@@ -17,21 +17,8 @@ public class UserDao extends BaseIbatisDao{
 	}
 	
 	public User selectOne(String statement, Map<String, Object> params){
-		User user = null;
-		try {
-			user = (User) super.selectOne(statement, params);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		User user = (User) super.selectOne(statement, params);
 		return user;
-	}
-
-	public int insert(String statement, Map<String, Object> params) {
-		return super.createObject(statement, params);
-	}
-	
-	public int update(String statement, Map<String, Object> params){
-		return super.updateObject(statement, params);
 	}
 
 }

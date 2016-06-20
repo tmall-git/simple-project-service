@@ -26,8 +26,7 @@ public class UserService {
 		return dao.createObject("user.createRegister", user);
 	}
 	
-	public int update(String statement, Map<String, Object> params){
-		return dao.updateObject(statement, params);
+	public int update(User user){
+		return dao.updateObject("user.modify",user);
 	}
-
 }

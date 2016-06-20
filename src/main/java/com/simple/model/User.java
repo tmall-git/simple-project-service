@@ -2,7 +2,7 @@ package com.simple.model;
 
 import java.util.Date;
 
-public class User implements java.io.Serializable{
+public class User extends AbstractBaseModel implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 749814039851956911L;
 	
