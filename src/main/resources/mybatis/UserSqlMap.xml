@@ -32,15 +32,12 @@
 	<update id="modify" parameterType="com.simple.model.User">
 		UPDATE user SET 
 			user_name = #{userName},
-			user_phone = #{userPhone},
 			user_tel = #{userTel},
 			login_name = #{loginName},
 			password = #{password},
 			wechat_no = #{weChatNo},
 			ID_card = #{IDCard},
-			address = #{address},
-			register_date = #{registerDate},
-			salt = #{salt}
-		WHERE id = #{id}
+			address = #{address}
+		WHERE user_phone = #{userPhone}
 	</update>
 </mapper>
