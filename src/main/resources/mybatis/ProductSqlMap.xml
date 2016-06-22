@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product" >
+
+	<resultMap id="productEntity" type="com.simple.model.Product" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="stock" property="stock" jdbcType="INTEGER" />
+		<result column="price" property="price" jdbcType="DOUBLE" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="tip" property="tip" jdbcType="VARCHAR" />
+		<result column="product_status" property="productStatus" jdbcType="INTEGER" />
+		<result column="owner" property="owner" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="productImage" type="com.simple.model.ProductImage" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="product_id" property="productId" jdbcType="INTEGER" />
+		<result column="image" property="image" jdbcType="VARCHAR" />
+	</resultMap>
+
+ 	<sql id="product_Column_List" >
+		id,name,stock,price,description,tip,product_status,owner
+  	</sql>
+  	
+  	<sql id="productImage_Column_List" >
+		id,product_id,image
+  	</sql>
+
+	<select id="queryById" resultMap="productEntity" parameterType="Integer">
+  		select
+  		<include refid="product_Column_List"></include>
+  		from product where id = #{id}
+  	</select>
+
+
+ 	<select id="queryByOwner" resultMap="productEntity">
+  		select
+  		<include refid="product_Column_List"></include>
+  		from product where owner in 
+  		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+		  #{item}  
+		 </foreach> 
+		 <if test="name != null and name != ''" > and name like CONCAT('%',#{name},'%')</if>
+		 limit #{startnum},#{pageSize} 
+  	</select>
+  	
+	<insert id="insert" parameterType="com.simple.model.User">
+		INSERT INTO product (name,stock,price,description,tip,product_status,owner) 
+		VALUES (#{name},#{stock},#{price},#{description},#{tip},#{productStatus},#{owner})
+	</insert>	
+	
+	<update id="update" parameterType="com.simple.model.Product">
+		UPDATE product SET 
+			name = #{name},
+			stock = #{stock},
+			price = #{price},
+			description = #{description},
+			tip = #{tip},
+			product_status = #{productStatus}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="reduceStock" parameterType="Integer">
+		UPDATE product SET stock = stock-1 where id = #{id} and stock > 0 
+	</update>
+	
+	<insert id="insertImage" parameterType="com.simple.model.ProductImage">
+		INSERT INTO product_image (product_id,image) 
+		VALUES (#{productId},#{image})
+	</insert>
+	
+	<delete id="deleteImage" parameterType="Integer">
+		delete from product_image where product_id  = #{productId}
+	</delete>
+	
+	<update id="updatestatus" >
+		UPDATE product SET product_status = #{productStatus} where id = #{id}
+	</update>
+	
+</mapper>
