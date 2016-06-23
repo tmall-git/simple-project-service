@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="order" >
+
+	<resultMap id="orderEntity" type="com.simple.model.Order" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_phone" property="user_phone" jdbcType="VARCHAR"/>
+		<result column="product_id" property="product_id" jdbcType="INTEGER"/>
+		<result column="product_name" property="product_name" jdbcType="VARCHAR"/>
+		<result column="user_name" property="user_name" jdbcType="VARCHAR"/>
+		<result column="address" property="address" jdbcType="VARCHAR"/>
+		<result column="product_count" property="product_count" jdbcType="INTEGER"/>
+		<result column="price" property="price" jdbcType="DOUBLE"/>
+		<result column="owner" property="owner" jdbcType="VARCHAR"/>
+		<result column="seller" property="seller" jdbcType="VARCHAR"/>
+		<result column="create_time" property="create_time" jdbcType="DATE"/>
+		<result column="order_status" property="order_status" jdbcType="INTEGER"/>
+		<result column="expressage" property="expressage" jdbcType="VARCHAR"/>
+		<result column="expressage_name" property="expressage_name" jdbcType="VARCHAR"/>
+		<result column="expressage_no" property="expressage_no" jdbcType="VARCHAR"/>
+		<result column="expressage_time" property="expressage_time" jdbcType="DATE"/>
+		<result column="change_status" property="change_status" jdbcType="INTEGER"/>
+		<result column="change_time" property="change_time" jdbcType="DATE"/>
+		<result column="change_remark" property="change_remark" jdbcType="VARCHAR"/>
+		<result column="reject_status" property="reject_status" jdbcType="INTEGER"/>
+		<result column="reject_time" property="reject_time" jdbcType="DATE"/>
+		<result column="reject_remark" property="reject_remark" jdbcType="VARCHAR"/>
+		<result column="pay_status" property="pay_status" jdbcType="INTEGER"/>
+		<result column="pay_time" property="pay_time" jdbcType="DATE"/>
+		<result column="product_image" property="product_image" jdbcType="VARCHAR"/>
+		<result column="total_price" property="total_price" jdbcType="DOUBLE"/>
+		<result column="total_charge" property="total_charge" jdbcType="DOUBLE"/>
+	</resultMap>
+
+ 	<sql id="order_Column_List" >
+		id,user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,order_status,
+		expressage,expressage_name,expressage_no,expressage_time,change_status,change_time,change_remark,reject_status,
+		reject_time,reject_remark,pay_status,pay_time,product_image,total_price,total_charge
+  	</sql>
+
+	<select id="queryByUserPhone" resultMap="orderEntity" parameterMap="java.util.Map">
+  		select
+  		<include refid="order_Column_List"></include>
+  		from tmall_order where user_phone = #{userPhone} order by create_time desc 
+  		limit #{startnum},#{pageSize} 
+  	</select>
+
+	
+	<select id="queryTotalPrice" resultType="Double" parameterType="String">
+  		select sum(total_price) 
+  		from tmall_order where owner = #{userPhone} and order_status != 4
+  	</select>
+  	
+  	<select id="queryTotalCharge" resultType="Integer" parameterType="String">
+  		select sum(total_price) 
+  		from tmall_order where owner = #{userPhone} and order_status != 4 and pay_status = 1
+  	</select>
+  	
+  	<select id="queryCountByStatus" resultType="Integer" parameterType="com.simple.model.Order">
+  		select count(1)  
+  		from tmall_order where owner = #{userPhone} 
+  		<if test="order_status > 0 " > and order_status = #{order_status}</if>
+  		<if test="change_status >= 0 " > and change_status = #{change_status}</if>
+  		<if test="reject_status >= 0 " > and reject_status = #{reject_status}</if>
+  		<if test="pay_status >= 0 " > and pay_status = #{pay_status}</if>
+  	</select>
+
+	<insert id="insert" parameterType="com.simple.model.Order">
+		INSERT INTO tmall_order (
+			user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,order_status,
+			expressage,expressage_name,expressage_no,expressage_time,change_status,change_time,change_remark,reject_status,
+			reject_time,reject_remark,pay_status,pay_time,product_image,total_price,total_charge
+		) 
+		VALUES (
+			#{user_phone},#{product_id},#{product_name},#{user_name},#{address},#{product_count},#{price},#{owner},#{seller},#{create_time},#{order_status},
+			#{expressage},#{expressage_name},#{expressage_no},#{expressage_time},#{change_status},#{change_time},#{change_remark},#{reject_status},
+			#{reject_time},#{reject_remark},#{pay_status},#{pay_time},#{product_image},#{total_price},#{total_charge}
+		)
+	</insert>	
+	
+	<update id="updateOrderStatus" parameterType="com.simple.model.Order">
+		UPDATE tmall_order SET order_status = #{order_status}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="changeProduct" parameterType="com.simple.model.Order">
+		UPDATE tmall_order SET change_status = 1,change_time = #{change_time},change_remark = #{change_remark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="reject" parameterType="com.simple.model.Order">
+		UPDATE tmall_order SET reject_status = 1,reject_time = #{change_time},reject_remark = #{reject_remark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="payOrder" parameterType="com.simple.model.Order">
+		UPDATE tmall_order SET pay_status = 1,pay_time = #{change_time}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateExpressage" parameterType="com.simple.model.Order">
+		UPDATE tmall_order SET expressage = #{expressage},expressage_no = #{expressage_no},expressage_time=#{expressage_time}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
