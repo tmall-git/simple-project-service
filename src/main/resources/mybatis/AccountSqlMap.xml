@@ -16,7 +16,7 @@
 		id,user_phone,bank_id,bank_account,bank_account_no,cash_amount,cash_time
   	</sql>
 
-	<select id="getByBankId" resultMap="bankEntity" parameterType="com.simple.model.Account">
+	<select id="getByBankId" resultMap="accountEntity" parameterType="com.simple.model.Account">
   		select
   		<include refid="account_column_list"></include>
   		from tmall_account 
