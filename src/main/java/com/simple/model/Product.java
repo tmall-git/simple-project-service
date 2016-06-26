@@ -11,6 +11,8 @@ public class Product extends AbstractBaseModel{
 	private String tip;
 	private int productStatus;
 	private String owner;
+	private String thumbnail;
+	
 	
 	public String getName() {
 		return name;
@@ -53,5 +55,11 @@ public class Product extends AbstractBaseModel{
 	}
 	public void setOwner(String owner) {
 		this.owner = owner;
+	}
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 }

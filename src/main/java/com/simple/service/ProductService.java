@@ -23,8 +23,11 @@ public class ProductService {
 	}
 
 	public void insert(Product product,String[] images) {
+		if (null != images && images.length > 0) {
+			product.setThumbnail(images[0]);
+		}
 		int id = productDao.addProduct(product);
-		if (null != images) {
+		if (null != images && images.length > 0) {
 			for (int i = 0 ; i < images.length;i++) {
 				String ima = images[i];
 				ProductImage pi = new ProductImage();
@@ -33,13 +36,15 @@ public class ProductService {
 				productDao.addProductImage(pi);
 			}
 		}
-		
 	}
 	
 	public void update(Product product,String[] images){
+		if (null != images && images.length > 0) {
+			product.setThumbnail(images[0]);
+		}
 		productDao.updateProduct(product);
 		productDao.deleteProductImage(product.getId());
-		if (null != images) {
+		if (null != images && images.length > 0 ) {
 			for (int i = 0 ; i < images.length;i++) {
 				String ima = images[i];
 				ProductImage pi = new ProductImage();

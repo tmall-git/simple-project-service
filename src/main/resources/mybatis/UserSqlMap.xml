@@ -19,7 +19,7 @@
 	</resultMap>
 
 	<sql id="user_Column_List" >
-		id, user_name, user_phone, user_tel, login_name, password, wechat_no, 
+		id, user_name,user_nick, user_phone, user_tel, password, wechat_no, 
 		ID_card, address, register_date, salt, balance, category
 	</sql>
 
@@ -34,7 +34,7 @@
 	<insert id="createRegister" parameterType="com.simple.model.User">
 		INSERT INTO user (user_name,user_phone,user_nick,user_tel,password,
 			wechat_no,ID_card,address,register_date,salt,balance,category) 
-		VALUES (#{userName},#{userPhone},#{userTel},#{loginName},#{password},
+		VALUES (#{userName},#{userPhone},#{userNick},#{userTel},#{password},
 			#{weChatNo},#{IDCard},#{address},#{registerDate},#{salt},#{balance},#{category})
 	</insert>	
 	

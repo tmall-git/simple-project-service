@@ -11,6 +11,7 @@
 		<result column="tip" property="tip" jdbcType="VARCHAR" />
 		<result column="product_status" property="productStatus" jdbcType="INTEGER" />
 		<result column="owner" property="owner" jdbcType="VARCHAR" />
+		<result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<resultMap id="productImage" type="com.simple.model.ProductImage" >
@@ -20,7 +21,7 @@
 	</resultMap>
 
  	<sql id="product_Column_List" >
-		id,name,stock,price,description,tip,product_status,owner
+		id,name,stock,price,description,tip,product_status,owner,thumbnail
   	</sql>
   	
   	<sql id="productImage_Column_List" >
@@ -38,7 +39,7 @@
   		select
   		<include refid="product_Column_List"></include>
   		from product where owner in 
-  		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
 		  #{item}  
 		 </foreach> 
 		 <if test="name != null and name != ''" > and name like CONCAT('%',#{name},'%')</if>
@@ -46,8 +47,8 @@
   	</select>
   	
 	<insert id="insert" parameterType="com.simple.model.User">
-		INSERT INTO product (name,stock,price,description,tip,product_status,owner) 
-		VALUES (#{name},#{stock},#{price},#{description},#{tip},#{productStatus},#{owner})
+		INSERT INTO product (name,stock,price,description,tip,product_status,owner,thumbnail) 
+		VALUES (#{name},#{stock},#{price},#{description},#{tip},#{productStatus},#{owner},#{thumbnail})
 	</insert>	
 	
 	<update id="update" parameterType="com.simple.model.Product">
@@ -57,7 +58,8 @@
 			price = #{price},
 			description = #{description},
 			tip = #{tip},
-			product_status = #{productStatus}
+			product_status = #{productStatus},
+			thumbnail = #{thumbnail}
 		WHERE id = #{id}
 	</update>
 	

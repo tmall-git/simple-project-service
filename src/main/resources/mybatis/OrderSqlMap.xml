@@ -39,7 +39,7 @@
 		reject_time,reject_remark,pay_status,pay_time,product_image,total_price,total_charge
   	</sql>
 
-	<select id="queryByUserPhone" resultMap="orderEntity" parameterMap="java.util.Map">
+	<select id="queryByUserPhone" resultMap="orderEntity" parameterType="java.util.Map">
   		select
   		<include refid="order_Column_List"></include>
   		from tmall_order where user_phone = #{userPhone} 
@@ -48,7 +48,7 @@
   		limit #{startnum},#{pageSize} 
   	</select>
 
-	<select id="getById" resultMap="orderEntity" parameterMap="java.util.Map">
+	<select id="getById" resultMap="orderEntity" parameterType="java.util.Map">
 		select
   		<include refid="order_Column_List"></include>
   		from tmall_order where id=#{id}
