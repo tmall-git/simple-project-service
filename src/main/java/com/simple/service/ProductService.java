@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simple.dao.ProductDao;
+import com.simple.model.PageResult;
 import com.simple.model.Product;
 import com.simple.model.ProductImage;
 @Service
@@ -18,8 +19,11 @@ public class ProductService {
 		return productDao.getById(id);
 	}
 	
-	public List<Product> query(String name,List<String> owners,int pageIndex,int pageSize){
-		return productDao.getByOwners(owners, name, pageIndex, pageSize);
+	public PageResult query(String name,List<String> owners,int productStatus ,int pageIndex,int pageSize){
+		List<Product> products = productDao.getByOwners(owners, name,productStatus, pageIndex, pageSize);
+		int total = productDao.getCountByOwners(owners, name, productStatus);
+		PageResult p = new PageResult(total, pageSize, pageIndex, products);
+		return p;
 	}
 
 	public void insert(Product product,String[] images) {

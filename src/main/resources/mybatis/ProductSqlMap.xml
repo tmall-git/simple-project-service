@@ -43,8 +43,20 @@
 		  #{item}  
 		 </foreach> 
 		 <if test="name != null and name != ''" > and name like CONCAT('%',#{name},'%')</if>
+		 <if test="productStatus > 0 " > and product_status = #{productStatus}</if>
 		 limit #{startnum},#{pageSize} 
   	</select>
+  	
+  	<select id="queryCountByOwner" resultType="Integer">
+  		select count(1) 
+  		from product where owner in 
+  		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+		  #{item}  
+		 </foreach> 
+		 <if test="name != null and name != ''" > and name like CONCAT('%',#{name},'%')</if>
+		 <if test="productStatus > 0 " > and product_status = #{productStatus}</if>
+  	</select>
+  	
   	
 	<insert id="insert" parameterType="com.simple.model.User">
 		INSERT INTO product (name,stock,price,description,tip,product_status,owner,thumbnail) 

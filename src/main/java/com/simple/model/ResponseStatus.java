@@ -7,6 +7,7 @@ public class ResponseStatus implements Serializable {
 	private static final long serialVersionUID = 6180026101789656042L;
 	private static final String SUCCESS  = "1";
 	private static final String ERROR = "2";
+	public static final String REDIRECT = "3";
 
 	private boolean state;
 
