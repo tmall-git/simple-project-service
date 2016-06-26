@@ -1,7 +1,9 @@
 package com.simple.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.simple.dao.OrderDao;
 import com.simple.dao.ProductDao;
 import com.simple.model.Order;
+import com.simple.model.PageResult;
 import com.simple.model.Product;
 @Service
 public class OrderService {
@@ -23,8 +26,21 @@ public class OrderService {
 	@Autowired
 	private ProductDao productDao;
 	
-	public List<Order> getOrdersLists(String userPhone, int orderStatus, int pageIndex, int pageSize){
-		return orderDao.getOrdersByUserPhone(userPhone, orderStatus, pageIndex, pageSize);
+	public PageResult getOrdersLists(String userPhone, Integer orderStatus, int pageIndex, int pageSize){
+		if ( pageIndex < 1) {
+			pageIndex = 1;
+		}
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("userPhone", userPhone);
+		param.put("startnum", (pageIndex-1)*pageSize);
+		param.put("pageSize", pageSize);
+		if(orderStatus != null){
+			param.put("orderStatus", orderStatus);
+		}
+		List<Order> listOrder = orderDao.getOrdersByUserPhone(param);
+		Integer count = orderDao.getOrdersCount(param);
+		PageResult result = new PageResult(count, pageIndex, listOrder);
+		return result;
 	}
 
 	public Order getOrdersById(int id) {
