@@ -12,6 +12,7 @@ public class Account extends AbstractBaseModel{
 	private static final long serialVersionUID = 3087624468698518327L;
 	
 	private String userPhone;
+	private String realName;
 	private int bankId;
 	private String bankAccount;
 	private int bankAccountNo;
@@ -23,6 +24,12 @@ public class Account extends AbstractBaseModel{
 	}
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
+	}
+	public String getRealName() {
+		return realName;
+	}
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 	public int getBankId() {
 		return bankId;
