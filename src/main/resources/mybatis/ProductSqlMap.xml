@@ -57,6 +57,11 @@
 		 <if test="productStatus > 0 " > and product_status = #{productStatus}</if>
   	</select>
   	
+  	<select id="queryNoStock" resultType="Integer" parameterType="String">
+  		select count(1) 
+  		from product where owner = #{phone} and stock &lt;=0
+  	</select>
+  	
   	
 	<insert id="insert" parameterType="com.simple.model.User">
 		INSERT INTO product (name,stock,price,description,tip,product_status,owner,thumbnail) 

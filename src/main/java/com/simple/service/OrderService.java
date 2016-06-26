@@ -1,7 +1,9 @@
 package com.simple.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,6 +91,19 @@ public class OrderService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	
+	public double queryTotalPrice(String owner) {
+		return orderDao.queryTotalPrice(owner);
+	}
+	
+	public double queryTotalCharge(String owner) {
+		return orderDao.queryTotalCharge(owner);
+	}
+	
+	public int queryCountByStatus(String owner,int orderStatus,int changeStatus,int rejectStatus,int payStatus) {
+		return orderDao.queryCountByStatus(owner,orderStatus, changeStatus, rejectStatus, payStatus);
 	}
 	
 }

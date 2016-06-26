@@ -22,6 +22,10 @@ public class UserService {
 		return dao.selectOne(statement, params);
 	}
 
+	public User queryByPhone(String phone) {
+		return dao.getByPhone(phone);
+	}
+	
 	public int insert(User user) {
 		return dao.createObject("user.createRegister", user);
 	}

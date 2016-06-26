@@ -40,12 +40,13 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectOne("order.queryTotalCharge",owner);
 	}
 	
-	public int queryCountByStatus(int orderStatus,int changeStatus,int rejectStatus,int payStatus) {
+	public int queryCountByStatus(String owner,int orderStatus,int changeStatus,int rejectStatus,int payStatus) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("order_status", orderStatus);
 		param.put("change_status", changeStatus);
 		param.put("reject_status", rejectStatus);
 		param.put("pay_status", payStatus);
+		param.put("userPhone", owner);
 		return this.sqlSession.selectOne("order.queryCountByStatus",param);
 	}
 	

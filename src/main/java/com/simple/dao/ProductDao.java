@@ -66,5 +66,9 @@ public class ProductDao extends BaseIbatisDao{
 		param.put("productStatus", status);
 		this.sqlSession.update("product.updatestatus",param);
 	}
+	
+	public int queryNoStockCount(String owner) {
+		return this.sqlSession.selectOne("product.queryNoStock",owner);
+	}
 
 }

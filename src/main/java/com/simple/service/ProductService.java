@@ -1,5 +1,6 @@
 package com.simple.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +60,21 @@ public class ProductService {
 		}
 	}
 	
-	public int reduceStock(int productId) {
+	public int updateStock(int productId) {
 		return productDao.reduceStock(productId);
 	}
 	
 	public void updateProductStatus(int id,int status ) {
 		productDao.updateStatus(id, status);
+	}
+	
+	public int queryProductCount(int productStatus,String owner) {
+		List<String> owners = new ArrayList<String>();
+		owners.add(owner);
+		return productDao.getCountByOwners(owners, null, productStatus);
+	}
+	
+	public int queryNoStockCount(String owner) {
+		return productDao.queryNoStockCount(owner);
 	}
 }

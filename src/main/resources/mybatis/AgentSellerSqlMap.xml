@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="agentSeller" >
+
+	<resultMap id="BaseResultMap" type="com.simple.model.AgentSeller" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="agent_phone" property="agentPhone" jdbcType="VARCHAR" />
+		<result column="seller_phone" property="sellerPhone" jdbcType="VARCHAR" />
+		<result column="charge_percent" property="chargePercent" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="user_Column_List" >
+		id, agent_phone,seller_phone,charge_percent
+	</sql>
+
+	<select id="queryByAgent" parameterType="String" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="user_Column_List"></include>
+		FROM agent_seller where agent_phone = #{userPhone}
+	</select>
+	
+	<select id="queryBySeller" parameterType="String" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="user_Column_List"></include>
+		FROM agent_seller where seller_phone = #{userPhone}
+	</select>
+	
+	<select id="queryCountByAgent" parameterType="String" resultType="Integer">
+		SELECT count(1) FROM agent_seller where agent_phone = #{userPhone}
+	</select>
+
+	<insert id="insert" parameterType="com.simple.model.AgentSeller">
+		INSERT INTO agent_seller (agent_phone,seller_phone) VALUES (#{agentPhone},#{sellerPhone})
+	</insert>	
+	
+	<delete id="delete" parameterType="com.simple.model.AgentSeller">
+		delete from agent_seller where id = #{id} and agent_phone = #{agentPhone} and seller_phone = #{sellerPhone}
+	</delete>
+	
+	<update id="updatePercent" parameterType="java.util.Map">
+		update agent_seller set charge_percent = #{chargePercent} 
+		where agent_phone = #{agentPhone} 
+		<if test="sellerPhone != null and sellerPhone !=''" > and seller_phone = #{sellerPhone} </if>
+	</update>
+	
+	
+</mapper>
