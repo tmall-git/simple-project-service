@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.simple.dao.UserDao;
 import com.simple.dao.WithdrawDao;
 import com.simple.model.Account;
 import com.simple.model.User;
 
+@Service
 public class WithdrawService {
 
 	@Autowired
