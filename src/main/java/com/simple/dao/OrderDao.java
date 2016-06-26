@@ -14,18 +14,12 @@ import com.simple.model.Order;
 @DatabaseTemplate("st_all")
 public class OrderDao extends BaseIbatisDao{
 	
-	public List<Order> getOrdersByUserPhone(String userPhone, Integer orderStatus, int pageIndex,int pageSize){
-		if ( pageIndex < 1) {
-			pageIndex = 1;
-		}
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("userPhone", userPhone);
-		param.put("startnum", (pageIndex-1)*pageSize);
-		param.put("pageSize", pageSize);
-		if(orderStatus != null){
-			param.put("orderStatus", orderStatus);
-		}
+	public List<Order> getOrdersByUserPhone(Map<String, Object> param){
 		return this.sqlSession.selectList("order.queryByUserPhone",param);
+	}
+	
+	public Integer getOrdersCount(Map<String, Object> param){
+		return this.sqlSession.selectOne("order.queryOrderCount",param);
 	}
 	
 	public Order getById(int id){

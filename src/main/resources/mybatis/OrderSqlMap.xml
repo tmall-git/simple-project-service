@@ -47,6 +47,11 @@
   		order by create_time desc 
   		limit #{startnum},#{pageSize} 
   	</select>
+  	
+  	<select id="queryOrderCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+  		select count(1) from tmall_order where user_phone = #{userPhone} 
+  		<if test="order_status != null and order_status != '' " > and order_status = #{order_status}</if>
+  	</select>
 
 	<select id="getById" resultMap="orderEntity" parameterType="java.util.Map">
 		select
