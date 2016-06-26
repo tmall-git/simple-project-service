@@ -31,7 +31,7 @@ public class OrderService {
 		return orderDao.getById(id);
 	}
 	
-	public boolean sendProduct(int orderId){
+	public boolean updateProductToSend(int orderId){
 		try {
 			// 修改订单状态
 			Order order = orderDao.getById(orderId);
@@ -58,7 +58,7 @@ public class OrderService {
 	}
 
 	
-	public boolean returnProduct(int orderId, int returnStatus, String remark) {
+	public boolean updateReturnProduct(int orderId, int returnStatus, String remark) {
 		try {
 			Order order = orderDao.getById(orderId);
 			order.setOrder_status(ORDER_FINISHED);
@@ -81,7 +81,7 @@ public class OrderService {
 	}
 	
 	// TODO 换货状态不明确
-	public boolean changeProduct(int orderId, int returnStatus){
+	public boolean updateChangeProduct(int orderId, int returnStatus){
 		try {
 			Order order = orderDao.getById(orderId);
 			return true;
