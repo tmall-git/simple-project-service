@@ -9,13 +9,15 @@ public class User extends AbstractBaseModel implements java.io.Serializable{
 	private String userName;
 	private String userPhone;
 	private String userTel;
-	private String loginName;
 	private String password;
 	private String weChatNo;
 	private String IDCard;
 	private String address;
 	private Date registerDate;
 	private String salt;
+	private Double balance;
+	private String userNick;
+	private String category;
 	
 	public User() {
 	}
@@ -39,12 +41,6 @@ public class User extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setUserTel(String userTel) {
 		this.userTel = userTel;
-	}
-	public String getLoginName() {
-		return loginName;
-	}
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
 	}
 	public String getPassword() {
 		return password;
@@ -81,6 +77,24 @@ public class User extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+	public Double getBalance() {
+		return balance;
+	}
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+	public String getUserNick() {
+		return userNick;
+	}
+	public void setUserNick(String userNick) {
+		this.userNick = userNick;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 }

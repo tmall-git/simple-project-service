@@ -4,6 +4,7 @@
 
 	<resultMap id="orderEntity" type="com.simple.model.Order" >
 		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="order_no" property="order_no" jdbcType="VARCHAR"/>
 		<result column="user_phone" property="user_phone" jdbcType="VARCHAR"/>
 		<result column="product_id" property="product_id" jdbcType="INTEGER"/>
 		<result column="product_name" property="product_name" jdbcType="VARCHAR"/>
@@ -33,7 +34,7 @@
 	</resultMap>
 
  	<sql id="order_Column_List" >
-		id,user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,order_status,
+		id,order_no,user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,order_status,
 		expressage,expressage_name,expressage_no,expressage_time,change_status,change_time,change_remark,reject_status,
 		reject_time,reject_remark,pay_status,pay_time,product_image,total_price,total_charge
   	</sql>
@@ -41,10 +42,17 @@
 	<select id="queryByUserPhone" resultMap="orderEntity" parameterMap="java.util.Map">
   		select
   		<include refid="order_Column_List"></include>
-  		from tmall_order where user_phone = #{userPhone} order by create_time desc 
+  		from tmall_order where user_phone = #{userPhone} 
+  		<if test="order_status != null and order_status != '' " > and order_status = #{order_status}</if>
+  		order by create_time desc 
   		limit #{startnum},#{pageSize} 
   	</select>
 
+	<select id="getById" resultMap="orderEntity" parameterMap="java.util.Map">
+		select
+  		<include refid="order_Column_List"></include>
+  		from tmall_order where id=#{id}
+	</select>
 	
 	<select id="queryTotalPrice" resultType="Double" parameterType="String">
   		select sum(total_price) 
@@ -67,19 +75,28 @@
 
 	<insert id="insert" parameterType="com.simple.model.Order">
 		INSERT INTO tmall_order (
-			user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,order_status,
-			expressage,expressage_name,expressage_no,expressage_time,change_status,change_time,change_remark,reject_status,
-			reject_time,reject_remark,pay_status,pay_time,product_image,total_price,total_charge
+			order_no,user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,
+			order_status,expressage,expressage_name,expressage_no,expressage_time,change_status,change_time,change_remark,
+			reject_status,reject_time,reject_remark,pay_status,pay_time,product_image,total_price,total_charge
 		) 
 		VALUES (
-			#{user_phone},#{product_id},#{product_name},#{user_name},#{address},#{product_count},#{price},#{owner},#{seller},#{create_time},#{order_status},
-			#{expressage},#{expressage_name},#{expressage_no},#{expressage_time},#{change_status},#{change_time},#{change_remark},#{reject_status},
-			#{reject_time},#{reject_remark},#{pay_status},#{pay_time},#{product_image},#{total_price},#{total_charge}
+			#{order_no,},#{user_phone},#{product_id},#{product_name},#{user_name},#{address},#{product_count},#{price},#{owner},#{seller},#{create_time},
+			#{order_status},#{expressage},#{expressage_name},#{expressage_no},#{expressage_time},#{change_status},#{change_time},#{change_remark},
+			#{reject_status},#{reject_time},#{reject_remark},#{pay_status},#{pay_time},#{product_image},#{total_price},#{total_charge}
 		)
 	</insert>	
 	
 	<update id="updateOrderStatus" parameterType="com.simple.model.Order">
 		UPDATE tmall_order SET order_status = #{order_status}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateReject" parameterType="com.simple.model.Order">
+		UPDATE tmall_order 
+		SET 
+		order_status = #{order_status}
+		,reject_status = #{reject_status}
+		<if test="reject_remark != null and reject_remark != ''"> ,reject_remark = #{reject_remark}</if>
 		WHERE id = #{id}
 	</update>
 	

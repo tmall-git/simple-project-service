@@ -52,7 +52,7 @@ public class ProductDao extends BaseIbatisDao{
 	}
 	
 	public void updateStatus(int id,int status) {
-		Map param = new HashMap();
+		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("id", id);
 		param.put("productStatus", status);
 		this.sqlSession.update("product.updatestatus",param);

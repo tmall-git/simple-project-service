@@ -9,21 +9,27 @@ import org.springframework.stereotype.Repository;
 import com.simple.common.mybatis.annotation.DatabaseTemplate;
 import com.simple.common.mybatis.dao.BaseIbatisDao;
 import com.simple.model.Order;
-import com.simple.model.User;
 
 @Repository
 @DatabaseTemplate("st_all")
 public class OrderDao extends BaseIbatisDao{
 	
-	public List<Order> getOrdersByUserPhone(String userPhone,int pageIndex,int pageSize){
+	public List<Order> getOrdersByUserPhone(String userPhone, Integer orderStatus, int pageIndex,int pageSize){
 		if ( pageIndex < 1) {
 			pageIndex = 1;
 		}
-		Map param = new HashMap();
+		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("userPhone", userPhone);
 		param.put("startnum", (pageIndex-1)*pageSize);
 		param.put("pageSize", pageSize);
+		if(orderStatus != null){
+			param.put("orderStatus", orderStatus);
+		}
 		return this.sqlSession.selectList("order.queryByUserPhone",param);
+	}
+	
+	public Order getById(int id){
+		return this.sqlSession.selectOne("order.getById",id);
 	}
 	
 	public double queryTotalPrice(String owner) {
@@ -35,7 +41,7 @@ public class OrderDao extends BaseIbatisDao{
 	}
 	
 	public int queryCountByStatus(int orderStatus,int changeStatus,int rejectStatus,int payStatus) {
-		Map param = new HashMap();
+		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("order_status", orderStatus);
 		param.put("change_status", changeStatus);
 		param.put("reject_status", rejectStatus);
@@ -49,6 +55,10 @@ public class OrderDao extends BaseIbatisDao{
 	
 	public void updateOrderStatus(Order order) {
 		this.sqlSession.update("order.updateOrderStatus",order);
+	}
+	
+	public void updateRejectStatus(Order order){
+		this.sqlSession.update("order.updateReject",order);
 	}
 	
 	public void changeProduct(Order order) {

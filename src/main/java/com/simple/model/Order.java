@@ -2,34 +2,46 @@ package com.simple.model;
 
 import java.util.Date;
 
-public class Order extends AbstractBaseModel{
+public class Order extends AbstractBaseModel implements java.io.Serializable{
+	
 	private static final long serialVersionUID = 5784715568286725038L;
-	private String user_phone       ;          
-	private int product_id       ;             
-	private String product_name     ;          
-	private String user_name        ;          
-	private String address          ;          
-	private int product_count    ;             
-	private double price            ;          
-	private String owner            ;          
-	private String seller           ;          
-	private Date create_time      ;            
-	private int order_status     ;             
-	private String expressage       ;          
-	private String expressage_name  ;          
-	private String expressage_no    ;          
-	private Date expressage_time  ;            
-	private int change_status    ;             
-	private Date change_time      ;            
-	private String change_remark    ;          
-	private int reject_status    ;             
-	private Date reject_time      ;            
-	private String reject_remark    ;          
-	private int pay_status       ;             
-	private Date pay_time         ;            
-	private String product_image    ;          
-	private double total_price      ;          
-	private double total_charge     ;
+	
+	private String order_no;
+	private String user_phone;
+	private int product_id; 
+	private String product_name;
+	private String user_name;
+	private String address;
+	private int product_count; 
+	private double price;
+	private String owner;
+	private String seller;
+	private Date create_time;
+	private int order_status; 
+	private String expressage;
+	private String expressage_name;
+	private String expressage_no;
+	private Date expressage_time;
+	private int change_status; 
+	private Date change_time;
+	private String change_remark;
+	private int reject_status; 
+	private Date reject_time;
+	private String reject_remark;
+	private int pay_status; 
+	private Date pay_time;
+	private String product_image;
+	private double total_price;
+	private double total_charge;
+	
+	
+	
+	public String getOrder_no() {
+		return order_no;
+	}
+	public void setOrder_no(String order_no) {
+		this.order_no = order_no;
+	}
 	public String getUser_phone() {
 		return user_phone;
 	}

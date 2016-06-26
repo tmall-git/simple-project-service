@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="account" >
+
+	<resultMap id="accountEntity" type="com.simple.model.Account" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+		<result column="bank_id" property="bankId" jdbcType="INTEGER"/>
+		<result column="bank_account" property="bankAccount" jdbcType="VARCHAR"/>
+		<result column="bank_account_no" property="bankAccountNo" jdbcType="INTEGER"/>
+		<result column="cash_amount" property="cashAmount" jdbcType="DOUBLE"/>
+		<result column="cash_time" property="cashTime" jdbcType="DATE"/>
+	</resultMap>
+
+ 	<sql id="account_column_list" >
+		id,user_phone,bank_id,bank_account,bank_account_no,cash_amount,cash_time
+  	</sql>
+
+	<select id="getByBankId" resultMap="bankEntity" parameterType="com.simple.model.Account">
+  		select
+  		<include refid="account_column_list"></include>
+  		from tmall_account 
+  		where id=#{id} 
+  	</select>
+
+	<insert id="bankIst" parameterType="com.simple.model.Account">
+		INSERT INTO tmall_account(user_phone,bank_id,bank_account,bank_account_no,cash_amount,cash_time)
+		VALUES(#{userPhone},#{bankId},#{bankAccount},#{bankAccountNo},#{cashAmount},#{cashTime})
+	</insert>
+		
+	<update id="bankUpd" parameterType="com.simple.model.Account">
+		UPDATE tmall_account SET
+			user_phone = #{userPhone},
+			bank_id = #{bankId},
+			bank_account = #{bankAccount},
+			bank_account_no = #{bankAccountNo},
+			cash_amount = #{cashAmount},
+			cash_time = #{cashTime}
+		WHERE 
+			id=#{id}
+	</update>
+	
+	<delete id="bankDel" parameterType="com.simple.model.Account">
+		DELETE FROM tmall_account WHERE id=#{id}
+	</delete>	
+</mapper>
