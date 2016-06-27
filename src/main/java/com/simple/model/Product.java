@@ -11,7 +11,8 @@ public class Product extends AbstractBaseModel{
 	private String tip;
 	private int productStatus;
 	private String owner;
-	private String thumbnail;
+	private String thumbnail;//缩略图，多张图
+	private String firstImg;
 	
 	
 	public String getName() {
@@ -61,5 +62,11 @@ public class Product extends AbstractBaseModel{
 	}
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
+	}
+	public String getFirstImg() {
+		return firstImg;
+	}
+	public void setFirstImg(String firstImg) {
+		this.firstImg = firstImg;
 	}
 }

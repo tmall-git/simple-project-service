@@ -20,6 +20,12 @@ public class ProductService {
 		return productDao.getById(id);
 	}
 	
+	public ProductImage getImage(int productId) {
+		return productDao.getImage(productId);
+	}
+	
+	
+	
 	public PageResult query(String name,List<String> owners,int productStatus ,int pageIndex,int pageSize){
 		List<Product> products = productDao.getByOwners(owners, name,productStatus, pageIndex, pageSize);
 		int total = productDao.getCountByOwners(owners, name, productStatus);
@@ -27,36 +33,24 @@ public class ProductService {
 		return p;
 	}
 
-	public void insert(Product product,String[] images) {
-		if (null != images && images.length > 0) {
-			product.setThumbnail(images[0]);
-		}
-		int id = productDao.addProduct(product);
-		if (null != images && images.length > 0) {
-			for (int i = 0 ; i < images.length;i++) {
-				String ima = images[i];
-				ProductImage pi = new ProductImage();
-				pi.setImage(ima);
-				pi.setProductId(id);
-				productDao.addProductImage(pi);
-			}
+	public void insert(Product product,String images) {
+		productDao.addProduct(product);
+		if (null != images) {
+			ProductImage pi = new ProductImage();
+			pi.setImage(images);
+			pi.setProductId(product.getId());
+			productDao.addProductImage(pi);
 		}
 	}
 	
-	public void update(Product product,String[] images){
-		if (null != images && images.length > 0) {
-			product.setThumbnail(images[0]);
-		}
+	public void update(Product product,String images){
 		productDao.updateProduct(product);
 		productDao.deleteProductImage(product.getId());
-		if (null != images && images.length > 0 ) {
-			for (int i = 0 ; i < images.length;i++) {
-				String ima = images[i];
-				ProductImage pi = new ProductImage();
-				pi.setImage(ima);
-				pi.setProductId(product.getId());
-				productDao.addProductImage(pi);
-			}
+		if (null != images) {
+			ProductImage pi = new ProductImage();
+			pi.setImage(images);
+			pi.setProductId(product.getId());
+			productDao.addProductImage(pi);
 		}
 	}
 	

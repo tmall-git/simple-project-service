@@ -11,7 +11,7 @@
 		<result column="tip" property="tip" jdbcType="VARCHAR" />
 		<result column="product_status" property="productStatus" jdbcType="INTEGER" />
 		<result column="owner" property="owner" jdbcType="VARCHAR" />
-		<result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+		<result column="thumbnail" property="firstImg" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<resultMap id="productImage" type="com.simple.model.ProductImage" >
@@ -63,7 +63,7 @@
   	</select>
   	
   	
-	<insert id="insert" parameterType="com.simple.model.User">
+	<insert id="insert" parameterType="com.simple.model.Product" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO product (name,stock,price,description,tip,product_status,owner,thumbnail) 
 		VALUES (#{name},#{stock},#{price},#{description},#{tip},#{productStatus},#{owner},#{thumbnail})
 	</insert>	
@@ -76,7 +76,7 @@
 			description = #{description},
 			tip = #{tip},
 			product_status = #{productStatus},
-			thumbnail = #{thumbnail}
+			thumbnail = #{firstImg}
 		WHERE id = #{id}
 	</update>
 	
@@ -96,5 +96,10 @@
 	<update id="updatestatus" >
 		UPDATE product SET product_status = #{productStatus} where id = #{id}
 	</update>
+	
+	<select id="queryImage" parameterType="Integer" resultMap="productImage">
+		select <include refid="productImage_Column_List"></include>
+		from product_image where product_id = #{productId} limit 0, 1
+	</select>
 	
 </mapper>

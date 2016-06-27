@@ -18,6 +18,10 @@ public class ProductDao extends BaseIbatisDao{
 	public Product getById(int id) {
 		return this.sqlSession.selectOne("product.queryById",id);
 	}
+
+	public ProductImage getImage(int productId) {
+		return this.sqlSession.selectOne("product.queryImage",productId);
+	}
 	
 	public List<Product> getByOwners(List<String> owners,String name,int productStatus,int pageIndex,int pageSize) {
 		if (pageIndex < 1) {
