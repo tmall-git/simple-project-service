@@ -61,7 +61,7 @@ public class ProductDao extends BaseIbatisDao{
 	}
 	
 	public void deleteProductImage(int productId) {
-		this.sqlSession.delete("product.deleteImage");
+		this.sqlSession.delete("product.deleteImage",productId);
 	}
 	
 	public void updateStatus(int id,int status) {

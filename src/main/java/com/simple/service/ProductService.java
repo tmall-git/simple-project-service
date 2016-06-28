@@ -38,15 +38,13 @@ public class ProductService {
 		addProductImage(product,images);
 	}
 	
-	public void update(Product product){
+	public void update(Product product,String images){
 		productDao.updateProduct(product);
-	}
-	
-	public void deleteProductImage(Product product) {
 		productDao.deleteProductImage(product.getId());
+		addProductImage(product,images);
 	}
 	
-	public void addProductImage(Product product,String images) {
+	private void addProductImage(Product product,String images) {
 		if (null != images) {
 			ProductImage pi = new ProductImage();
 			pi.setImage(images);
