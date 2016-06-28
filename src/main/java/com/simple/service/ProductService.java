@@ -35,17 +35,18 @@ public class ProductService {
 
 	public void insert(Product product,String images) {
 		productDao.addProduct(product);
-		if (null != images) {
-			ProductImage pi = new ProductImage();
-			pi.setImage(images);
-			pi.setProductId(product.getId());
-			productDao.addProductImage(pi);
-		}
+		addProductImage(product,images);
 	}
 	
-	public void update(Product product,String images){
+	public void update(Product product){
 		productDao.updateProduct(product);
+	}
+	
+	public void deleteProductImage(Product product) {
 		productDao.deleteProductImage(product.getId());
+	}
+	
+	public void addProductImage(Product product,String images) {
 		if (null != images) {
 			ProductImage pi = new ProductImage();
 			pi.setImage(images);
