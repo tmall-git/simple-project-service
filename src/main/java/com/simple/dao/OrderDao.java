@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.simple.common.mybatis.annotation.DatabaseTemplate;
 import com.simple.common.mybatis.dao.BaseIbatisDao;
 import com.simple.model.Order;
+import com.simple.model.SellerListVO;
+import com.simple.model.User;
 
 @Repository
 @DatabaseTemplate("st_all")
@@ -70,6 +72,14 @@ public class OrderDao extends BaseIbatisDao{
 	
 	public void updateExpressage(Order order) {
 		this.sqlSession.update("order.updateExpressage",order);
+	}
+
+	public Map<String, Object> getTotalSellerAmount(User user) {
+		return this.sqlSession.selectOne("order.getTotalSellerAmount",user);
+	}
+	
+	public List<SellerListVO> getSellerList(User user) {
+		return this.sqlSession.selectList("order.getSellerList",user);
 	}
 
 }
