@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.simple.common.mybatis.annotation.DatabaseTemplate;
 import com.simple.common.mybatis.dao.BaseIbatisDao;
 import com.simple.model.AgentSeller;
-import com.simple.model.SellerJoinHeadVO;
 import com.simple.model.SellerJoinProductVO;
+import com.simple.model.SellerJoinVO;
 
 @Repository
 @DatabaseTemplate("st_all")
@@ -44,8 +44,8 @@ public class AgentSellerDao extends BaseIbatisDao{
 		this.sqlSession.update("agentSeller.updatePercent",param);
 	}
 	
-	public List<SellerJoinHeadVO> getSellerJoinHeadList(String userPhone){
-		return this.sqlSession.selectList("agentSeller.getSellerJoinHeadList", userPhone);
+	public List<SellerJoinVO> getSellerJoinHeadList(String userPhone){
+		return this.sqlSession.selectList("agentSeller.getSellerJoinList", userPhone);
 	}
 
 	public List<SellerJoinProductVO> getSellerJoinProductVO(String sql) {

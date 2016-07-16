@@ -4,12 +4,19 @@ public class SellerListVO implements java.io.Serializable{
 
 	private static final long serialVersionUID = -2046633238913528568L;
 	
-	private String userPhone;
-	private String wechatName;
-	private Double sellerAmount;
-	private Integer dealCount;
-	private Integer productCount;
+	private Long oId;				//ownerId
+	private String userPhone;		//用户电话
+	private String wechatName;		//用户名称
+	private Double sellerAmount;	//代销金额
+	private Integer dealCount;		//成交笔数
+	private Integer productCount;	//商品总数
 	
+	public Long getOid() {
+		return oId;
+	}
+	public void setId(Long oId) {
+		this.oId = oId;
+	}
 	public String getUserPhone() {
 		return userPhone;
 	}

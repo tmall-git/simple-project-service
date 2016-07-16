@@ -1,17 +1,17 @@
 package com.simple.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.simple.dao.AgentSellerDao;
 import com.simple.model.AgentSeller;
-import com.simple.model.SellerJoinHeadVO;
 import com.simple.model.SellerJoinProductVO;
+import com.simple.model.SellerJoinVO;
 
 
 @Service
@@ -44,24 +44,23 @@ public class AgentSellerService {
 		dao.updatePercent(agent, seller, percent);
 	}
 	
-	public List<Map<String, Object>> getSellerJoinList(String userPhone){
-		List<SellerJoinHeadVO> headLists = dao.getSellerJoinHeadList(userPhone);
-		String sqlPre = "select p.owner,p.name,p.price,ROUND(p.price*";
+	public PageInfo<SellerJoinVO> getSellerJoinList(String userPhone, Integer pageIndex, Integer pageSize){
+		PageHelper.startPage(pageIndex, pageSize);
+		List<SellerJoinVO> headLists = dao.getSellerJoinHeadList(userPhone);
+		String sqlPre = "(select p.owner userPhone, p.name productName, p.price, ROUND(p.price*";
 		String sqlMid = " ,2) chargePrice, p.thumbnail from product p where p.owner = ";
-		String sqlEnd = " limit 2";
+		String sqlNext = " limit 2)";
 		Integer headListSize = headLists.size();
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < headListSize; i++) {
-			SellerJoinHeadVO sjhVO = headLists.get(i);
-			sb.append(sqlPre).append(sjhVO.getChargePst()).append(sqlMid).append(sjhVO.getUserPhone()).append(sqlEnd);
+			SellerJoinVO sjhVO = headLists.get(i);
+			sb.append(sqlPre).append(sjhVO.getChargePst()).append(sqlMid).append(sjhVO.getUserPhone()).append(sqlNext);
 			if(i != headListSize -1){
 				sb.append(" union ");
 			}
 		}
 		List<SellerJoinProductVO> productLists = dao.getSellerJoinProductVO(sb.toString());
-		List<Map<String, Object>> resultVO = new ArrayList<Map<String,Object>>();
-		for (SellerJoinHeadVO headList : headLists) {
-			Map<String, Object> resultMap = new HashMap<String, Object>();
+		for (SellerJoinVO headList : headLists) {
 			List<SellerJoinProductVO> sjpList= new ArrayList<SellerJoinProductVO>();
 			String phoneHead = headList.getUserPhone();
 			for (SellerJoinProductVO productVO : productLists) {
@@ -70,10 +69,9 @@ public class AgentSellerService {
 					sjpList.add(productVO);
 				}
 			}
-			resultMap.put("headList", headList);
-			resultMap.put("productList", sjpList);
-			resultVO.add(resultMap);
+			headList.setLists(sjpList);
 		}
-		return resultVO;
+		PageInfo<SellerJoinVO> page = new PageInfo<>(headLists);
+		return page;
 	}
 }

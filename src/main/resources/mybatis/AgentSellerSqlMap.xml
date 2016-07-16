@@ -52,19 +52,19 @@
 		<if test="sellerPhone != null and sellerPhone !=''" > and seller_phone = #{sellerPhone} </if>
 	</update>
 	
-	<select id="getSellerJoinHeadList"  parameterType="String" resultType="com.simple.model.SellerJoinHeadVO">
+	<select id="getSellerJoinList"  parameterType="String" resultType="com.simple.model.SellerJoinVO">
 		SELECT u.*, IFNULL(a.charge_percent,0) chargePst, IF(a.seller_phone = #{userPhone},1,0) isJoin
 		FROM 
-			(SELECT u.user_phone, u.wechat_no, u.category, (SELECT COUNT(1) FROM product WHERE owner = u.user_phone AND product.product_status = 2) countSelling
+			(SELECT u.user_phone userPhone, u.wechat_no wechatNo, u.category, (SELECT COUNT(1) FROM product WHERE owner = u.user_phone AND product.product_status = 2) countSelling
 			   FROM user u) u
 		LEFT JOIN
 			agent_seller a 
-		ON u.user_phone = a.agent_phone
+		ON u.userPhone = a.agent_phone
 		ORDER BY isJoin DESC
 	</select>
 	
 	<select id="getSellerJoinProductList" parameterType="java.lang.String" resultType="com.simple.model.SellerJoinProductVO">
-		#{sql}
+		select a.* from ( ${_parameter} ) a
 	</select>
 	
 </mapper>

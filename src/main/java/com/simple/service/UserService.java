@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.simple.dao.OrderDao;
 import com.simple.dao.UserDao;
 import com.simple.model.SellerListVO;
@@ -46,7 +48,10 @@ public class UserService {
 		return vo;
 	}
 	
-	public List<SellerListVO> toSellerMainList(Map<String, Object> params) {
-		return orderDao.getSellerList(params);
+	public PageInfo<SellerListVO> toSellerMainList(String userPhone, Integer pageIndex, Integer PageSize) {
+		PageHelper.startPage(pageIndex, PageSize);
+		List<SellerListVO> sellerList = orderDao.getSellerList(userPhone);
+		PageInfo<SellerListVO> page = new PageInfo<SellerListVO>(sellerList);
+		return page;
 	}
 }

@@ -1,8 +1,9 @@
 package com.simple.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SellerJoinHeadVO implements java.io.Serializable{
+public class SellerJoinVO implements java.io.Serializable{
 	
 	private static final long serialVersionUID = -5721772385851062618L;
 	
@@ -12,6 +13,8 @@ public class SellerJoinHeadVO implements java.io.Serializable{
 	private Integer countSelling;	//在售商品总数
 	private Double chargePst;		//店铺提点
 	private Integer isJoin;			//是否加入代销 1:加入 0：未加入
+	
+	private List<SellerJoinProductVO> lists = new ArrayList<SellerJoinProductVO>();
 	
 	public String getUserPhone() {
 		return userPhone;
@@ -48,5 +51,11 @@ public class SellerJoinHeadVO implements java.io.Serializable{
 	}
 	public void setIsJoin(Integer isJoin) {
 		this.isJoin = isJoin;
+	}
+	public List<SellerJoinProductVO> getLists() {
+		return lists;
+	}
+	public void setLists(List<SellerJoinProductVO> lists) {
+		this.lists = lists;
 	}
 }
