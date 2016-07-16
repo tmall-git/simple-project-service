@@ -1,5 +1,6 @@
 package com.simple.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,12 +42,13 @@ public class UserService {
 		return dao.updateObject("user.modify",user);
 	}
 
-	public SellerMainVO toSellerMain(User user) {
+	public Map<String, Object> toSellerMain(User user) {
 		/*SELECT SUM(o.total_price) totalPrice, SUM(o.total_charge) totalCharge, 
 			COUNT(DISTINCT owner) ownerCount, SUM(IF(o.order_status = 1 OR o.order_status = 2,1,0)) trading, 
 			SUM(IF(o.reject_status = 1,1,0)) rejectCount
 		FROM tmall_order o
 		WHERE order.seller = #{userPhone}*/
+		Map<String, Object> mainVO = new HashMap<String, Object>();
 		SellerMainVO vo = new SellerMainVO();
 		// 头部
 		Map<String, Object> headMap = orderDao.getTotalSellerAmount(user);
@@ -60,7 +62,8 @@ public class UserService {
 		vo.setOwnerCount(Integer.valueOf(headMap.get("ownerCount").toString()));
 		// 店铺列表
 		List<SellerListVO> sellerListVO = orderDao.getSellerList(user);
-		vo.setSellerList(sellerListVO);
-		return vo;
+		mainVO.put("main", vo);
+		mainVO.put("lists", sellerListVO);
+		return mainVO;
 	}
 }

@@ -10,6 +10,7 @@ import com.simple.common.mybatis.annotation.DatabaseTemplate;
 import com.simple.common.mybatis.dao.BaseIbatisDao;
 import com.simple.model.Order;
 import com.simple.model.SellerListVO;
+import com.simple.model.SellerMainVO;
 import com.simple.model.User;
 
 @Repository

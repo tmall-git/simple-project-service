@@ -1,7 +1,9 @@
 package com.simple.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import com.simple.dao.AgentSellerDao;
 import com.simple.model.AgentSeller;
 import com.simple.model.SellerJoinHeadVO;
 import com.simple.model.SellerJoinProductVO;
+
 
 @Service
 public class AgentSellerService {
@@ -41,7 +44,7 @@ public class AgentSellerService {
 		dao.updatePercent(agent, seller, percent);
 	}
 	
-	public List<SellerJoinHeadVO> getSellerJoinList(String userPhone){
+	public List<Map<String, Object>> getSellerJoinList(String userPhone){
 		List<SellerJoinHeadVO> headLists = dao.getSellerJoinHeadList(userPhone);
 		String sqlPre = "select p.owner,p.name,p.price,ROUND(p.price*";
 		String sqlMid = " ,2) chargePrice, p.thumbnail from product p where p.owner = ";
@@ -56,7 +59,9 @@ public class AgentSellerService {
 			}
 		}
 		List<SellerJoinProductVO> productLists = dao.getSellerJoinProductVO(sb.toString());
+		List<Map<String, Object>> resultVO = new ArrayList<Map<String,Object>>();
 		for (SellerJoinHeadVO headList : headLists) {
+			Map<String, Object> resultMap = new HashMap<String, Object>();
 			List<SellerJoinProductVO> sjpList= new ArrayList<SellerJoinProductVO>();
 			String phoneHead = headList.getUserPhone();
 			for (SellerJoinProductVO productVO : productLists) {
@@ -65,8 +70,10 @@ public class AgentSellerService {
 					sjpList.add(productVO);
 				}
 			}
-			headList.setLists(sjpList);
+			resultMap.put("headList", headList);
+			resultMap.put("productList", sjpList);
+			resultVO.add(resultMap);
 		}
-		return headLists;
+		return resultVO;
 	}
 }

@@ -33,13 +33,6 @@
 		<result column="total_charge" property="total_charge" jdbcType="DOUBLE"/>
 	</resultMap>
 	
-	<resultMap type="com.simple.model.SellerListVO" id="sellerListVO">
-		<result column="wechatName" property="wechatName" jdbcType="VARCHAR"/>
-		<result column="sellerAmount" property="sellerAmount" jdbcType="VARCHAR"/>
-		<result column="dealCount" property="dealCount" jdbcType="VARCHAR"/>
-		<result column="productCount" property="productCount" jdbcType="VARCHAR"/>
-	</resultMap>
-
  	<sql id="order_Column_List" >
 		id,order_no,user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,order_status,
 		expressage,expressage_name,expressage_no,expressage_time,change_status,change_time,change_remark,reject_status,
@@ -136,14 +129,16 @@
 		SELECT SUM(o.total_price) totalPrice, SUM(o.total_charge) totalCharge,count(distinct owner) ownerCount,
 		SUM(if(o.order_status = 1 or o.order_status = 2,1,0)) trading, SUM(if(o.reject_status = 1,1,0)) rejectCount
 		FROM tmall_order o 
-		WHERE order.seller = #{userPhone}
+		WHERE o.seller = #{userPhone}
 	</select>
 	
-	<select id="getSellerList" parameterType="com.simple.model.User" resultMap="sellerListVO">
+	<select id="getSellerList" parameterType="com.simple.model.User" resultType="com.simple.model.SellerListVO">
 		SELECT u.wechat_no wechatName, SUM(o.total_charge) sellerAmount, 
 			SUM(IF(o.order_status = 3,1,0)) dealCount, SUM(DISTINCT o.product_id) productCount
-		FROM USER u, tmall_order o
-		WHERE u.user_phone = o.user_phone AND order.seller = #{userPhone}
+		FROM user u, tmall_order o, agent_seller a
+		WHERE u.user_phone = o.seller
+		AND a.seller_phone = o.seller
+		AND a.seller_phone = #{userPhone}
 		GROUP BY o.owner
 	</select>
 	

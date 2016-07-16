@@ -17,9 +17,6 @@ public class SellerMainVO implements java.io.Serializable{
 	private Integer returningOrderCount;	//退货中订单
 	private Integer ownerCount;				//代销店铺数
 	
-	//bottom
-	private List<SellerListVO> sellerList;
-
 	public Double getTotalSellAmount() {
 		return totalSellAmount;
 	}
@@ -62,12 +59,4 @@ public class SellerMainVO implements java.io.Serializable{
 	public void setOwnerCount(Integer ownerCount) {
 		this.ownerCount = ownerCount;
 	}
-	public List<SellerListVO> getSellerList() {
-		return sellerList;
-	}
-	public void setSellerList(List<SellerListVO> sellerList) {
-		this.sellerList = sellerList;
-	}
-	
-	
 }

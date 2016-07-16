@@ -13,8 +13,6 @@ public class SellerJoinHeadVO implements java.io.Serializable{
 	private Double chargePst;		//店铺提点
 	private Integer isJoin;			//是否加入代销 1:加入 0：未加入
 	
-	List<SellerJoinProductVO> lists;
-	
 	public String getUserPhone() {
 		return userPhone;
 	}
@@ -51,11 +49,4 @@ public class SellerJoinHeadVO implements java.io.Serializable{
 	public void setIsJoin(Integer isJoin) {
 		this.isJoin = isJoin;
 	}
-	public List<SellerJoinProductVO> getLists() {
-		return lists;
-	}
-	public void setLists(List<SellerJoinProductVO> lists) {
-		this.lists = lists;
-	}
-	
 }
