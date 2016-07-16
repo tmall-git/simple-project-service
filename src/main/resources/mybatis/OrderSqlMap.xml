@@ -125,21 +125,21 @@
 		WHERE id = #{id}
 	</update>
 	
-	<select id="getTotalSellerAmount" parameterType="com.simple.model.User" resultType="java.util.HashMap">
+	<select id="getTotalSellerAmount" parameterType="com.simple.model.User" resultType="com.simple.model.SellerMainVO">
 		SELECT SUM(o.total_price) totalPrice, SUM(o.total_charge) totalCharge,count(distinct owner) ownerCount,
 		SUM(if(o.order_status = 1 or o.order_status = 2,1,0)) trading, SUM(if(o.reject_status = 1,1,0)) rejectCount
 		FROM tmall_order o 
 		WHERE o.seller = #{userPhone}
 	</select>
 	
-	<select id="getSellerList" parameterType="com.simple.model.User" resultType="com.simple.model.SellerListVO">
-		SELECT u.wechat_no wechatName, SUM(o.total_charge) sellerAmount, 
-			SUM(IF(o.order_status = 3,1,0)) dealCount, SUM(DISTINCT o.product_id) productCount
-		FROM user u, tmall_order o, agent_seller a
-		WHERE u.user_phone = o.seller
-		AND a.seller_phone = o.seller
-		AND a.seller_phone = #{userPhone}
-		GROUP BY o.owner
+	<select id="getSellerList" parameterType="java.util.HashMap" resultType="com.simple.model.SellerListVO">
+		SELECT u.user_phone userPhone, u.wechat_no wechatName, SUM(o.total_charge) sellerAmount, 
+			SUM(IF(o.order_status = 3,1,0)) dealCount, COUNT(o.id) productCount
+		FROM tmall_order o LEFT JOIN USER u 
+		ON o.user_phone = u.user_phone
+		WHERE o.seller = #{userPhone}
+		GROUP BY u.id
+		LIMIT #{pageIndex},#{pageSize}
 	</select>
 	
 </mapper>

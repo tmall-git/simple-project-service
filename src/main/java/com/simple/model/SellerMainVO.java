@@ -1,33 +1,30 @@
 package com.simple.model;
 
-import java.util.List;
-
 public class SellerMainVO implements java.io.Serializable{
 	
 	private static final long serialVersionUID = -5010299911543691128L;
 	
 	// head
-	private Double totalSellAmount; 		//总销售额
-	private Double totalChargeAmount; 		//总提成额
+	private Double totalPrice; 		//总销售额
+	private Double totalCharge; 		//总提成额
 	private Double balance;					//余额
 	private Double withdrawAmount;			//可提现额度
 	
 	//middle
-	private Integer tradingOrderCount;		//交易中订单
-	private Integer returningOrderCount;	//退货中订单
-	private Integer ownerCount;				//代销店铺数
-	
-	public Double getTotalSellAmount() {
-		return totalSellAmount;
+	private Integer trading;		//交易中订单
+	private Integer rejectCount;	//退货中订单
+	private Integer ownerCount;		//代销店铺数
+	public Double getTotalPrice() {
+		return totalPrice;
 	}
-	public void setTotalSellAmount(Double totalSellAmount) {
-		this.totalSellAmount = totalSellAmount;
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
-	public Double getTotalChargeAmount() {
-		return totalChargeAmount;
+	public Double getTotalCharge() {
+		return totalCharge;
 	}
-	public void setTotalChargeAmount(Double totalChargeAmount) {
-		this.totalChargeAmount = totalChargeAmount;
+	public void setTotalCharge(Double totalCharge) {
+		this.totalCharge = totalCharge;
 	}
 	public Double getBalance() {
 		return balance;
@@ -41,17 +38,17 @@ public class SellerMainVO implements java.io.Serializable{
 	public void setWithdrawAmount(Double withdrawAmount) {
 		this.withdrawAmount = withdrawAmount;
 	}
-	public Integer getTradingOrderCount() {
-		return tradingOrderCount;
+	public Integer getTrading() {
+		return trading;
 	}
-	public void setTradingOrderCount(Integer tradingOrderCount) {
-		this.tradingOrderCount = tradingOrderCount;
+	public void setTrading(Integer trading) {
+		this.trading = trading;
 	}
-	public Integer getReturningOrderCount() {
-		return returningOrderCount;
+	public Integer getRejectCount() {
+		return rejectCount;
 	}
-	public void setReturningOrderCount(Integer returningOrderCount) {
-		this.returningOrderCount = returningOrderCount;
+	public void setRejectCount(Integer rejectCount) {
+		this.rejectCount = rejectCount;
 	}
 	public Integer getOwnerCount() {
 		return ownerCount;

@@ -75,12 +75,12 @@ public class OrderDao extends BaseIbatisDao{
 		this.sqlSession.update("order.updateExpressage",order);
 	}
 
-	public Map<String, Object> getTotalSellerAmount(User user) {
+	public SellerMainVO getTotalSellerAmount(User user) {
 		return this.sqlSession.selectOne("order.getTotalSellerAmount",user);
 	}
 	
-	public List<SellerListVO> getSellerList(User user) {
-		return this.sqlSession.selectList("order.getSellerList",user);
+	public List<SellerListVO> getSellerList(Map<String, Object> params) {
+		return this.sqlSession.selectList("order.getSellerList",params);
 	}
 
 }
