@@ -24,13 +24,23 @@ public class ProductService {
 		return productDao.getImage(productId);
 	}
 	
-	
-	
 	public PageResult query(String name,List<String> owners,int productStatus ,int pageIndex,int pageSize){
-		List<Product> products = productDao.getByOwners(owners, name,productStatus, pageIndex, pageSize);
-		int total = productDao.getCountByOwners(owners, name, productStatus);
+		List<Product> products = queryList(name, owners, productStatus, pageIndex, pageSize);
+		int total = queryCount(name, owners, productStatus);
 		PageResult p = new PageResult(total, pageSize, pageIndex, products);
 		return p;
+	}
+	
+	public List<Product> queryList(String name,List<String> owners,int productStatus ,int pageIndex,int pageSize) {
+		return productDao.getByOwners(owners, name,productStatus, pageIndex, pageSize);
+	}
+	
+	public int queryCount(String name,List<String> owners,int productStatus) {
+		return productDao.getCountByOwners(owners, name, productStatus);
+	}
+	
+	public List<String> queryProductOwners(int pageIndex,int pageSize) {
+		return productDao.queryProductOwners(pageIndex,pageSize);
 	}
 
 	public void insert(Product product,String images) {

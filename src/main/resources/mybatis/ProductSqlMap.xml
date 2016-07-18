@@ -34,7 +34,10 @@
   		from product where id = #{id}
   	</select>
 
-
+	<select id="queryOwners" resultType="String">
+  		select distinct owner from product limit #{begin}, #{end}
+  	</select>
+  	
  	<select id="queryByOwner" resultMap="productEntity">
   		select
   		<include refid="product_Column_List"></include>

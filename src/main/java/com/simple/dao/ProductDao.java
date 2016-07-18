@@ -74,5 +74,15 @@ public class ProductDao extends BaseIbatisDao{
 	public int queryNoStockCount(String owner) {
 		return this.sqlSession.selectOne("product.queryNoStock",owner);
 	}
+	
+	public List<String> queryProductOwners(int pageIndex,int pageSize) {
+		if (pageIndex <=0) {
+			pageIndex = 1;
+		}
+		Map param = new HashMap();
+		param.put("begin", (pageIndex-1)*pageSize);
+		param.put("end", pageSize);
+		return this.sqlSession.selectList("product.queryOwners",param);
+	}
 
 }

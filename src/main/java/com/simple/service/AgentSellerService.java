@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 //import com.github.pagehelper.PageHelper;
 //import com.github.pagehelper.PageInfo;
 import com.simple.dao.AgentSellerDao;
+import com.simple.dao.ChargeDao;
 import com.simple.model.AgentSeller;
 //import com.simple.model.SellerJoinProductVO;
 //import com.simple.model.SellerJoinVO;
+import com.simple.model.Charge;
 
 
 @Service
@@ -18,6 +20,8 @@ public class AgentSellerService {
 	
 	@Autowired
 	private AgentSellerDao dao;
+	@Autowired
+	private ChargeDao chargeDao;
 	
 	public List<AgentSeller> queryByAgent(String phone){
 		return dao.queryByAgent(phone);
@@ -46,6 +50,18 @@ public class AgentSellerService {
 	public void updatePercent(String agent,String seller,double percent) {
 		dao.updatePercent(agent, seller, percent);
 	}
+	
+	public double queryCharge() {
+		Charge charge = chargeDao.getCharge();
+		if ( null ==charge ) {
+			return 0d;
+		}
+		if ( null == charge.getCharge()) {
+			return 0d;
+		}
+		return charge.getCharge();
+	}
+	
 	
 //	public PageInfo<SellerJoinVO> getSellerJoinList(String userPhone, Integer pageIndex, Integer pageSize){
 //		PageHelper.startPage(pageIndex, pageSize);
