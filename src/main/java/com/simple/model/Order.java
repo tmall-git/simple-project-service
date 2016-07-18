@@ -32,7 +32,8 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	private Date pay_time;
 	private String product_image;
 	private double total_price;
-	private double total_charge;
+	private double agent_total_charge;
+	private double seller_total_charge;
 	
 	
 	
@@ -192,10 +193,16 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	public void setTotal_price(double total_price) {
 		this.total_price = total_price;
 	}
-	public double getTotal_charge() {
-		return total_charge;
+	public double getAgent_total_charge() {
+		return agent_total_charge;
 	}
-	public void setTotal_charge(double total_charge) {
-		this.total_charge = total_charge;
-	} 
+	public void setAgent_total_charge(double agent_total_charge) {
+		this.agent_total_charge = agent_total_charge;
+	}
+	public double getSeller_total_charge() {
+		return seller_total_charge;
+	}
+	public void setSeller_total_charge(double seller_total_charge) {
+		this.seller_total_charge = seller_total_charge;
+	}
 }

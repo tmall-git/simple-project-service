@@ -24,8 +24,23 @@ public class AgentSellerDao extends BaseIbatisDao{
 		return this.sqlSession.selectList("agentSeller.queryBySeller",phone);
 	}
 	
-	public int queryCountByAgent(String phone) {
-		return this.sqlSession.selectOne("agentSeller.queryCountByAgent",phone);
+	public int queryCountByPhone(String owner,String seller) {
+		Map param = new HashMap();
+		param.put("owner", owner);
+		param.put("seller", seller);
+		return this.sqlSession.selectOne("agentSeller.queryCountByPhone",param);
+	}
+	
+	public List<AgentSeller> queryListByPhone(String owner,String seller,int pageIndex,int pageSize) {
+		Map param = new HashMap();
+		param.put("owner", owner);
+		param.put("seller", seller);
+		if ( pageIndex <= 0 ) {
+			pageIndex = 1;
+		}
+		param.put("begin", (pageIndex-1)*pageSize);
+		param.put("end", pageSize);
+		return this.sqlSession.selectList("agentSeller.queryByPhone",param);
 	}
 	
 	public void add(AgentSeller agentSeller) {

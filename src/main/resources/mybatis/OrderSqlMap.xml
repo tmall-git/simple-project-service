@@ -30,13 +30,14 @@
 		<result column="pay_time" property="pay_time" jdbcType="DATE"/>
 		<result column="product_image" property="product_image" jdbcType="VARCHAR"/>
 		<result column="total_price" property="total_price" jdbcType="DOUBLE"/>
-		<result column="total_charge" property="total_charge" jdbcType="DOUBLE"/>
+		<result column="agent_total_charge" property="agent_total_charge" jdbcType="DOUBLE"/>
+		<result column="seller_total_charge" property="seller_total_charge" jdbcType="DOUBLE"/>
 	</resultMap>
 	
  	<sql id="order_Column_List" >
 		id,order_no,user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,order_status,
 		expressage,expressage_name,expressage_no,expressage_time,change_status,change_time,change_remark,reject_status,
-		reject_time,reject_remark,pay_status,pay_time,product_image,total_price,total_charge
+		reject_time,reject_remark,pay_status,pay_time,product_image,total_price,agent_total_charge,seller_total_charge
   	</sql>
 
 	<select id="queryByUserPhone" resultMap="orderEntity" parameterType="java.util.Map">
@@ -59,19 +60,44 @@
   		from tmall_order where id=#{id}
 	</select>
 	
-	<select id="queryTotalPrice" resultType="Double" parameterType="String">
+	<select id="queryAgentTotalPrice" resultType="Double" parameterType="String">
   		select sum(total_price) 
   		from tmall_order where owner = #{userPhone} and order_status != 4
   	</select>
   	
-  	<select id="queryTotalCharge" resultType="Integer" parameterType="String">
-  		select sum(total_price) 
+  	<select id="queryAgentTotalCharge" resultType="Double" parameterType="String">
+  		select sum(agent_total_charge) 
   		from tmall_order where owner = #{userPhone} and order_status != 4 and pay_status = 1
+  	</select>
+  	
+  	<select id="querySellerTotalPrice" resultType="Double" parameterType="java.util.Map">
+  		select sum(total_price) 
+  		from tmall_order where seller = #{seller} and order_status != 4 
+  		<if test="owner != null and owner != ''">and owner = #{owner}</if>
+  	</select>
+  	
+  	<select id="querySellerTotalCharge" resultType="Double" parameterType="java.util.Map">
+  		select sum(seller_total_charge) 
+  		from tmall_order where seller = #{seller} and order_status != 4 and pay_status = 1
+  		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   	</select>
   	
   	<select id="queryCountByStatus" resultType="Integer" parameterType="com.simple.model.Order">
   		select count(1)  
-  		from tmall_order where owner = #{userPhone} 
+  		from tmall_order where 1=1
+  		<if test="owner != null and owner != ''">and owner = #{owner}</if>
+  		<if test="seller != null and seller != ''">and seller = #{seller}</if>
+  		<if test="order_status > 0 " > and order_status = #{order_status}</if>
+  		<if test="change_status >= 0 " > and change_status = #{change_status}</if>
+  		<if test="reject_status >= 0 " > and reject_status = #{reject_status}</if>
+  		<if test="pay_status >= 0 " > and pay_status = #{pay_status}</if>
+  	</select>
+  	
+  	<select id="queryProductCount" resultType="Integer" parameterType="com.simple.model.Order">
+  		select count(product_id)  
+  		from tmall_order where 1=1
+  		<if test="owner != null and owner != ''">and owner = #{owner}</if>
+  		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="order_status > 0 " > and order_status = #{order_status}</if>
   		<if test="change_status >= 0 " > and change_status = #{change_status}</if>
   		<if test="reject_status >= 0 " > and reject_status = #{reject_status}</if>

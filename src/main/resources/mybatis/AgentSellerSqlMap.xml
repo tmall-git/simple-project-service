@@ -7,6 +7,8 @@
 		<result column="agent_phone" property="agentPhone" jdbcType="VARCHAR" />
 		<result column="seller_phone" property="sellerPhone" jdbcType="VARCHAR" />
 		<result column="charge_percent" property="chargePercent" jdbcType="VARCHAR" />
+		<result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+		<result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
 	</resultMap>
 	
 <!-- 	<resultMap type="com.simple.model.SellerJoinHeadVO" id="SellerJoinHeadVO"> -->
@@ -19,7 +21,7 @@
 <!-- 	</resultMap> -->
 
 	<sql id="user_Column_List" >
-		id, agent_phone,seller_phone,charge_percent
+		id, agent_phone,seller_phone,charge_percent,agent_name,seller_name
 	</sql>
 
 	<select id="queryByAgent" parameterType="String" resultMap="BaseResultMap">
@@ -34,8 +36,19 @@
 		FROM agent_seller where seller_phone = #{userPhone}
 	</select>
 	
-	<select id="queryCountByAgent" parameterType="String" resultType="Integer">
-		SELECT count(1) FROM agent_seller where agent_phone = #{userPhone}
+	<select id="queryCountByPhone" parameterType="java.util.Map" resultType="Integer">
+		SELECT count(1) FROM agent_seller where 1=1
+		<if test="owner != null and owner != ''">and agent_phone = #{owner}</if>
+		<if test="seller != null and seller != ''">and seller_phone = #{seller}</if>
+	</select>
+	
+	<select id="queryByPhone" parameterType="java.util.Map" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="user_Column_List"></include>
+		FROM agent_seller where 1=1
+		<if test="owner != null and owner != ''">and agent_phone = #{owner}</if>
+		<if test="seller != null and seller != ''">and seller_phone = #{seller}</if>
+		limit #{begin},#{end}
 	</select>
 
 	<insert id="insert" parameterType="com.simple.model.AgentSeller">

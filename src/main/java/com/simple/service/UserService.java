@@ -1,16 +1,16 @@
 package com.simple.service;
 
-import java.util.List;
+//import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+//import com.github.pagehelper.PageHelper;
+//import com.github.pagehelper.PageInfo;
 import com.simple.dao.OrderDao;
 import com.simple.dao.UserDao;
-import com.simple.model.SellerListVO;
+//import com.simple.model.SellerListVO;
 import com.simple.model.SellerMainVO;
 import com.simple.model.User;
 
@@ -48,10 +48,10 @@ public class UserService {
 		return vo;
 	}
 	
-	public PageInfo<SellerListVO> toSellerMainList(String userPhone, Integer pageIndex, Integer PageSize) {
-		PageHelper.startPage(pageIndex, PageSize);
-		List<SellerListVO> sellerList = orderDao.getSellerList(userPhone);
-		PageInfo<SellerListVO> page = new PageInfo<SellerListVO>(sellerList);
-		return page;
-	}
+//	public PageInfo<SellerListVO> toSellerMainList(String userPhone, Integer pageIndex, Integer PageSize) {
+//		PageHelper.startPage(pageIndex, PageSize);
+//		List<SellerListVO> sellerList = orderDao.getSellerList(userPhone);
+//		PageInfo<SellerListVO> page = new PageInfo<SellerListVO>(sellerList);
+//		return page;
+//	}
 }

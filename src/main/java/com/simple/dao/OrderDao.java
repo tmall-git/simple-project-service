@@ -29,21 +29,47 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectOne("order.getById",id);
 	}
 	
-	public double queryTotalPrice(String owner) {
-		return this.sqlSession.selectOne("order.queryTotalPrice",owner);
+	public Double queryAgentTotalPrice(String owner) {
+		return this.sqlSession.selectOne("order.queryAgentTotalPrice",owner);
 	}
 	
-	public double queryTotalCharge(String owner) {
-		return this.sqlSession.selectOne("order.queryTotalCharge",owner);
+	public Double queryAgentTotalCharge(String owner) {
+		return this.sqlSession.selectOne("order.queryAgentTotalCharge",owner);
 	}
 	
-	public int queryCountByStatus(String owner,int orderStatus,int changeStatus,int rejectStatus,int payStatus) {
+	public Double querySellerTotalPrice(String owner,String seller) {
+		Map param = new HashMap();
+		param.put("owner", owner);
+		param.put("seller", seller);
+		return this.sqlSession.selectOne("order.querySellerTotalPrice",param);
+	}
+	
+	public Double querySellerTotalCharge(String owner,String seller) {
+		Map param = new HashMap();
+		param.put("owner", owner);
+		param.put("seller", seller);
+		return this.sqlSession.selectOne("order.querySellerTotalCharge",param);
+	}
+	
+	public Integer queryCountByStatus(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("order_status", orderStatus);
 		param.put("change_status", changeStatus);
 		param.put("reject_status", rejectStatus);
 		param.put("pay_status", payStatus);
-		param.put("userPhone", owner);
+		param.put("owner", owner);
+		param.put("seller", seller);
+		return this.sqlSession.selectOne("order.queryCountByStatus",param);
+	}
+	
+	public Integer queryProductCount(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("order_status", orderStatus);
+		param.put("change_status", changeStatus);
+		param.put("reject_status", rejectStatus);
+		param.put("pay_status", payStatus);
+		param.put("owner", owner);
+		param.put("seller", seller);
 		return this.sqlSession.selectOne("order.queryCountByStatus",param);
 	}
 	

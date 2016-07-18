@@ -1,8 +1,8 @@
 package com.simple.test;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -13,9 +13,9 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.simple.model.SellerListVO;
+//import com.github.pagehelper.PageHelper;
+//import com.github.pagehelper.PageInfo;
+//import com.simple.model.SellerListVO;
 import com.simple.model.SellerMainVO;
 import com.simple.model.User;
 import com.simple.service.UserService;
@@ -43,9 +43,9 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
 	public void toSellerMainList(){
 		User user = new User();
 		user.setUserPhone("18712301230");
-		PageInfo<SellerListVO> page = service.toSellerMainList(user.getUserPhone(), 1, 1);
-		System.out.println(page.getTotal());
-		System.out.println(JSON.toJSONString(page.getList()));
+//		PageInfo<SellerListVO> page = service.toSellerMainList(user.getUserPhone(), 1, 1);
+//		System.out.println(page.getTotal());
+//		System.out.println(JSON.toJSONString(page.getList()));
 	}
 	
 	
