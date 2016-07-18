@@ -11,9 +11,9 @@
 <!--            destroy-method="close" -->
     <bean id="ds_all" class="org.apache.commons.dbcp.BasicDataSource" >
         <property name="driverClassName" value="${all.driver}" />
-        <property name="url" value="jdbc:mysql://202.165.179.86:3306/tmall?useUnicode=true&amp;characterEncoding=UTF-8" />
-        <property name="username" value="root" />
-        <property name="password" value="root@wp" />
+        <property name="url" value="${all.jdbc.url}" />
+        <property name="username" value="${all.username}" />
+        <property name="password" value="${all.password}" />
         <property name="initialSize" value="${all.initialSize}"></property><!-- 初始化连接大小 -->  
         <property name="maxActive" value="${all.maxActive}"></property><!-- 连接池最大数量 -->    
         <property name="maxIdle" value="${all.maxIdle}"></property><!-- 连接池最大空闲 -->    

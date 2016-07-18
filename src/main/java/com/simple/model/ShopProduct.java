@@ -6,24 +6,31 @@ public class ShopProduct implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private String productName;
-	private double price;
-	private double charge;
+	private String price;
+	private String charge;
+	private String image;
 	public String getProductName() {
 		return productName;
 	}
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-	public double getPrice() {
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
-	public double getCharge() {
+	public String getCharge() {
 		return charge;
 	}
-	public void setCharge(double charge) {
+	public void setCharge(String charge) {
 		this.charge = charge;
 	}
 }

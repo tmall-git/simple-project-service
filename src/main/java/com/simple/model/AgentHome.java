@@ -6,14 +6,15 @@ public class AgentHome implements Serializable{
 
 	private static final long serialVersionUID = 6980691915784332851L;
 
-	public AgentHome(int daifahuo, int tuihuozhong, int sellproduct,
-			int nostock, int totalSellers, double chargepercent) {
-		this.daifahuo = daifahuo;
-		this.tuihuozhong = tuihuozhong;
-		this.sellproduct = sellproduct;
-		this.nostock = nostock;
-		this.totalSellers = totalSellers;
-		this.chargepercent = chargepercent;
+	public AgentHome(Integer daifahuo, Integer tuihuozhong, Integer sellproduct,
+			Integer nostock, Integer totalSellers, Double chargepercent,String zhuying) {
+		this.daifahuo = (daifahuo==null)?0:daifahuo;
+		this.tuihuozhong = (tuihuozhong==null)?0:tuihuozhong;
+		this.sellproduct = (sellproduct==null)?0:sellproduct;
+		this.nostock = (nostock==null)?0:nostock;
+		this.totalSellers = (totalSellers==null)?0:totalSellers;
+		this.chargepercent = (chargepercent==null)?0d:chargepercent;
+		this.zhuying = zhuying;
 	}
 	private int daifahuo;
 	private int tuihuozhong;
@@ -21,6 +22,7 @@ public class AgentHome implements Serializable{
 	private int nostock;
 	private int totalSellers;
 	private double chargepercent;
+	private String zhuying;
 	public int getDaifahuo() {
 		return daifahuo;
 	}
@@ -57,5 +59,10 @@ public class AgentHome implements Serializable{
 	public void setChargepercent(double chargepercent) {
 		this.chargepercent = chargepercent;
 	}
-	
+	public String getZhuying() {
+		return zhuying;
+	}
+	public void setZhuying(String zhuying) {
+		this.zhuying = zhuying;
+	}
 }

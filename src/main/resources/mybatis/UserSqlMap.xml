@@ -48,13 +48,13 @@
 	<update id="modify" parameterType="com.simple.model.User">
 		UPDATE user SET 
 			user_name = #{userName},
-			user_nick = #{userNick}
+			user_nick = #{userNick},
 			user_tel = #{userTel},
 			password = #{password},
 			wechat_no = #{weChatNo},
 			ID_card = #{IDCard},
-			address = #{address}
-			balance = #{balance}
+			address = #{address},
+			balance = #{balance},
 			category = #{category}
 		WHERE user_phone = #{userPhone}
 	</update>

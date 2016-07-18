@@ -52,7 +52,8 @@
 	</select>
 
 	<insert id="insert" parameterType="com.simple.model.AgentSeller">
-		INSERT INTO agent_seller (agent_phone,seller_phone) VALUES (#{agentPhone},#{sellerPhone})
+		INSERT INTO agent_seller (agent_phone,seller_phone,agent_name,seller_name,charge_percent) 
+		VALUES (#{agentPhone},#{sellerPhone},#{agentName},#{sellerName},#{chargePercent})
 	</insert>	
 	
 	<delete id="delete" parameterType="com.simple.model.AgentSeller">
