@@ -44,6 +44,11 @@ public class AgentSellerDao extends BaseIbatisDao{
 		return this.sqlSession.selectList("agentSeller.queryByPhone",param);
 	}
 	
+	public Integer querySumWatchCount(String owner) {
+		return this.sqlSession.selectOne("agentSeller.querySumWatchCount",owner);
+	}
+	
+	
 	public void add(AgentSeller agentSeller) {
 		this.sqlSession.insert("agentSeller.insert",agentSeller);
 	}

@@ -38,6 +38,10 @@
 		FROM agent_seller where seller_phone = #{userPhone}
 	</select>
 	
+	<select id="querySumWatchCount" parameterType="String" resultType="Integer">
+		SELECT sum(watch_count) FROM agent_seller where  agent_phone = #{userPhone}
+	</select>
+	
 	<select id="queryCountByPhone" parameterType="java.util.Map" resultType="Integer">
 		SELECT count(1) FROM agent_seller where 1=1
 		<if test="owner != null and owner != ''">and agent_phone = #{owner}</if>

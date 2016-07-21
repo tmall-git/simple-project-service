@@ -42,6 +42,10 @@ public class AgentSellerService {
 		return dao.queryListByPhone(owner, seller,pageIndex,pageSize);
 	}
 	
+	public Integer querySumWatchCount(String owner) {
+		return dao.querySumWatchCount(owner);
+	}
+	
 	public void add(AgentSeller agentSeller) {
 		dao.add(agentSeller);
 	}

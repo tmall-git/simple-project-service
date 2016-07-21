@@ -116,16 +116,16 @@ public class OrderService {
 		return orderDao.queryAgentTotalCharge(owner);
 	}
 	
-	public Double querySellerTotalPrice(String owner,String seller) {
-		return orderDao.querySellerTotalPrice(owner,seller);
+	public Double querySellerTotalPrice(String owner,String seller,String begin,String end) {
+		return orderDao.querySellerTotalPrice(owner,seller,begin,end);
 	}
 	
 	public Double querySellerTotalCharge(String owner,String seller) {
 		return orderDao.querySellerTotalCharge(owner,seller);
 	}
 	
-	public Integer queryCountByStatus(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus) {
-		return orderDao.queryCountByStatus(owner,seller,orderStatus, changeStatus, rejectStatus, payStatus);
+	public Integer queryCountByStatus(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus,String begin,String end) {
+		return orderDao.queryCountByStatus(owner,seller,orderStatus, changeStatus, rejectStatus, payStatus,begin,end);
 	}
 	
 	public Integer queryProductCount(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus) {

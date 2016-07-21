@@ -37,10 +37,12 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectOne("order.queryAgentTotalCharge",owner);
 	}
 	
-	public Double querySellerTotalPrice(String owner,String seller) {
+	public Double querySellerTotalPrice(String owner,String seller,String begin,String end) {
 		Map param = new HashMap();
 		param.put("owner", owner);
 		param.put("seller", seller);
+		param.put("beginTime", begin);
+		param.put("endTime", end);
 		return this.sqlSession.selectOne("order.querySellerTotalPrice",param);
 	}
 	
@@ -51,7 +53,7 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectOne("order.querySellerTotalCharge",param);
 	}
 	
-	public Integer queryCountByStatus(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus) {
+	public Integer queryCountByStatus(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus,String begin,String end) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("order_status", orderStatus);
 		param.put("change_status", changeStatus);
@@ -59,6 +61,8 @@ public class OrderDao extends BaseIbatisDao{
 		param.put("pay_status", payStatus);
 		param.put("owner", owner);
 		param.put("seller", seller);
+		param.put("beginTime", begin);
+		param.put("endTime", end);
 		return this.sqlSession.selectOne("order.queryCountByStatus",param);
 	}
 	
