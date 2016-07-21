@@ -114,4 +114,10 @@ public class User extends AbstractBaseModel implements java.io.Serializable{
 	public void setChargePrecent(double chargePrecent) {
 		this.chargePrecent = chargePrecent;
 	}
+	public boolean isAllow() {
+		if (this.allowSell != 1) {
+			return false;
+		}
+		return true;
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.simple.common.mybatis.annotation.DatabaseTemplate;
 import com.simple.common.mybatis.dao.BaseIbatisDao;
+import com.simple.constant.Constant;
 import com.simple.model.AgentSeller;
 import com.simple.model.SellerJoinProductVO;
 import com.simple.model.SellerJoinVO;
@@ -57,6 +58,18 @@ public class AgentSellerDao extends BaseIbatisDao{
 		param.put("agentPhone", agent);
 		param.put("sellerPhone", seller);
 		this.sqlSession.update("agentSeller.updatePercent",param);
+	}
+	
+	public void updateAllow(String agent,String seller,boolean allow) {
+		Map param = new HashMap();
+		if (allow) {
+			param.put("allow", Constant.ALLOW_SELL);
+		}else {
+			param.put("allow", Constant.NOT_ALLOW_SELL);
+		}
+		param.put("agentPhone", agent);
+		param.put("sellerPhone", seller);
+		this.sqlSession.update("agentSeller.updateAllow",param);
 	}
 	
 	public List<SellerJoinVO> getSellerJoinHeadList(String userPhone){

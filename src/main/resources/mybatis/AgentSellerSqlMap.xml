@@ -10,6 +10,7 @@
 		<result column="agent_name" property="agentName" jdbcType="VARCHAR" />
 		<result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
 		<result column="allow_sell" property="allowSell" jdbcType="INTEGER" />
+		<result column="watch_count" property="watchCount" jdbcType="INTEGER" />
 	</resultMap>
 	
 <!-- 	<resultMap type="com.simple.model.SellerJoinHeadVO" id="SellerJoinHeadVO"> -->
@@ -22,7 +23,7 @@
 <!-- 	</resultMap> -->
 
 	<sql id="user_Column_List" >
-		id, agent_phone,seller_phone,charge_percent,agent_name,seller_name,allow_sell
+		id, agent_phone,seller_phone,charge_percent,agent_name,seller_name,allow_sell,watch_count
 	</sql>
 
 	<select id="queryByAgent" parameterType="String" resultMap="BaseResultMap">
@@ -63,6 +64,12 @@
 	
 	<update id="updatePercent" parameterType="java.util.Map">
 		update agent_seller set charge_percent = #{chargePercent} 
+		where agent_phone = #{agentPhone} 
+		<if test="sellerPhone != null and sellerPhone !=''" > and seller_phone = #{sellerPhone} </if>
+	</update>
+	
+	<update id="updateAllow" parameterType="java.util.Map">
+		update agent_seller set allow_sell = #{allow} 
 		where agent_phone = #{agentPhone} 
 		<if test="sellerPhone != null and sellerPhone !=''" > and seller_phone = #{sellerPhone} </if>
 	</update>

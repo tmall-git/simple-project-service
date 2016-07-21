@@ -10,6 +10,7 @@ public class AgentSeller extends AbstractBaseModel{
 	private String sellerName;
 	private double chargePercent;
 	private int allowSell;
+	private int watchCount;
 	public String getAgentPhone() {
 		return agentPhone;
 	}
@@ -45,5 +46,17 @@ public class AgentSeller extends AbstractBaseModel{
 	}
 	public void setAllowSell(int allowSell) {
 		this.allowSell = allowSell;
+	}
+	public int getWatchCount() {
+		return watchCount;
+	}
+	public void setWatchCount(int watchCount) {
+		this.watchCount = watchCount;
+	}
+	public boolean isAllow() {
+		if (this.allowSell != 1) {
+			return false;
+		}
+		return true;
 	}
 }

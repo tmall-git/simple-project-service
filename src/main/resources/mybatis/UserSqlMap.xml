@@ -62,4 +62,14 @@
 			charge_percent = #{chargePrecent}
 		WHERE user_phone = #{userPhone}
 	</update>
+	
+	<update id="updateAllow" parameterType="java.util.Map">
+		update user set allow_sell = #{allow} 
+		where user_phone = #{userPhone} 
+	</update>
+	
+	<update id="updatePercent" parameterType="java.util.Map">
+		update user set charge_percent = #{percent} 
+		where user_phone = #{userPhone} 
+	</update>
 </mapper>

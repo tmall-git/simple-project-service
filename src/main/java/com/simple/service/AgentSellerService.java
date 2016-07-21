@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 //import com.github.pagehelper.PageInfo;
 import com.simple.dao.AgentSellerDao;
 import com.simple.dao.ChargeDao;
+import com.simple.dao.UserDao;
 import com.simple.model.AgentSeller;
 //import com.simple.model.SellerJoinProductVO;
 //import com.simple.model.SellerJoinVO;
@@ -22,6 +23,8 @@ public class AgentSellerService {
 	private AgentSellerDao dao;
 	@Autowired
 	private ChargeDao chargeDao;
+	@Autowired
+	private UserDao userDao;
 	
 	public List<AgentSeller> queryByAgent(String phone){
 		return dao.queryByAgent(phone);
@@ -49,6 +52,22 @@ public class AgentSellerService {
 	
 	public void updatePercent(String agent,String seller,double percent) {
 		dao.updatePercent(agent, seller, percent);
+	}
+	
+	public void updatePercent(String owner,double percent) {
+		List<AgentSeller> ass = queryListByPhone(owner,null,1,10000);
+		if ( null != ass && ass.size() > 0 ) {
+			for (int i = 0 ; i < ass.size() ; i ++ ) {
+				AgentSeller as = ass.get(i);
+				updatePercent(as.getAgentPhone(),as.getSellerPhone(),percent);
+			}
+		}
+		userDao.updatePercent(owner, percent);
+	}
+	
+	public void updateAllow(String owner,String seller,boolean allow) {
+		dao.updateAllow(owner, seller, allow);
+		userDao.updateUserAllow(owner, allow);
 	}
 	
 	public double queryCharge() {
