@@ -16,11 +16,13 @@
 		<result column="salt" property="salt" jdbcType="VARCHAR" />
 		<result column="balance" property="balance" jdbcType="DOUBLE" />
 		<result column="category" property="category" jdbcType="VARCHAR" />
+		<result column="allow_sell" property="allowSell" jdbcType="INTEGER" />
+		<result column="charge_percent" property="chargePrecent" jdbcType="DOUBLE" />
 	</resultMap>
 
 	<sql id="user_Column_List" >
 		id, user_name,user_nick, user_phone, user_tel, password, wechat_no, 
-		ID_card, address, register_date, salt, balance, category
+		ID_card, address, register_date, salt, balance, category,allow_sell,charge_percent
 	</sql>
 
 	<select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -40,9 +42,9 @@
 
 	<insert id="createRegister" parameterType="com.simple.model.User">
 		INSERT INTO user (user_name,user_phone,user_nick,user_tel,password,
-			wechat_no,ID_card,address,register_date,salt,balance,category) 
+			wechat_no,ID_card,address,register_date,salt,balance,category,allow_sell,charge_percent) 
 		VALUES (#{userName},#{userPhone},#{userNick},#{userTel},#{password},
-			#{weChatNo},#{IDCard},#{address},#{registerDate},#{salt},#{balance},#{category})
+			#{weChatNo},#{IDCard},#{address},#{registerDate},#{salt},#{balance},#{category},#{allowSell},#{chargePrecent})
 	</insert>	
 	
 	<update id="modify" parameterType="com.simple.model.User">
@@ -55,7 +57,9 @@
 			ID_card = #{IDCard},
 			address = #{address},
 			balance = #{balance},
-			category = #{category}
+			category = #{category},
+			allow_sell = #{allowSell},
+			charge_percent = #{chargePrecent}
 		WHERE user_phone = #{userPhone}
 	</update>
 </mapper>

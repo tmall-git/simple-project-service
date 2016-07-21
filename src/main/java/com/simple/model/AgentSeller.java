@@ -9,6 +9,7 @@ public class AgentSeller extends AbstractBaseModel{
 	private String sellerPhone;
 	private String sellerName;
 	private double chargePercent;
+	private int allowSell;
 	public String getAgentPhone() {
 		return agentPhone;
 	}
@@ -38,5 +39,11 @@ public class AgentSeller extends AbstractBaseModel{
 	}
 	public void setSellerName(String sellerName) {
 		this.sellerName = sellerName;
+	}
+	public int getAllowSell() {
+		return allowSell;
+	}
+	public void setAllowSell(int allowSell) {
+		this.allowSell = allowSell;
 	}
 }

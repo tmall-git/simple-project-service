@@ -9,6 +9,7 @@
 		<result column="charge_percent" property="chargePercent" jdbcType="VARCHAR" />
 		<result column="agent_name" property="agentName" jdbcType="VARCHAR" />
 		<result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+		<result column="allow_sell" property="allowSell" jdbcType="INTEGER" />
 	</resultMap>
 	
 <!-- 	<resultMap type="com.simple.model.SellerJoinHeadVO" id="SellerJoinHeadVO"> -->
@@ -21,7 +22,7 @@
 <!-- 	</resultMap> -->
 
 	<sql id="user_Column_List" >
-		id, agent_phone,seller_phone,charge_percent,agent_name,seller_name
+		id, agent_phone,seller_phone,charge_percent,agent_name,seller_name,allow_sell
 	</sql>
 
 	<select id="queryByAgent" parameterType="String" resultMap="BaseResultMap">
