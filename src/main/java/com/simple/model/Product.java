@@ -13,7 +13,7 @@ public class Product extends AbstractBaseModel{
 	private String owner;
 	private String thumbnail;//缩略图，多张图
 	private String firstImg;
-	
+	private double charge;//提成
 	
 	public String getName() {
 		return name;
@@ -68,5 +68,11 @@ public class Product extends AbstractBaseModel{
 	}
 	public void setFirstImg(String firstImg) {
 		this.firstImg = firstImg;
+	}
+	public double getCharge() {
+		return charge;
+	}
+	public void setCharge(double charge) {
+		this.charge = charge;
 	}
 }

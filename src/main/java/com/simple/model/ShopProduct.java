@@ -10,6 +10,7 @@ public class ShopProduct implements Serializable{
 	private String charge;
 	private String image;
 	private int stock;
+	private int id;
 	public String getProductName() {
 		return productName;
 	}
@@ -39,5 +40,11 @@ public class ShopProduct implements Serializable{
 	}
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

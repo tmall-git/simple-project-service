@@ -16,8 +16,12 @@ public class ProductService {
 	@Autowired
 	private ProductDao productDao;
 	
-	public Product getById(int id){
-		return productDao.getById(id);
+	public Product getById(int id,boolean needFirstImage){
+		Product p = productDao.getById(id);
+		if (!needFirstImage) {
+			p.setFirstImg(null);
+		}
+		return p;
 	}
 	
 	public ProductImage getImage(int productId) {

@@ -44,7 +44,7 @@ public class UserDao extends BaseIbatisDao{
 		Map param = new HashMap();
 		param.put("userPhone", phone);
 		param.put("percent", percent);
-		this.sqlSession.update("user.updateAllow",param);
+		this.sqlSession.update("user.updatePercent",param);
 	}
 
 }
