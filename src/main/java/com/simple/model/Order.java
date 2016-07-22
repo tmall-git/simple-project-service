@@ -2,6 +2,8 @@ package com.simple.model;
 
 import java.util.Date;
 
+import com.simple.common.util.DateUtil;
+
 public class Order extends AbstractBaseModel implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 5784715568286725038L;
@@ -17,6 +19,7 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	private String owner;
 	private String seller;
 	private Date create_time;
+	private String showCreateTime;
 	private int order_status; 
 	private String expressage;
 	private String expressage_name;
@@ -102,6 +105,9 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setCreate_time(Date create_time) {
 		this.create_time = create_time;
+		if ( null != this.create_time) {
+			this.showCreateTime = DateUtil.date2AllString(this.create_time);
+		}
 	}
 	public int getOrder_status() {
 		return order_status;
@@ -204,5 +210,11 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setSeller_total_charge(double seller_total_charge) {
 		this.seller_total_charge = seller_total_charge;
+	}
+	public String getShowCreateTime() {
+		return showCreateTime;
+	}
+	public void setShowCreateTime(String showCreateTime) {
+		this.showCreateTime = showCreateTime;
 	}
 }

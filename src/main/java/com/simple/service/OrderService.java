@@ -91,12 +91,12 @@ public class OrderService {
 	}
 	
 	
-	public Double queryAgentTotalPrice(String owner) {
-		return orderDao.queryAgentTotalPrice(owner);
+	public Double queryAgentTotalPrice(String owner,String begin,String end) {
+		return orderDao.queryAgentTotalPrice(owner,begin,end);
 	}
 	
-	public Double queryAgentTotalCharge(String owner) {
-		return orderDao.queryAgentTotalCharge(owner);
+	public Double queryAgentTotalCharge(String owner,String begin,String end) {
+		return orderDao.queryAgentTotalCharge(owner,begin,end);
 	}
 	
 	public Double querySellerTotalPrice(String owner,String seller,String begin,String end) {

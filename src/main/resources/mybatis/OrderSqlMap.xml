@@ -60,14 +60,18 @@
   		from tmall_order where id=#{id}
 	</select>
 	
-	<select id="queryAgentTotalPrice" resultType="Double" parameterType="String">
+	<select id="queryAgentTotalPrice" resultType="Double" parameterType="java.util.Map">
   		select sum(total_price) 
-  		from tmall_order where owner = #{userPhone} and order_status != 4
+  		from tmall_order where owner = #{owner} and order_status != 4
+  		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
+		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
   	</select>
   	
-  	<select id="queryAgentTotalCharge" resultType="Double" parameterType="String">
+  	<select id="queryAgentTotalCharge" resultType="Double" parameterType="java.util.Map">
   		select sum(agent_total_charge) 
-  		from tmall_order where owner = #{userPhone} and order_status != 4 and pay_status = 1
+  		from tmall_order where owner = #{owner} and order_status != 4 and pay_status = 1
+  		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
+		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
   	</select>
   	
   	<select id="querySellerTotalPrice" resultType="Double" parameterType="java.util.Map">
@@ -97,9 +101,23 @@
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
   	</select>
   	
-  	<select id="queryListByStatus" resultType="Integer" parameterType="com.simple.model.Order">
+  	<select id="queryToDoList" resultMap="orderEntity" parameterType="com.simple.model.Order">
   		select <include refid="order_Column_List"></include>  
   		from tmall_order where order_status = 1 or change_status = 1 or reject_status = 1 or pay_status = 0 or pay_status = 2
+  		<if test="owner != null and owner != ''">and owner = #{owner}</if>
+  		<if test="seller != null and seller != ''">and seller = #{seller}</if>
+  		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
+		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
+		limit #{begin},#{size}
+  	</select>
+  	
+  	<select id="queryListByStatus" resultMap="orderEntity" parameterType="com.simple.model.Order">
+  		select <include refid="order_Column_List"></include>  
+  		from tmall_order where 1=1
+  		<if test="order_status > 0 " > and order_status = #{order_status}</if>
+  		<if test="change_status >= 0 " > and change_status = #{change_status}</if>
+  		<if test="reject_status >= 0 " > and reject_status = #{reject_status}</if>
+  		<if test="pay_status >= 0 " > and pay_status = #{pay_status}</if>
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>

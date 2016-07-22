@@ -29,12 +29,20 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectOne("order.getById",id);
 	}
 	
-	public Double queryAgentTotalPrice(String owner) {
-		return this.sqlSession.selectOne("order.queryAgentTotalPrice",owner);
+	public Double queryAgentTotalPrice(String owner,String begin,String end) {
+		Map param = new HashMap();
+		param.put("owner", owner);
+		param.put("beginTime", begin);
+		param.put("endTime", end);
+		return this.sqlSession.selectOne("order.queryAgentTotalPrice",param);
 	}
 	
-	public Double queryAgentTotalCharge(String owner) {
-		return this.sqlSession.selectOne("order.queryAgentTotalCharge",owner);
+	public Double queryAgentTotalCharge(String owner,String begin,String end) {
+		Map param = new HashMap();
+		param.put("owner", owner);
+		param.put("beginTime", begin);
+		param.put("endTime", end);
+		return this.sqlSession.selectOne("order.queryAgentTotalCharge",param);
 	}
 	
 	public Double querySellerTotalPrice(String owner,String seller,String begin,String end) {
@@ -96,7 +104,7 @@ public class OrderDao extends BaseIbatisDao{
 		}
 		param.put("begin", (pageIndex-1)*pageSize);
 		param.put("size", pageSize);
-		return this.sqlSession.selectList("order.queryListByStatus",param);
+		return this.sqlSession.selectList("order.queryToDoList",param);
 	}
 	
 	public Integer queryProductCount(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus) {

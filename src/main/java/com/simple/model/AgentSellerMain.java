@@ -9,6 +9,8 @@ public class AgentSellerMain implements Serializable{
 	private Double totalSell;
 	private Integer orderCount;
 	private Integer watchCount;
+	private String sellerPhone;
+	private String weiChat;
 	
 	public Double getTotalSell() {
 		return totalSell;
@@ -27,5 +29,17 @@ public class AgentSellerMain implements Serializable{
 	}
 	public void setWatchCount(Integer watchCount) {
 		this.watchCount = watchCount;
+	}
+	public String getSellerPhone() {
+		return sellerPhone;
+	}
+	public void setSellerPhone(String sellerPhone) {
+		this.sellerPhone = sellerPhone;
+	}
+	public String getWeiChat() {
+		return weiChat;
+	}
+	public void setWeiChat(String weiChat) {
+		this.weiChat = weiChat;
 	}
 }
