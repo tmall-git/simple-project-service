@@ -26,23 +26,6 @@ public class OrderService {
 	@Autowired
 	private ProductDao productDao;
 	
-	public PageResult getOrdersLists(String userPhone, Integer orderStatus, int pageIndex, int pageSize){
-		if ( pageIndex < 1) {
-			pageIndex = 1;
-		}
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("userPhone", userPhone);
-		param.put("startnum", (pageIndex-1)*pageSize);
-		param.put("pageSize", pageSize);
-		if(orderStatus != null){
-			param.put("orderStatus", orderStatus);
-		}
-		List<Order> listOrder = orderDao.getOrdersByUserPhone(param);
-		Integer count = orderDao.getOrdersCount(param);
-		PageResult result = new PageResult(count, pageIndex, listOrder);
-		return result;
-	}
-
 	public Order getOrdersById(int id) {
 		return orderDao.getById(id);
 	}
@@ -122,6 +105,15 @@ public class OrderService {
 	
 	public Double querySellerTotalCharge(String owner,String seller) {
 		return orderDao.querySellerTotalCharge(owner,seller);
+	}
+	
+	public List<Order> queryListByStatus(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,
+			int payStatus,String begin,String end,int pageIndex,int pageSize) {
+		return orderDao.queryListByStatus(owner,seller,orderStatus, changeStatus, rejectStatus, payStatus,begin,end,pageIndex,pageSize);
+	}
+	
+	public List<Order> queryToDoList(String owner,String seller,String begin,String end,int pageIndex,int pageSize) {
+		return orderDao.queryToDoList(owner,seller,begin,end,pageIndex,pageSize);
 	}
 	
 	public Integer queryCountByStatus(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus,String begin,String end) {

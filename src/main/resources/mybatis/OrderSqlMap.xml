@@ -97,6 +97,16 @@
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
   	</select>
   	
+  	<select id="queryListByStatus" resultType="Integer" parameterType="com.simple.model.Order">
+  		select <include refid="order_Column_List"></include>  
+  		from tmall_order where order_status = 1 or change_status = 1 or reject_status = 1 or pay_status = 0 or pay_status = 2
+  		<if test="owner != null and owner != ''">and owner = #{owner}</if>
+  		<if test="seller != null and seller != ''">and seller = #{seller}</if>
+  		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
+		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
+		limit #{begin},#{size}
+  	</select>
+  	
   	<select id="queryProductCount" resultType="Integer" parameterType="com.simple.model.Order">
   		select count(product_id)  
   		from tmall_order where 1=1

@@ -9,6 +9,7 @@ public class ShopProduct implements Serializable{
 	private String price;
 	private String charge;
 	private String image;
+	private int stock;
 	public String getProductName() {
 		return productName;
 	}
@@ -32,5 +33,11 @@ public class ShopProduct implements Serializable{
 	}
 	public void setCharge(String charge) {
 		this.charge = charge;
+	}
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 }
