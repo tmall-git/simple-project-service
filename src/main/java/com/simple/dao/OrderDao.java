@@ -25,8 +25,8 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectOne("order.queryOrderCount",param);
 	}
 	
-	public Order getById(int id){
-		return this.sqlSession.selectOne("order.getById",id);
+	public Order getByCode(String code){
+		return this.sqlSession.selectOne("order.getByCode",code);
 	}
 	
 	public Double queryAgentTotalPrice(String owner,String begin,String end) {
@@ -61,12 +61,9 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectOne("order.querySellerTotalCharge",param);
 	}
 	
-	public Integer queryCountByStatus(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus,String begin,String end) {
+	public Integer queryCountByStatus(String owner,String seller,int orderStatus,String begin,String end) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("order_status", orderStatus);
-		param.put("change_status", changeStatus);
-		param.put("reject_status", rejectStatus);
-		param.put("pay_status", payStatus);
 		param.put("owner", owner);
 		param.put("seller", seller);
 		param.put("beginTime", begin);
@@ -74,13 +71,10 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectOne("order.queryCountByStatus",param);
 	}
 	
-	public List<Order> queryListByStatus(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus,
+	public List<Order> queryListByStatus(String owner,String seller,int orderStatus,
 			String begin,String end,int pageIndex,int pageSize) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("order_status", orderStatus);
-		param.put("change_status", changeStatus);
-		param.put("reject_status", rejectStatus);
-		param.put("pay_status", payStatus);
 		param.put("owner", owner);
 		param.put("seller", seller);
 		param.put("beginTime", begin);
@@ -107,12 +101,9 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectList("order.queryToDoList",param);
 	}
 	
-	public Integer queryProductCount(String owner,String seller,int orderStatus,int changeStatus,int rejectStatus,int payStatus) {
+	public Integer queryProductCount(String owner,String seller,int orderStatus) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("order_status", orderStatus);
-		param.put("change_status", changeStatus);
-		param.put("reject_status", rejectStatus);
-		param.put("pay_status", payStatus);
 		param.put("owner", owner);
 		param.put("seller", seller);
 		return this.sqlSession.selectOne("order.queryCountByStatus",param);
@@ -122,36 +113,24 @@ public class OrderDao extends BaseIbatisDao{
 		this.sqlSession.insert("order.insert",order);
 	}
 	
-	public void updateOrderStatus(Order order) {
-		this.sqlSession.update("order.updateOrderStatus",order);
+	public int sendOrder(Order order) {
+		return this.sqlSession.update("order.sendOrder",order);
 	}
 	
-	public void updateRejectStatus(Order order){
-		this.sqlSession.update("order.updateReject",order);
+	public int reject(Order order) {
+		return this.sqlSession.update("order.updateReject",order);
 	}
 	
-	public void changeProduct(Order order) {
-		this.sqlSession.update("order.changeProduct",order);
+	public int rejectRefuse(Order order) {
+		return this.sqlSession.update("order.updateRejectRefuse",order);
 	}
 	
-	public void reject(Order order) {
-		this.sqlSession.update("order.reject",order);
+	public int cancel(Order order) {
+		return this.sqlSession.update("order.updateCancel",order);
 	}
 	
 	public void payOrder(Order order) {
 		this.sqlSession.update("order.payOrder",order);
-	}
-	
-	public void updateExpressage(Order order) {
-		this.sqlSession.update("order.updateExpressage",order);
-	}
-
-	public SellerMainVO getTotalSellerAmount(User user) {
-		return this.sqlSession.selectOne("order.getTotalSellerAmount",user);
-	}
-	
-	public List<SellerListVO> getSellerList(String userPhone) {
-		return this.sqlSession.selectList("order.getSellerList",userPhone);
 	}
 
 }

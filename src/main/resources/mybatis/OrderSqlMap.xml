@@ -20,24 +20,21 @@
 		<result column="expressage_name" property="expressage_name" jdbcType="VARCHAR"/>
 		<result column="expressage_no" property="expressage_no" jdbcType="VARCHAR"/>
 		<result column="expressage_time" property="expressage_time" jdbcType="DATE"/>
-		<result column="change_status" property="change_status" jdbcType="INTEGER"/>
-		<result column="change_time" property="change_time" jdbcType="DATE"/>
-		<result column="change_remark" property="change_remark" jdbcType="VARCHAR"/>
-		<result column="reject_status" property="reject_status" jdbcType="INTEGER"/>
 		<result column="reject_time" property="reject_time" jdbcType="DATE"/>
 		<result column="reject_remark" property="reject_remark" jdbcType="VARCHAR"/>
-		<result column="pay_status" property="pay_status" jdbcType="INTEGER"/>
+		<result column="apply_reject_time" property="apply_reject_time" jdbcType="DATE"/>
 		<result column="pay_time" property="pay_time" jdbcType="DATE"/>
 		<result column="product_image" property="product_image" jdbcType="VARCHAR"/>
 		<result column="total_price" property="total_price" jdbcType="DOUBLE"/>
 		<result column="agent_total_charge" property="agent_total_charge" jdbcType="DOUBLE"/>
 		<result column="seller_total_charge" property="seller_total_charge" jdbcType="DOUBLE"/>
+		<result column="pay_account" property="pay_account" jdbcType="VARCHAR"/>
 	</resultMap>
 	
  	<sql id="order_Column_List" >
 		id,order_no,user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,order_status,
-		expressage,expressage_name,expressage_no,expressage_time,change_status,change_time,change_remark,reject_status,
-		reject_time,reject_remark,pay_status,pay_time,product_image,total_price,agent_total_charge,seller_total_charge
+		expressage,expressage_name,expressage_no,expressage_time,reject_time,reject_remark,apply_reject_time,pay_time,product_image,total_price,
+		agent_total_charge,seller_total_charge,pay_account
   	</sql>
 
 	<select id="queryByUserPhone" resultMap="orderEntity" parameterType="java.util.Map">
@@ -54,10 +51,10 @@
   		<if test="order_status != null and order_status != '' " > and order_status = #{order_status}</if>
   	</select>
 
-	<select id="getById" resultMap="orderEntity" parameterType="java.util.Map">
+	<select id="getByCode" resultMap="orderEntity" parameterType="java.util.Map">
 		select
   		<include refid="order_Column_List"></include>
-  		from tmall_order where id=#{id}
+  		from tmall_order where order_no=#{order_no}
 	</select>
 	
 	<select id="queryAgentTotalPrice" resultType="Double" parameterType="java.util.Map">
@@ -94,18 +91,13 @@
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="order_status > 0 " > and order_status = #{order_status}</if>
-  		<if test="change_status >= 0 " > and change_status = #{change_status}</if>
-  		<if test="reject_status >= 0 " > and reject_status = #{reject_status}</if>
-  		<if test="pay_status >= 0 " > and pay_status = #{pay_status}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
   	</select>
   	
   	<select id="queryToDoList" resultMap="orderEntity" parameterType="com.simple.model.Order">
   		select <include refid="order_Column_List"></include>  
-  		from tmall_order where order_status = 1 
-  		or (order_status = 3 and change_status = 1) 
-  		or (order_status = 3 and reject_status = 1)
+  		from tmall_order where order_status = 1 or order_status = 5 
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
@@ -117,9 +109,6 @@
   		select <include refid="order_Column_List"></include>  
   		from tmall_order where 1=1
   		<if test="order_status > 0 " > and order_status = #{order_status}</if>
-  		<if test="change_status >= 0 " > and change_status = #{change_status}</if>
-  		<if test="reject_status >= 0 " > and reject_status = #{reject_status}</if>
-  		<if test="pay_status >= 0 " > and pay_status = #{pay_status}</if>
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
@@ -133,46 +122,50 @@
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="order_status > 0 " > and order_status = #{order_status}</if>
-  		<if test="change_status >= 0 " > and change_status = #{change_status}</if>
-  		<if test="reject_status >= 0 " > and reject_status = #{reject_status}</if>
-  		<if test="pay_status >= 0 " > and pay_status = #{pay_status}</if>
   	</select>
 
 	<insert id="insert" parameterType="com.simple.model.Order">
 		INSERT INTO tmall_order (
 			order_no,user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,
-			order_status,expressage,expressage_name,expressage_no,expressage_time,change_status,change_time,change_remark,
-			reject_status,reject_time,reject_remark,pay_status,pay_time,product_image,total_price,total_charge
+			order_status,expressage,expressage_name,expressage_no,expressage_time,reject_time,reject_remark,apply_reject_time,pay_time,
+			product_image,total_price,total_charge,pay_account
 		) 
 		VALUES (
 			#{order_no,},#{user_phone},#{product_id},#{product_name},#{user_name},#{address},#{product_count},#{price},#{owner},#{seller},#{create_time},
-			#{order_status},#{expressage},#{expressage_name},#{expressage_no},#{expressage_time},#{change_status},#{change_time},#{change_remark},
-			#{reject_status},#{reject_time},#{reject_remark},#{pay_status},#{pay_time},#{product_image},#{total_price},#{total_charge}
+			#{order_status},#{expressage},#{expressage_name},#{expressage_no},#{expressage_time},#{reject_time},#{reject_remark},#{apply_reject_time},
+			#{pay_time},#{product_image},#{total_price},#{total_charge},#{pay_account}
 		)
 	</insert>	
 	
-	<update id="updateOrderStatus" parameterType="com.simple.model.Order">
-		UPDATE tmall_order SET order_status = #{order_status}
-		WHERE id = #{id}
+	<update id="sendOrder" parameterType="com.simple.model.Order">
+		UPDATE tmall_order SET order_status = #{order_status},expressage=#{expressage},
+		expressage_name=#{expressage_name},expressage_no=#{expressage_no},expressage_time=#{expressage_time}
+		WHERE order_no = #{order_no} and order_status = 1
 	</update>
 	
 	<update id="updateReject" parameterType="com.simple.model.Order">
 		UPDATE tmall_order 
-		SET 
-		order_status = #{order_status}
-		,reject_status = #{reject_status}
+		SET order_status = #{order_status},
+		agent_total_charge = #{agent_total_charge},
+		seller_total_charge = #{seller_total_charge},
+		total_price = #{total_price}
+		WHERE order_no = #{order_no} and order_status != 3
+	</update>
+	
+	<update id="updateRejectRefuse" parameterType="com.simple.model.Order">
+		UPDATE tmall_order 
+		SET order_status = #{order_status}
 		<if test="reject_remark != null and reject_remark != ''"> ,reject_remark = #{reject_remark}</if>
-		WHERE id = #{id}
+		WHERE order_no = #{order_no} and order_status = 5 
 	</update>
 	
-	<update id="changeProduct" parameterType="com.simple.model.Order">
-		UPDATE tmall_order SET change_status = 1,change_time = #{change_time},change_remark = #{change_remark}
-		WHERE id = #{id}
-	</update>
-	
-	<update id="reject" parameterType="com.simple.model.Order">
-		UPDATE tmall_order SET reject_status = 1,reject_time = #{change_time},reject_remark = #{reject_remark}
-		WHERE id = #{id}
+	<update id="updateCancel" parameterType="com.simple.model.Order">
+		UPDATE tmall_order 
+		SET order_status = #{order_status},
+		agent_total_charge = #{agent_total_charge},
+		seller_total_charge = #{seller_total_charge},
+		total_price = #{total_price}
+		WHERE order_no = #{order_no} and (order_status = 1 or order_status = 7) 
 	</update>
 	
 	<update id="payOrder" parameterType="com.simple.model.Order">
@@ -180,25 +173,5 @@
 		WHERE id = #{id}
 	</update>
 	
-	<update id="updateExpressage" parameterType="com.simple.model.Order">
-		UPDATE tmall_order SET expressage = #{expressage},expressage_no = #{expressage_no},expressage_time=#{expressage_time}
-		WHERE id = #{id}
-	</update>
-	
-	<select id="getTotalSellerAmount" parameterType="com.simple.model.User" resultType="com.simple.model.SellerMainVO">
-		SELECT SUM(o.total_price) totalPrice, SUM(o.total_charge) totalCharge,count(distinct owner) ownerCount,
-		SUM(if(o.order_status = 1 or o.order_status = 2,1,0)) trading, SUM(if(o.reject_status = 1,1,0)) rejectCount
-		FROM tmall_order o 
-		WHERE o.seller = #{userPhone}
-	</select>
-	
-	<select id="getSellerList" parameterType="java.util.HashMap" resultType="com.simple.model.SellerListVO">
-		SELECT u.id userId, u.user_phone userPhone, u.wechat_no wechatName, SUM(o.total_charge) sellerAmount, 
-			SUM(IF(o.order_status = 3,1,0)) dealCount, COUNT(o.id) productCount
-		FROM tmall_order o LEFT JOIN USER u 
-		ON o.user_phone = u.user_phone
-		WHERE o.seller = #{userPhone}
-		GROUP BY u.id
-	</select>
 	
 </mapper>

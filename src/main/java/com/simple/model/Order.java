@@ -25,20 +25,15 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	private String expressage_name;
 	private String expressage_no;
 	private Date expressage_time;
-	private int change_status; 
-	private Date change_time;
-	private String change_remark;
-	private int reject_status; 
 	private Date reject_time;
 	private String reject_remark;
-	private int pay_status; 
+	private Date apply_reject_time;
 	private Date pay_time;
 	private String product_image;
 	private double total_price;
 	private double agent_total_charge;
 	private double seller_total_charge;
-	
-	
+	private String pay_account;
 	
 	public String getOrder_no() {
 		return order_no;
@@ -139,30 +134,6 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	public void setExpressage_time(Date expressage_time) {
 		this.expressage_time = expressage_time;
 	}
-	public int getChange_status() {
-		return change_status;
-	}
-	public void setChange_status(int change_status) {
-		this.change_status = change_status;
-	}
-	public Date getChange_time() {
-		return change_time;
-	}
-	public void setChange_time(Date change_time) {
-		this.change_time = change_time;
-	}
-	public String getChange_remark() {
-		return change_remark;
-	}
-	public void setChange_remark(String change_remark) {
-		this.change_remark = change_remark;
-	}
-	public int getReject_status() {
-		return reject_status;
-	}
-	public void setReject_status(int reject_status) {
-		this.reject_status = reject_status;
-	}
 	public Date getReject_time() {
 		return reject_time;
 	}
@@ -174,12 +145,6 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setReject_remark(String reject_remark) {
 		this.reject_remark = reject_remark;
-	}
-	public int getPay_status() {
-		return pay_status;
-	}
-	public void setPay_status(int pay_status) {
-		this.pay_status = pay_status;
 	}
 	public Date getPay_time() {
 		return pay_time;
@@ -216,5 +181,17 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setShowCreateTime(String showCreateTime) {
 		this.showCreateTime = showCreateTime;
+	}
+	public Date getApply_reject_time() {
+		return apply_reject_time;
+	}
+	public void setApply_reject_time(Date apply_reject_time) {
+		this.apply_reject_time = apply_reject_time;
+	}
+	public String getPay_account() {
+		return pay_account;
+	}
+	public void setPay_account(String pay_account) {
+		this.pay_account = pay_account;
 	}
 }
