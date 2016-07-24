@@ -103,7 +103,9 @@
   	
   	<select id="queryToDoList" resultMap="orderEntity" parameterType="com.simple.model.Order">
   		select <include refid="order_Column_List"></include>  
-  		from tmall_order where order_status = 1 or change_status = 1 or reject_status = 1 or pay_status = 0 or pay_status = 2
+  		from tmall_order where order_status = 1 
+  		or (order_status = 3 and change_status = 1) 
+  		or (order_status = 3 and reject_status = 1)
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
