@@ -22,6 +22,7 @@ public class Constant {
 	public static final int ORDER_STATUS_REGECT = 5;
 	public static final int ORDER_STATUS_REGECT_REFUSE = 6;
 	public static final int ORDER_STATUS_UNPAY = 7;
+	public static final int ORDER_STATUS_REGECT_FINISHED = 8;
 	
 	public static final double CHARGE_DEFAULT = 30.00d;
 	

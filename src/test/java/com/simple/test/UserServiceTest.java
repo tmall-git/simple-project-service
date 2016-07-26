@@ -33,10 +33,10 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
 		User user = new User();
 		user.setUserPhone("18712301230");
 		user.setBalance(3000.0);
-		SellerMainVO vo = service.toSellerMainHead(user);
-		vo.setBalance(user.getBalance());
-		vo.setWithdrawAmount(user.getBalance());
-		System.out.println(JSON.toJSONString(vo));
+//		SellerMainVO vo = service.toSellerMainHead(user);
+//		vo.setBalance(user.getBalance());
+//		vo.setWithdrawAmount(user.getBalance());
+//		System.out.println(JSON.toJSONString(vo));
 	}
 	
 	@Test

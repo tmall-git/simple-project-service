@@ -43,15 +43,4 @@ public class UserService {
 		return dao.updateObject("user.modify",user);
 	}
 
-	public SellerMainVO toSellerMainHead(User user) {
-		SellerMainVO vo = orderDao.getTotalSellerAmount(user);
-		return vo;
-	}
-	
-//	public PageInfo<SellerListVO> toSellerMainList(String userPhone, Integer pageIndex, Integer PageSize) {
-//		PageHelper.startPage(pageIndex, PageSize);
-//		List<SellerListVO> sellerList = orderDao.getSellerList(userPhone);
-//		PageInfo<SellerListVO> page = new PageInfo<SellerListVO>(sellerList);
-//		return page;
-//	}
 }

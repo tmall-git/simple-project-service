@@ -62,7 +62,7 @@ public class OrderService {
 			throw new Exception("该订单不存在");
 		}
 		//
-		order.setOrder_status(Constant.ORDER_STATUS_FINISHED);
+		order.setOrder_status(Constant.ORDER_STATUS_REGECT_FINISHED);
 		order.setAgent_total_charge(0d);
 		order.setSeller_total_charge(0d);
 		order.setReject_time(new Date());
