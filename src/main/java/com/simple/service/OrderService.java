@@ -102,6 +102,11 @@ public class OrderService {
 		if(order == null){
 			throw new Exception("该订单不存在");
 		}
+		updateFinished(order);
+	}
+	
+	public void updateFinished(Order order) throws Exception {
+		//更新订单状态为已完成，并加提成额度到代理和代销账户
 		order.setOrder_status(Constant.ORDER_STATUS_FINISHED);
 		int result = orderDao.finish(order);
 		if (result <=0) {
@@ -120,6 +125,10 @@ public class OrderService {
 		if(order == null){
 			throw new Exception("该订单不存在");
 		}
+		updateCancel(order);
+	}
+	
+	public void updateCancel(Order order)throws Exception {
 		if ((order.getOrder_status() == Constant.ORDER_STATUS_TOSEND) || (order.getOrder_status() == Constant.ORDER_STATUS_UNPAY)) {
 			order.setOrder_status(Constant.ORDER_STATUS_CANCEL);
 			order.setAgent_total_charge(0d);
@@ -130,6 +139,8 @@ public class OrderService {
 			if (result <=0) {
 				throw new Exception("当情订单状态不是未付款或者未发货，不能取消");
 			}
+			//回滚库存
+			productDao.increaseStock(order.getProduct_id(), order.getProduct_count());
 		}else {
 			throw new Exception("取消失败：当前订单状态不可取消");
 		}
@@ -153,7 +164,7 @@ public class OrderService {
 			percent = owner.getChargePrecent();
 		}
 		//扣商品库存
-		int stock = productDao.reduceStock(product.getId());
+		int stock = productDao.reduceStock(product.getId(),orderForm.getProductCount());
 		if (stock<=0) {
 			throw new Exception("商品库存不足!");
 		}
@@ -180,6 +191,10 @@ public class OrderService {
 	
 	public List<Order> queryListByStatus(String owner,String seller,int orderStatus,String begin,String end,int pageIndex,int pageSize) {
 		return orderDao.queryListByStatus(owner,seller,orderStatus, begin,end,pageIndex,pageSize);
+	}
+	
+	public List<Order> querySendList(String owner,String seller,String begin,String end,int pageIndex,int pageSize) {
+		return orderDao.querySendList(owner,seller,begin,end,pageIndex,pageSize);
 	}
 	
 	public List<Order> queryToDoList(String owner,String seller,String begin,String end,int pageIndex,int pageSize) {

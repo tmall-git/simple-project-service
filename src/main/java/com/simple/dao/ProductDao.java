@@ -52,8 +52,18 @@ public class ProductDao extends BaseIbatisDao{
 		return this.sqlSession.update("product.update",product);
 	}
 	
-	public int reduceStock(int id) {
+	public int reduceStock(int id,int count) {
+		Map param = new HashMap();
+		param.put("id", id);
+		param.put("productCount", count);
 		return this.sqlSession.update("product.reduceStock",id);
+	}
+	
+	public int increaseStock(int id,int count) {
+		Map param = new HashMap();
+		param.put("id", id);
+		param.put("productCount", count);
+		return this.sqlSession.update("product.increaseStock",param);
 	}
 	
 	public void addProductImage(ProductImage image) {

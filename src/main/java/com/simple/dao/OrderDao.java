@@ -87,6 +87,21 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectList("order.queryListByStatus",param);
 	}
 	
+	public List<Order> querySendList(String owner,String seller,
+			String begin,String end,int pageIndex,int pageSize) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("owner", owner);
+		param.put("seller", seller);
+		param.put("beginTime", begin);
+		param.put("endTime", end);
+		if (pageIndex <=0) {
+			pageIndex = 1;
+		}
+		param.put("begin", (pageIndex-1)*pageSize);
+		param.put("size", pageSize);
+		return this.sqlSession.selectList("order.querySendList",param);
+	}
+	
 	public List<Order> queryToDoList(String owner,String seller,String begin,String end,int pageIndex,int pageSize) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("owner", owner);
