@@ -125,6 +125,10 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.update("order.updateRejectRefuse",order);
 	}
 	
+	public int finish(Order order) {
+		return this.sqlSession.update("order.updateFinish",order);
+	}
+	
 	public int cancel(Order order) {
 		return this.sqlSession.update("order.updateCancel",order);
 	}

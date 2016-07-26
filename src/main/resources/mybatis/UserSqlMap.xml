@@ -72,4 +72,9 @@
 		update user set charge_percent = #{percent} 
 		where user_phone = #{userPhone} 
 	</update>
+	
+	<update id="increseCharge" parameterType="java.util.Map">
+		update user set balance = balance+${charge}
+		where user_phone = #{userPhone}
+	</update>
 </mapper>

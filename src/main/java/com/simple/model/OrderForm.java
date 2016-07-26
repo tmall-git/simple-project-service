@@ -15,7 +15,7 @@ public class OrderForm implements Serializable{
 	private String userName;
 	private String address;
 	private int productCount;
-	private String seller;
+	private String token;
 	public String getUserPhone() {
 		return userPhone;
 	}
@@ -52,13 +52,12 @@ public class OrderForm implements Serializable{
 	public void setProductCount(int productCount) {
 		this.productCount = productCount;
 	}
-	public String getSeller() {
-		return seller;
+	public String getToken() {
+		return token;
 	}
-	public void setSeller(String seller) {
-		this.seller = seller;
+	public void setToken(String token) {
+		this.token = token;
 	}
-	
 	public Order castToOrder(Product product,String seller,double percent) {
 		Order order = new Order();
 		order.setOrder_no(PrimaryKeyUtil.getId());

@@ -46,5 +46,12 @@ public class UserDao extends BaseIbatisDao{
 		param.put("percent", percent);
 		this.sqlSession.update("user.updatePercent",param);
 	}
+	
+	public void increseCharge(String phone,double charge) {
+		Map param = new HashMap();
+		param.put("userPhone", phone);
+		param.put("charge", charge);
+		this.sqlSession.update("user.increseCharge",param);
+	}
 
 }

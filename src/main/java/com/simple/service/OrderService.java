@@ -96,6 +96,25 @@ public class OrderService {
 		}
 	}
 	
+	public void updateFinished(String code) throws Exception {
+		//更新订单状态为已完成，并加提成额度到代理和代销账户
+		Order order = getOrderByCode(code);
+		if(order == null){
+			throw new Exception("该订单不存在");
+		}
+		order.setOrder_status(Constant.ORDER_STATUS_FINISHED);
+		int result = orderDao.finish(order);
+		if (result <=0) {
+			throw new Exception("当情订单状态不能完成");
+		}
+		String owner = order.getOwner();
+		String seller = order.getSeller();
+		double ownercharge = order.getAgent_total_charge();
+		double sellercharge = order.getSeller_total_charge();
+		userDao.increseCharge(owner, ownercharge);
+		userDao.increseCharge(seller, sellercharge);
+	}
+	
 	public void updateCancel(String code) throws Exception {
 		Order order = getOrderByCode(code);
 		if(order == null){
@@ -116,13 +135,13 @@ public class OrderService {
 		}
 	}
 	
-	public String addOrder(OrderForm orderForm) throws Exception  {
+	public String addOrder(OrderForm orderForm,String seller) throws Exception  {
 		Product product = productDao.getById(orderForm.getProductId());
 		if ( null == product ) {
 			throw new Exception("商品不存在.");
 		}
 		//查询代销提成比
-		List<AgentSeller> ass =  agentSellerDao.queryListByPhone(product.getOwner(), orderForm.getSeller(), 1, 1);
+		List<AgentSeller> ass =  agentSellerDao.queryListByPhone(product.getOwner(), seller, 1, 1);
 		double percent = 0d;
 		if ( null != ass && ass.size() > 0) {
 			percent = ass.get(0).getChargePercent();
@@ -133,7 +152,12 @@ public class OrderService {
 			}
 			percent = owner.getChargePrecent();
 		}
-		Order order = orderForm.castToOrder(product, orderForm.getSeller(), percent);
+		//扣商品库存
+		int stock = productDao.reduceStock(product.getId());
+		if (stock<=0) {
+			throw new Exception("商品库存不足!");
+		}
+		Order order = orderForm.castToOrder(product, seller, percent);
 		orderDao.addOrder(order);
 		return order.getOrder_no();
 	}

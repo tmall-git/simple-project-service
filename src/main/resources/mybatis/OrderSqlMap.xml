@@ -168,6 +168,12 @@
 		WHERE order_no = #{order_no} and (order_status = 1 or order_status = 7) 
 	</update>
 	
+	<update id="updateFinish" parameterType="com.simple.model.Order">
+		UPDATE tmall_order 
+		SET order_status = #{order_status},
+		WHERE order_no = #{order_no} and (order_status != 4 and order_status != 3) 
+	</update>
+	
 	<update id="payOrder" parameterType="com.simple.model.Order">
 		UPDATE tmall_order SET pay_status = 1,pay_time = #{change_time}
 		WHERE id = #{id}
