@@ -67,8 +67,8 @@ public class ProductService {
 		}
 	}
 	
-	public int updateStock(int productId) {
-		return productDao.reduceStock(productId);
+	public int reduceStock(int productId,int count) {
+		return productDao.reduceStock(productId,count);
 	}
 	
 	public void updateProductStatus(int id,int status ) {
