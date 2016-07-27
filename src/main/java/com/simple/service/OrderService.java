@@ -1,5 +1,6 @@
 package com.simple.service;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class OrderService {
 			throw new Exception("该订单不存在");
 		}
 		order.setOrder_status(Constant.ORDER_STATUS_SEND);
-		order.setExpressage_time(new Date());
+		order.setExpressage_time(new Timestamp(new Date().getTime()));
 		order.setExpressage_no(expressNumber);
 		order.setExpressage(expressCode);
 		order.setExpressage_name(expressName);
@@ -65,7 +66,7 @@ public class OrderService {
 		order.setOrder_status(Constant.ORDER_STATUS_REGECT_FINISHED);
 		order.setAgent_total_charge(0d);
 		order.setSeller_total_charge(0d);
-		order.setReject_time(new Date());
+		order.setReject_time(new Timestamp(new Date().getTime()));
 		order.setTotal_price(0d);
 		int result = orderDao.reject(order);
 		if (result <=0) {
@@ -133,7 +134,7 @@ public class OrderService {
 			order.setOrder_status(Constant.ORDER_STATUS_CANCEL);
 			order.setAgent_total_charge(0d);
 			order.setSeller_total_charge(0d);
-			order.setReject_time(new Date());
+			order.setReject_time(new Timestamp(new Date().getTime()));
 			order.setTotal_price(0d);
 			int result = orderDao.cancel(order);
 			if (result <=0) {

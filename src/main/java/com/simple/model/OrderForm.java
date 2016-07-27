@@ -1,6 +1,7 @@
 package com.simple.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import com.simple.common.util.PrimaryKeyUtil;
@@ -70,7 +71,7 @@ public class OrderForm implements Serializable{
 		order.setPrice(product.getPrice());
 		order.setOwner(product.getOwner());
 		order.setSeller(seller);
-		order.setCreate_time(new Date());
+		order.setCreate_time(new Timestamp(new Date().getTime()));
 		order.setOrder_status(Constant.ORDER_STATUS_UNPAY);
 		order.setProduct_image(product.getFirstImg());
 		order.setTotal_price(product.getPrice()*this.productCount);
