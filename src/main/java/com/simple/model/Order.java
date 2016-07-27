@@ -1,5 +1,6 @@
 package com.simple.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import com.simple.common.util.DateUtil;
@@ -18,17 +19,21 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	private double price;
 	private String owner;
 	private String seller;
-	private Date create_time;
+	private Timestamp create_time;
 	private String showCreateTime;
 	private int order_status; 
 	private String expressage;
 	private String expressage_name;
 	private String expressage_no;
-	private Date expressage_time;
-	private Date reject_time;
+	private Timestamp expressage_time;
+	private String showExpressageTime;
+	private Timestamp reject_time;
+	private String showRejectTime;
 	private String reject_remark;
-	private Date apply_reject_time;
-	private Date pay_time;
+	private Timestamp apply_reject_time;
+	private String showApplyRejectTime;
+	private Timestamp pay_time;
+	private String showPayTime;
 	private String product_image;
 	private double total_price;
 	private double agent_total_charge;
@@ -98,7 +103,7 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	public Date getCreate_time() {
 		return create_time;
 	}
-	public void setCreate_time(Date create_time) {
+	public void setCreate_time(Timestamp create_time) {
 		this.create_time = create_time;
 		if ( null != this.create_time) {
 			this.showCreateTime = DateUtil.date2AllString(this.create_time);
@@ -131,14 +136,20 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	public Date getExpressage_time() {
 		return expressage_time;
 	}
-	public void setExpressage_time(Date expressage_time) {
+	public void setExpressage_time(Timestamp expressage_time) {
 		this.expressage_time = expressage_time;
+		if ( null != this.expressage_time) {
+			this.showExpressageTime = DateUtil.date2String(expressage_time);
+		}
 	}
 	public Date getReject_time() {
 		return reject_time;
 	}
-	public void setReject_time(Date reject_time) {
+	public void setReject_time(Timestamp reject_time) {
 		this.reject_time = reject_time;
+		if ( null != this.reject_time) {
+			this.showRejectTime = DateUtil.date2AllString(reject_time);
+		}
 	}
 	public String getReject_remark() {
 		return reject_remark;
@@ -149,8 +160,11 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	public Date getPay_time() {
 		return pay_time;
 	}
-	public void setPay_time(Date pay_time) {
+	public void setPay_time(Timestamp pay_time) {
 		this.pay_time = pay_time;
+		if ( null != this.pay_time) {
+			this.showPayTime = DateUtil.date2AllString(pay_time);
+		}
 	}
 	public String getProduct_image() {
 		return product_image;
@@ -185,13 +199,40 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	public Date getApply_reject_time() {
 		return apply_reject_time;
 	}
-	public void setApply_reject_time(Date apply_reject_time) {
+	public void setApply_reject_time(Timestamp apply_reject_time) {
 		this.apply_reject_time = apply_reject_time;
+		if ( null != this.apply_reject_time) {
+			this.showApplyRejectTime = DateUtil.date2AllString(apply_reject_time);
+		}
 	}
 	public String getPay_account() {
 		return pay_account;
 	}
 	public void setPay_account(String pay_account) {
 		this.pay_account = pay_account;
+	}
+	public String getShowExpressageTime() {
+		return showExpressageTime;
+	}
+	public void setShowExpressageTime(String showExpressageTime) {
+		this.showExpressageTime = showExpressageTime;
+	}
+	public String getShowRejectTime() {
+		return showRejectTime;
+	}
+	public void setShowRejectTime(String showRejectTime) {
+		this.showRejectTime = showRejectTime;
+	}
+	public String getShowApplyRejectTime() {
+		return showApplyRejectTime;
+	}
+	public void setShowApplyRejectTime(String showApplyRejectTime) {
+		this.showApplyRejectTime = showApplyRejectTime;
+	}
+	public String getShowPayTime() {
+		return showPayTime;
+	}
+	public void setShowPayTime(String showPayTime) {
+		this.showPayTime = showPayTime;
 	}
 }
