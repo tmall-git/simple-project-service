@@ -85,6 +85,10 @@ public class AgentSellerService {
 		return charge.getCharge();
 	}
 	
+	public void increaseWatchCount(String owner,String seller) {
+		dao.increaseWatchCount(owner, seller);
+	}
+	
 	
 //	public PageInfo<SellerJoinVO> getSellerJoinList(String userPhone, Integer pageIndex, Integer pageSize){
 //		PageHelper.startPage(pageIndex, pageSize);

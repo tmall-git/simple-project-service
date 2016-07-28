@@ -84,4 +84,11 @@ public class AgentSellerDao extends BaseIbatisDao{
 	public List<SellerJoinProductVO> getSellerJoinProductVO(String sql) {
 		return this.sqlSession.selectList("agentSeller.getSellerJoinProductList", sql);
 	}
+	
+	public void increaseWatchCount(String agent,String seller) {
+		Map param = new HashMap();
+		param.put("agentPhone", agent);
+		param.put("sellerPhone", seller);
+		this.sqlSession.update("agentSeller.increaseWatchCount",param);
+	}
 }
