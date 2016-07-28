@@ -39,7 +39,7 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	private double agent_total_charge;
 	private double seller_total_charge;
 	private String pay_account;
-	
+	private String pay_number;
 	public String getOrder_no() {
 		return order_no;
 	}
@@ -234,5 +234,11 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setShowPayTime(String showPayTime) {
 		this.showPayTime = showPayTime;
+	}
+	public String getPay_number() {
+		return pay_number;
+	}
+	public void setPay_number(String pay_number) {
+		this.pay_number = pay_number;
 	}
 }

@@ -152,4 +152,15 @@ public class OrderDao extends BaseIbatisDao{
 		this.sqlSession.update("order.payOrder",order);
 	}
 
+	public List<Order> queryMyOrders(String userPhone,int pageIndex,int pageSize) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("userPhone", userPhone);
+		if (pageIndex <=0) {
+			pageIndex = 1;
+		}
+		param.put("begin", (pageIndex-1)*pageSize);
+		param.put("size", pageSize);
+		return this.sqlSession.selectList("order.queryMyOrders",param);
+	}
+	
 }
