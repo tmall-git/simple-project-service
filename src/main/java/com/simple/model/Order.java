@@ -40,6 +40,7 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	private double seller_total_charge;
 	private String pay_account;
 	private String pay_number;
+	private String productToken;
 	public String getOrder_no() {
 		return order_no;
 	}
@@ -240,5 +241,11 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setPay_number(String pay_number) {
 		this.pay_number = pay_number;
+	}
+	public String getProductToken() {
+		return productToken;
+	}
+	public void setProductToken(String productToken) {
+		this.productToken = productToken;
 	}
 }
