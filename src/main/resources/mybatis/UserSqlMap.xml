@@ -77,4 +77,9 @@
 		update user set balance = balance+${charge}
 		where user_phone = #{userPhone}
 	</update>
+	
+	<update id="reduceBlance" parameterType="java.util.Map">
+		update user set balance = balance-${amount}
+		where user_phone = #{userPhone}
+	</update>
 </mapper>

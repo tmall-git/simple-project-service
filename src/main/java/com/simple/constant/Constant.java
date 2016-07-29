@@ -1,5 +1,7 @@
 package com.simple.constant;
 
+import com.simple.common.config.EnvPropertiesConfiger;
+
 public class Constant {
 
 	/*session用户**/
@@ -26,6 +28,13 @@ public class Constant {
 	
 	public static final double CHARGE_DEFAULT = 30.00d;
 	
+	/*提现状态**/
+	public static final int CASH_STATUS_COMMIT =1;
+	public static final int CASH_STATUS_FINISHED = 2;
+	public static final int CASH_STATUS_CANCEL = 3;
+	
+	/*系统管理员电话**/
+	public static final String ADMIN_PHONE = EnvPropertiesConfiger.getValue("adminPhone");
 	
 
 }
