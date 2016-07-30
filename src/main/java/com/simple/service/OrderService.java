@@ -38,7 +38,7 @@ public class OrderService {
 		return orderDao.getByCode(code);
 	}
 	
-	public void updateOrderSend(String code,String expressCode,String expressNumber,String expressName) throws Exception{
+	public Order updateOrderSend(String code,String expressCode,String expressNumber,String expressName) throws Exception{
 		// 修改订单状态
 		Order order = getOrderByCode(code);
 		if(order == null){
@@ -53,10 +53,11 @@ public class OrderService {
 		if (result <=0) {
 			throw new Exception("当前订单状态不是待发货状态，不能发货");
 		}
+		return order;
 	}
 
 	
-	public void updateReject(String code) throws Exception {
+	public Order updateReject(String code) throws Exception {
 		//更新订单状态为完成，更新提成为0,不计入提成
 		Order order = getOrderByCode(code);
 		if(order == null){
@@ -67,7 +68,7 @@ public class OrderService {
 		order.setAgent_total_charge(0d);
 		order.setSeller_total_charge(0d);
 		order.setReject_time(new Timestamp(new Date().getTime()));
-		order.setTotal_price(0d);
+		//order.setTotal_price(0d);
 		int result = orderDao.reject(order);
 		if (result <=0) {
 			throw new Exception("当情订单状态已完成，不能退货");
@@ -81,9 +82,11 @@ public class OrderService {
 		*/
 		// TODO 退款给支付微信
 		String payAccount = order.getPay_account();
+		
+		return order;
 	}
 	
-	public void updateRejectRefuse(String code,String remark) throws Exception {
+	public Order updateRejectRefuse(String code,String remark) throws Exception {
 		//更新订单状态为拒绝退款，
 		Order order = getOrderByCode(code);
 		if(order == null){
@@ -95,6 +98,7 @@ public class OrderService {
 		if (result <=0) {
 			throw new Exception("当情订单状态不是退货中，不能拒绝退货");
 		}
+		return order;
 	}
 	
 	public void updateFinished(String code) throws Exception {
@@ -121,12 +125,13 @@ public class OrderService {
 		userDao.increseCharge(seller, sellercharge);
 	}
 	
-	public void updateCancel(String code) throws Exception {
+	public Order updateCancel(String code) throws Exception {
 		Order order = getOrderByCode(code);
 		if(order == null){
 			throw new Exception("该订单不存在");
 		}
 		updateCancel(order);
+		return order;
 	}
 	
 	public void updateCancel(Order order)throws Exception {
@@ -134,8 +139,7 @@ public class OrderService {
 			order.setOrder_status(Constant.ORDER_STATUS_CANCEL);
 			order.setAgent_total_charge(0d);
 			order.setSeller_total_charge(0d);
-			order.setReject_time(new Timestamp(new Date().getTime()));
-			order.setTotal_price(0d);
+			//order.setTotal_price(0d);
 			int result = orderDao.cancel(order);
 			if (result <=0) {
 				throw new Exception("当情订单状态不是未付款或者未发货，不能取消");

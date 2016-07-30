@@ -26,7 +26,7 @@ public class Constant {
 	public static final int ORDER_STATUS_UNPAY = 7;
 	public static final int ORDER_STATUS_REGECT_FINISHED = 8;
 	
-	public static final double CHARGE_DEFAULT = 30.00d;
+	public static final double CHARGE_DEFAULT = 3.00d;
 	
 	/*提现状态**/
 	public static final int CASH_STATUS_COMMIT =1;
