@@ -84,7 +84,7 @@
 	</update>
 	
 	<update id="reduceStock" parameterType="java.util.Map">
-		UPDATE product SET stock = stock-1 where id = #{id} and stock >= #{productCount} 
+		UPDATE product SET stock = stock-#{productCount} where id = #{id} and stock >= #{productCount} 
 	</update>
 	
 	<update id="increaseStock" parameterType="java.util.Map">

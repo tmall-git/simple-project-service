@@ -6,18 +6,18 @@ public class User extends AbstractBaseModel implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 749814039851956911L;
 	
-	private String userName;
+	private String userName="";
 	private String userPhone;
 	private String userTel;
 	private String password;
-	private String weChatNo;
+	private String weChatNo="";
 	private String IDCard;
-	private String address;
+	private String address="";
 	private Date registerDate;
 	private String salt;
 	private Double balance;
-	private String userNick;
-	private String category;
+	private String userNick="";
+	private String category="";
 	private int allowSell;
 	private double chargePrecent;
 	
