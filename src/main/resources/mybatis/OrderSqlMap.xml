@@ -60,7 +60,7 @@
 	
 	<select id="queryAgentTotalPrice" resultType="Double" parameterType="java.util.Map">
   		select sum(total_price) 
-  		from tmall_order where owner = #{owner} and order_status = 3
+  		from tmall_order where owner = #{owner} and order_status in (2,3,5,6,8)
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
   	</select>
@@ -74,7 +74,7 @@
   	
   	<select id="querySellerTotalPrice" resultType="Double" parameterType="java.util.Map">
   		select sum(total_price) 
-  		from tmall_order where seller = #{seller} and order_status = 3 
+  		from tmall_order where seller = #{seller} and order_status in (2,3,5,6,8)
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
