@@ -60,10 +60,15 @@ public class ProductService {
 	
 	private void addProductImage(Product product,String images) {
 		if (null != images) {
-			ProductImage pi = new ProductImage();
-			pi.setImage(images);
-			pi.setProductId(product.getId());
-			productDao.addProductImage(pi);
+			String[] ims = images.split(",");
+			if ( null != ims && ims.length > 0 ) {
+				for (int i = 0 ; i < ims.length ; i ++ ) {
+					ProductImage pi = new ProductImage();
+					pi.setImage(images);
+					pi.setProductId(product.getId());
+					productDao.addProductImage(pi);
+				}
+			}
 		}
 	}
 	
