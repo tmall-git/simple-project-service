@@ -56,30 +56,37 @@ public class OrderService {
 		return order;
 	}
 
-	
 	public Order updateReject(String code) throws Exception {
+		Order order = getOrderByCode(code);
+		if(order == null){
+			throw new Exception("该订单不存在");
+		}
+		order.setOrder_status(Constant.ORDER_STATUS_REGECT);
+		order.setApply_reject_time(new Timestamp(new Date().getTime()));
+		int result = orderDao.reject(order);
+		if (result <=0) {
+			throw new Exception("当情订单状态不是已发货，不能退货");
+		}
+		return order;
+	}
+	
+	public Order updateRejectSuccess(String code) throws Exception {
 		//更新订单状态为完成，更新提成为0,不计入提成
 		Order order = getOrderByCode(code);
 		if(order == null){
 			throw new Exception("该订单不存在");
 		}
-		//
 		order.setOrder_status(Constant.ORDER_STATUS_REGECT_FINISHED);
 		order.setAgent_total_charge(0d);
 		order.setSeller_total_charge(0d);
 		order.setReject_time(new Timestamp(new Date().getTime()));
 		//order.setTotal_price(0d);
-		int result = orderDao.reject(order);
+		int result = orderDao.rejectSuccess(order);
 		if (result <=0) {
-			throw new Exception("当情订单状态已完成，不能退货");
+			throw new Exception("当情订单状态不是退货中，不能退货");
 		}
-		//TODO 更新商品库存+1
-		/**
-		int goodsId = order.getProduct_id();
-		Product product = productDao.getById(goodsId);
-		product.setStock(product.getStock() + 1);
-		productDao.updateProduct(product);
-		*/
+		//更新商品库存+1
+		productDao.increaseStock(order.getProduct_id(), order.getProduct_count());
 		// TODO 退款给支付微信
 		String payAccount = order.getPay_account();
 		
@@ -214,6 +221,10 @@ public class OrderService {
 	
 	public List<Order> querySendList(String owner,String seller,String begin,String end,int pageIndex,int pageSize) {
 		return orderDao.querySendList(owner,seller,begin,end,pageIndex,pageSize);
+	}
+	
+	public List<Order> queryToFinishList(String owner,String seller,String begin,String end,int pageIndex,int pageSize) {
+		return orderDao.queryToFinishList(owner,seller,begin,end,pageIndex,pageSize);
 	}
 	
 	public List<Order> queryToDoList(String owner,String seller,String begin,String end,int pageIndex,int pageSize) {

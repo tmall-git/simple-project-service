@@ -102,6 +102,21 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectList("order.querySendList",param);
 	}
 	
+	public List<Order> queryToFinishList(String owner,String seller,
+			String begin,String end,int pageIndex,int pageSize) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("owner", owner);
+		param.put("seller", seller);
+		param.put("beginTime", begin);
+		param.put("endTime", end);
+		if (pageIndex <=0) {
+			pageIndex = 1;
+		}
+		param.put("begin", (pageIndex-1)*pageSize);
+		param.put("size", pageSize);
+		return this.sqlSession.selectList("order.queryToFinishList",param);
+	}
+	
 	public List<Order> queryToDoList(String owner,String seller,String begin,String end,int pageIndex,int pageSize) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("owner", owner);
@@ -134,6 +149,10 @@ public class OrderDao extends BaseIbatisDao{
 	
 	public int reject(Order order) {
 		return this.sqlSession.update("order.updateReject",order);
+	}
+	
+	public int rejectSuccess(Order order) {
+		return this.sqlSession.update("order.updateRejectSuccess",order);
 	}
 	
 	public int rejectRefuse(Order order) {

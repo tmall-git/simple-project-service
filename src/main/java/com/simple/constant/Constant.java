@@ -32,9 +32,4 @@ public class Constant {
 	public static final int CASH_STATUS_COMMIT =1;
 	public static final int CASH_STATUS_FINISHED = 2;
 	public static final int CASH_STATUS_CANCEL = 3;
-	
-	/*系统管理员电话**/
-	public static final String ADMIN_PHONE = EnvPropertiesConfiger.getValue("adminPhone");
-	
-
 }

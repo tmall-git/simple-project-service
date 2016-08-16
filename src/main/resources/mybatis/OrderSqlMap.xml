@@ -67,7 +67,7 @@
   	
   	<select id="queryAgentTotalCharge" resultType="Double" parameterType="java.util.Map">
   		select sum(agent_total_charge) 
-  		from tmall_order where owner = #{owner} and order_status = 3 
+  		from tmall_order where owner = #{owner} and order_status in (2,3,5,6) 
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
   	</select>
@@ -82,7 +82,7 @@
   	
   	<select id="querySellerTotalCharge" resultType="Double" parameterType="java.util.Map">
   		select sum(seller_total_charge) 
-  		from tmall_order where seller = #{seller} and order_status = 3 
+  		from tmall_order where seller = #{seller} and order_status in (2,3,5,6) 
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   	</select>
   	
@@ -127,6 +127,16 @@
 		limit #{begin},#{size}
   	</select>
   	
+  	<select id="queryToFinishList" resultMap="orderEntity" parameterType="java.util.Map">
+  		select <include refid="order_Column_List"></include>  
+  		from tmall_order where order_status in (2,6)
+  		<if test="owner != null and owner != ''">and owner = #{owner}</if>
+  		<if test="seller != null and seller != ''">and seller = #{seller}</if>
+  		<if test="beginTime != null and beginTime != ''" > and expressage_time &gt;= #{beginTime} </if>
+		<if test="endTime != null and endTime != ''" > and expressage_time &lt;= #{endTime} </if>
+		limit #{begin},#{size}
+  	</select>
+  	
   	<select id="queryProductCount" resultType="Integer" parameterType="java.util.Map">
   		select count(product_id)  
   		from tmall_order where 1=1
@@ -160,7 +170,16 @@
 		agent_total_charge = #{agent_total_charge},
 		seller_total_charge = #{seller_total_charge},
 		total_price = #{total_price}
-		WHERE order_no = #{order_no} and order_status != 3
+		WHERE order_no = #{order_no} and order_status = 2
+	</update>
+	
+	<update id="updateRejectSuccess" parameterType="com.simple.model.Order">
+		UPDATE tmall_order 
+		SET order_status = #{order_status},
+		agent_total_charge = #{agent_total_charge},
+		seller_total_charge = #{seller_total_charge},
+		total_price = #{total_price}
+		WHERE order_no = #{order_no} and order_status = 5
 	</update>
 	
 	<update id="updateRejectRefuse" parameterType="com.simple.model.Order">
@@ -181,7 +200,7 @@
 	
 	<update id="updateFinish" parameterType="com.simple.model.Order">
 		UPDATE tmall_order 
-		SET order_status = #{order_status},
+		SET order_status = #{order_status}
 		WHERE order_no = #{order_no} and (order_status != 4 and order_status != 3) 
 	</update>
 	
