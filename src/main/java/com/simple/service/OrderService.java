@@ -185,12 +185,10 @@ public class OrderService {
 		return order.getOrder_no();
 	}
 	
-	public Order updateOrderPaySuccess(String code,String payAccount,String payNo) throws Exception  {
+	public Order updateOrderPaySuccess(String code) throws Exception  {
 		Order order = getOrderByCode(code);
-		order.setPay_account(payAccount);
 		order.setPay_time(new Timestamp(new Date().getTime()));
 		order.setOrder_status(Constant.ORDER_STATUS_TOSEND);
-		order.setPay_number(payNo);
 		orderDao.payOrder(order);
 		return order;
 	}
