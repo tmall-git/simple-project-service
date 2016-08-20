@@ -1,9 +1,5 @@
 package com.simple.model;
 
-import org.springframework.util.StringUtils;
-
-import com.simple.common.util.ImageHandleUtil;
-
 public class Product extends AbstractBaseModel{
 
 	private static final long serialVersionUID = -4498554445122690179L;
@@ -73,9 +69,7 @@ public class Product extends AbstractBaseModel{
 		return firstImg;
 	}
 	public void setFirstImg(String firstImg) {
-		if (!StringUtils.isEmpty(firstImg)) {
-			this.firstImg = ImageHandleUtil.getScaleFilePath(firstImg,220);;
-		}
+		this.firstImg = firstImg;
 	}
 	public double getCharge() {
 		return charge;

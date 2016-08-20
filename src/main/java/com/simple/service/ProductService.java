@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import com.simple.common.util.ImageHandleUtil;
 import com.simple.dao.ProductDao;
 import com.simple.model.PageResult;
 import com.simple.model.Product;
@@ -24,19 +26,19 @@ public class ProductService {
 		return p;
 	}
 	
-	public ProductImage getImage(int productId) {
+	public List<ProductImage> getImage(int productId) {
 		return productDao.getImage(productId);
 	}
 	
-	public PageResult query(String name,List<String> owners,int productStatus ,int pageIndex,int pageSize){
-		List<Product> products = queryList(name, owners, productStatus, pageIndex, pageSize);
+	public PageResult query(String name,List<String> owners,int productStatus ,int pageIndex,int pageSize,boolean checkStock){
+		List<Product> products = queryList(name, owners, productStatus, pageIndex, pageSize,checkStock);
 		int total = queryCount(name, owners, productStatus);
 		PageResult p = new PageResult(total, pageSize, pageIndex, products);
 		return p;
 	}
 	
-	public List<Product> queryList(String name,List<String> owners,int productStatus ,int pageIndex,int pageSize) {
-		return productDao.getByOwners(owners, name,productStatus, pageIndex, pageSize);
+	public List<Product> queryList(String name,List<String> owners,int productStatus ,int pageIndex,int pageSize,boolean checkStock) {
+		return productDao.getByOwners(owners, name,productStatus, pageIndex, pageSize,checkStock);
 	}
 	
 	public int queryCount(String name,List<String> owners,int productStatus) {
@@ -63,10 +65,12 @@ public class ProductService {
 			String[] ims = images.split(",");
 			if ( null != ims && ims.length > 0 ) {
 				for (int i = 0 ; i < ims.length ; i ++ ) {
-					ProductImage pi = new ProductImage();
-					pi.setImage(images);
-					pi.setProductId(product.getId());
-					productDao.addProductImage(pi);
+					if (!StringUtils.isEmpty(ims[i])) {
+						ProductImage pi = new ProductImage();
+						pi.setImage(ims[i]);
+						pi.setProductId(product.getId());
+						productDao.addProductImage(pi);
+					}
 				}
 			}
 		}

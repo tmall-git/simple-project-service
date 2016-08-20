@@ -1,7 +1,5 @@
 package com.simple.constant;
 
-import com.simple.common.config.EnvPropertiesConfiger;
-
 public class Constant {
 
 	/*session用户**/

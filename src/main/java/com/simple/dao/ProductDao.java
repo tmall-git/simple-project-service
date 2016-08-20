@@ -19,11 +19,11 @@ public class ProductDao extends BaseIbatisDao{
 		return this.sqlSession.selectOne("product.queryById",id);
 	}
 
-	public ProductImage getImage(int productId) {
-		return this.sqlSession.selectOne("product.queryImage",productId);
+	public List<ProductImage> getImage(int productId) {
+		return this.sqlSession.selectList("product.queryImage",productId);
 	}
 	
-	public List<Product> getByOwners(List<String> owners,String name,int productStatus,int pageIndex,int pageSize) {
+	public List<Product> getByOwners(List<String> owners,String name,int productStatus,int pageIndex,int pageSize,boolean checkStock) {
 		if (pageIndex < 1) {
 			pageIndex  =1;
 		}
@@ -33,6 +33,11 @@ public class ProductDao extends BaseIbatisDao{
 		param.put("startnum", (pageIndex-1)*pageSize);
 		param.put("pageSize", pageSize);
 		param.put("productStatus", productStatus);
+		if (checkStock) {
+			param.put("checkStock", 1);
+		}else {
+			param.put("checkStock", 0);
+		}
 		return this.sqlSession.selectList("product.queryByOwner",param);
 	}
 	
