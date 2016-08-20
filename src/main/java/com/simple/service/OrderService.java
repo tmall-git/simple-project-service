@@ -58,11 +58,12 @@ public class OrderService {
 		return order;
 	}
 
-	public Order updateReject(String code) throws Exception {
+	public Order updateReject(String code,int reason) throws Exception {
 		Order order = getOrderByCode(code);
 		if(order == null){
 			throw new Exception("该订单不存在");
 		}
+		order.setApply_reject_reason(reason);
 		order.setOrder_status(Constant.ORDER_STATUS_REGECT);
 		order.setApply_reject_time(new Timestamp(new Date().getTime()));
 		int result = orderDao.reject(order);

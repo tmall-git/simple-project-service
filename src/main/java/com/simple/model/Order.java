@@ -32,6 +32,7 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	private String reject_remark;
 	private Timestamp apply_reject_time;
 	private String showApplyRejectTime;
+	private int apply_reject_reason;
 	private Timestamp pay_time;
 	private String showPayTime;
 	private String product_image;
@@ -247,5 +248,11 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setSellerWx(String sellerWx) {
 		this.sellerWx = sellerWx;
+	}
+	public int getApply_reject_reason() {
+		return apply_reject_reason;
+	}
+	public void setApply_reject_reason(int apply_reject_reason) {
+		this.apply_reject_reason = apply_reject_reason;
 	}
 }
