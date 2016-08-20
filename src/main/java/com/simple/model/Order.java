@@ -40,6 +40,7 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	private double seller_total_charge;
 	private String weixin_order_no;
 	private String productToken;
+	private String sellerWx;
 	public String getOrder_no() {
 		return order_no;
 	}
@@ -240,5 +241,11 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setProductToken(String productToken) {
 		this.productToken = productToken;
+	}
+	public String getSellerWx() {
+		return sellerWx;
+	}
+	public void setSellerWx(String sellerWx) {
+		this.sellerWx = sellerWx;
 	}
 }
