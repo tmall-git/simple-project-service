@@ -19,6 +19,8 @@ import com.simple.model.Order;
 import com.simple.model.OrderForm;
 import com.simple.model.Product;
 import com.simple.model.User;
+import com.simple.weixin.pay.WeiXinPay;
+import com.simple.weixin.pay.WeiXinRefundResult;
 @Service
 public class OrderService {
 	
@@ -87,10 +89,16 @@ public class OrderService {
 		}
 		//更新商品库存+1
 		productDao.increaseStock(order.getProduct_id(), order.getProduct_count());
-		// TODO 退款给支付微信
-		String payAccount = order.getPay_account();
-		
+		//退款给支付微信
+		refund(order);
 		return order;
+	}
+	
+	private void refund(Order order) throws Exception {
+		WeiXinRefundResult wrr = WeiXinPay.refund(order.getOrder_no(), order.getTotal_price());
+		String weixinorderNo = wrr.getTransaction_id();
+		order.setWeixin_order_no(weixinorderNo);
+		orderDao.updateOrderWeixinNo(order);
 	}
 	
 	public Order updateRejectRefuse(String code,String remark) throws Exception {
@@ -153,6 +161,10 @@ public class OrderService {
 			}
 			//回滚库存
 			productDao.increaseStock(order.getProduct_id(), order.getProduct_count());
+			//如果不是未付款状态，则需要退款
+			if (order.getOrder_status() != Constant.ORDER_STATUS_UNPAY) {
+				refund(order);
+			}
 		}else {
 			throw new Exception("取消失败：当前订单状态不可取消");
 		}

@@ -182,4 +182,7 @@ public class OrderDao extends BaseIbatisDao{
 		return this.sqlSession.selectList("order.queryMyOrders",param);
 	}
 	
+	public void updateOrderWeixinNo(Order order) {
+		this.sqlSession.update("order.setWeixinNo",order);
+	}
 }

@@ -28,14 +28,13 @@
 		<result column="total_price" property="total_price" jdbcType="DOUBLE"/>
 		<result column="agent_total_charge" property="agent_total_charge" jdbcType="DOUBLE"/>
 		<result column="seller_total_charge" property="seller_total_charge" jdbcType="DOUBLE"/>
-		<result column="pay_account" property="pay_account" jdbcType="VARCHAR"/>
-		<result column="pay_number" property="pay_number" jdbcType="VARCHAR"/>
+		<result column="weixin_order_no" property="weixin_order_no" jdbcType="VARCHAR"/>
 	</resultMap>
 	
  	<sql id="order_Column_List" >
 		id,order_no,user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,order_status,
 		expressage,expressage_name,expressage_no,expressage_time,reject_time,reject_remark,apply_reject_time,pay_time,product_image,total_price,
-		agent_total_charge,seller_total_charge,pay_account,pay_number
+		agent_total_charge,seller_total_charge,weixin_order_no
   	</sql>
 
 	<select id="queryByUserPhone" resultMap="orderEntity" parameterType="java.util.Map">
@@ -149,12 +148,12 @@
 		INSERT INTO tmall_order (
 			order_no,user_phone,product_id,product_name,user_name,address,product_count,price,owner,seller,create_time,
 			order_status,expressage,expressage_name,expressage_no,expressage_time,reject_time,reject_remark,apply_reject_time,pay_time,
-			product_image,total_price,agent_total_charge,seller_total_charge,pay_account,pay_number
+			product_image,total_price,agent_total_charge,seller_total_charge,weixin_order_no
 		) 
 		VALUES (
 			#{order_no,},#{user_phone},#{product_id},#{product_name},#{user_name},#{address},#{product_count},#{price},#{owner},#{seller},#{create_time},
 			#{order_status},#{expressage},#{expressage_name},#{expressage_no},#{expressage_time},#{reject_time},#{reject_remark},#{apply_reject_time},
-			#{pay_time},#{product_image},#{total_price},#{agent_total_charge},#{seller_total_charge},#{pay_account},#{pay_number}
+			#{pay_time},#{product_image},#{total_price},#{agent_total_charge},#{seller_total_charge},#{weixin_order_no}
 		)
 	</insert>	
 	
@@ -205,7 +204,7 @@
 	</update>
 	
 	<update id="payOrder" parameterType="com.simple.model.Order">
-		UPDATE tmall_order SET order_status = #{order_status},pay_time = #{pay_time},pay_account=#{pay_account},pay_number=#{pay_number}
+		UPDATE tmall_order SET order_status = #{order_status},pay_time = #{pay_time}
 		WHERE order_no = #{order_no}
 	</update>
 	
@@ -214,5 +213,10 @@
   		from tmall_order where user_phone = #{userPhone}
 		limit #{begin},#{size}
   	</select>
+  	
+  	<update id="setWeixinNo" parameterType="com.simple.model.Order">
+		UPDATE tmall_order SET weixin_order_no = #{weixin_order_no}
+		WHERE order_no = #{order_no}
+	</update>
 	
 </mapper>

@@ -38,8 +38,7 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	private double total_price;
 	private double agent_total_charge;
 	private double seller_total_charge;
-	private String pay_account;
-	private String pay_number;
+	private String weixin_order_no;
 	private String productToken;
 	public String getOrder_no() {
 		return order_no;
@@ -206,12 +205,6 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 			this.showApplyRejectTime = DateUtil.date2AllString(apply_reject_time);
 		}
 	}
-	public String getPay_account() {
-		return pay_account;
-	}
-	public void setPay_account(String pay_account) {
-		this.pay_account = pay_account;
-	}
 	public String getShowExpressageTime() {
 		return showExpressageTime;
 	}
@@ -236,11 +229,11 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	public void setShowPayTime(String showPayTime) {
 		this.showPayTime = showPayTime;
 	}
-	public String getPay_number() {
-		return pay_number;
+	public String getWeixin_order_no() {
+		return weixin_order_no;
 	}
-	public void setPay_number(String pay_number) {
-		this.pay_number = pay_number;
+	public void setWeixin_order_no(String weixin_order_no) {
+		this.weixin_order_no = weixin_order_no;
 	}
 	public String getProductToken() {
 		return productToken;
