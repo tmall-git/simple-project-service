@@ -88,10 +88,16 @@
   	
   	<select id="queryCountByStatus" resultType="Integer" parameterType="java.util.Map">
   		select count(1)  
-  		from tmall_order where pay_time is not null and pay_time != ''
+  		from tmall_order where 1=1
+  		<if test="hasPay > 0 " > and pay_time is not null and pay_time != ''</if>
+  		<if test="order_status_list != null " > 
+  			and order_status in 
+  			<foreach item="item" index="index" collection="order_status_list" open="(" separator="," close=")">  
+			  	#{item}  
+			</foreach>  
+  		</if>
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
-  		<if test="order_status > 0 " > and order_status = #{order_status}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
   	</select>
@@ -230,7 +236,7 @@
 	
 	<select id="queryMyOrders" resultMap="orderEntity" parameterType="java.util.Map">
   		select <include refid="order_Column_List"></include>  
-  		from tmall_order where user_phone = #{userPhone}
+  		from tmall_order where user_phone = #{userPhone} and pay_time is not null and pay_time != ''
 		limit #{begin},#{size}
   	</select>
   	

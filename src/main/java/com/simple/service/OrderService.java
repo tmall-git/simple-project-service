@@ -252,8 +252,8 @@ public class OrderService {
 		return orderDao.queryToDoList(owner,seller,begin,end,pageIndex,pageSize);
 	}
 	
-	public Integer queryCountByStatus(String owner,String seller,int orderStatus,String begin,String end) {
-		return orderDao.queryCountByStatus(owner,seller,orderStatus,begin,end);
+	public Integer queryCountByStatus(String owner,String seller,List<Integer> orderStatus,String begin,String end,boolean hasPay) {
+		return orderDao.queryCountByStatus(owner,seller,orderStatus,begin,end,hasPay);
 	}
 	
 	public Integer queryProductCount(String owner,String seller,int orderStatus) {

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import com.simple.common.util.DoubleUtil;
 import com.simple.common.util.PrimaryKeyUtil;
 import com.simple.constant.Constant;
 
@@ -76,17 +77,12 @@ public class OrderForm implements Serializable{
 		order.setOrder_status(Constant.ORDER_STATUS_UNPAY);
 		order.setProduct_image(product.getFirstImg());
 		order.setTotal_price(product.getPrice()*this.productCount);
-		double sellercharge = formatPrice(order.getTotal_price()*(percent-syscharge)/100.00);
+		double sellercharge = DoubleUtil.formatPrice(order.getTotal_price()*(percent-syscharge)/100.00);
 		if (sellercharge<0) {
 			sellercharge = 0d;
 		}
 		order.setSeller_total_charge(sellercharge);
-		order.setAgent_total_charge(formatPrice(order.getTotal_price()*(100-percent)/100.00));
+		order.setAgent_total_charge(DoubleUtil.formatPrice(order.getTotal_price()*(100-percent)/100.00));
 		return order;
-	}
-	
-	private double formatPrice(double price) {
-		BigDecimal bg = new BigDecimal(price);
-        return bg.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
 	}
 }
