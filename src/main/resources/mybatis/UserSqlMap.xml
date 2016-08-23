@@ -14,7 +14,7 @@
 		<result column="address" property="address" jdbcType="VARCHAR" />
 		<result column="register_date" property="registerDate" jdbcType="DATE" />
 		<result column="salt" property="salt" jdbcType="VARCHAR" />
-		<result column="balance" property="balance" jdbcType="DOUBLE" />
+		<result column="balance" property="blance" jdbcType="DOUBLE" />
 		<result column="category" property="category" jdbcType="VARCHAR" />
 		<result column="allow_sell" property="allowSell" jdbcType="INTEGER" />
 		<result column="charge_percent" property="chargePrecent" jdbcType="DOUBLE" />
@@ -44,7 +44,7 @@
 		INSERT INTO user (user_name,user_phone,user_nick,user_tel,password,
 			wechat_no,ID_card,address,register_date,salt,balance,category,allow_sell,charge_percent) 
 		VALUES (#{userName},#{userPhone},#{userNick},#{userTel},#{password},
-			#{weChatNo},#{IDCard},#{address},#{registerDate},#{salt},#{balance},#{category},#{allowSell},#{chargePrecent})
+			#{weChatNo},#{IDCard},#{address},#{registerDate},#{salt},#{blance},#{category},#{allowSell},#{chargePrecent})
 	</insert>	
 	
 	<update id="modify" parameterType="com.simple.model.User">
@@ -56,7 +56,7 @@
 			wechat_no = #{weChatNo},
 			ID_card = #{IDCard},
 			address = #{address},
-			balance = #{balance},
+			balance = #{blance},
 			category = #{category},
 			allow_sell = #{allowSell},
 			charge_percent = #{chargePrecent}
@@ -74,12 +74,12 @@
 	</update>
 	
 	<update id="increseCharge" parameterType="java.util.Map">
-		update user set balance = balance+${charge}
+		update user set balance = balance+#{charge}
 		where user_phone = #{userPhone}
 	</update>
 	
 	<update id="reduceBlance" parameterType="java.util.Map">
-		update user set balance = balance-${amount}
+		update user set balance = balance-#{amount}
 		where user_phone = #{userPhone}
 	</update>
 </mapper>

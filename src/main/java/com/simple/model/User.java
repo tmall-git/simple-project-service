@@ -15,7 +15,7 @@ public class User extends AbstractBaseModel implements java.io.Serializable{
 	private String address="";
 	private Date registerDate;
 	private String salt;
-	private Double balance;
+	private double blance;
 	private String userNick="";
 	private String category="";
 	private int allowSell;
@@ -80,11 +80,11 @@ public class User extends AbstractBaseModel implements java.io.Serializable{
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-	public Double getBalance() {
-		return balance;
+	public double getBlance() {
+		return blance;
 	}
-	public void setBalance(Double balance) {
-		this.balance = balance;
+	public void setBlance(double blance) {
+		this.blance = blance;
 	}
 	public String getUserNick() {
 		return userNick;

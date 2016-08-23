@@ -72,19 +72,45 @@ public class OrderDao extends BaseIbatisDao{
 	}
 	
 	public List<Order> queryListByStatus(String owner,String seller,int orderStatus,
-			String begin,String end,int pageIndex,int pageSize) {
+			String begin,String end,int pageIndex,int pageSize,boolean hasPay) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("order_status", orderStatus);
 		param.put("owner", owner);
 		param.put("seller", seller);
 		param.put("beginTime", begin);
 		param.put("endTime", end);
+		if (hasPay) {
+			param.put("hasPay", 1);
+		}else {
+			param.put("hasPay", 0);
+		}
 		if (pageIndex <=0) {
 			pageIndex = 1;
 		}
 		param.put("begin", (pageIndex-1)*pageSize);
 		param.put("size", pageSize);
 		return this.sqlSession.selectList("order.queryListByStatus",param);
+	}
+	
+	public List<Order> queryListByStatus(String owner,String seller,List<Integer> orderStatus,
+			String begin,String end,int pageIndex,int pageSize,boolean hasPay) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("order_status", orderStatus);
+		param.put("owner", owner);
+		param.put("seller", seller);
+		param.put("beginTime", begin);
+		param.put("endTime", end);
+		if (hasPay) {
+			param.put("hasPay", 1);
+		}else {
+			param.put("hasPay", 0);
+		}
+		if (pageIndex <=0) {
+			pageIndex = 1;
+		}
+		param.put("begin", (pageIndex-1)*pageSize);
+		param.put("size", pageSize);
+		return this.sqlSession.selectList("order.queryListByStatusList",param);
 	}
 	
 	public List<Order> querySendList(String owner,String seller,

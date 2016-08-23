@@ -42,6 +42,7 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	private String weixin_order_no;
 	private String productToken;
 	private String sellerWx;
+	private String ownerWx;
 	public String getOrder_no() {
 		return order_no;
 	}
@@ -254,5 +255,11 @@ public class Order extends AbstractBaseModel implements java.io.Serializable{
 	}
 	public void setApply_reject_reason(int apply_reject_reason) {
 		this.apply_reject_reason = apply_reject_reason;
+	}
+	public String getOwnerWx() {
+		return ownerWx;
+	}
+	public void setOwnerWx(String ownerWx) {
+		this.ownerWx = ownerWx;
 	}
 }

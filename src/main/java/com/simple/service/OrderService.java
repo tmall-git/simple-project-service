@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.simple.constant.Constant;
 import com.simple.dao.AgentSellerDao;
+import com.simple.dao.ChargeDao;
 import com.simple.dao.ExpressageDao;
 import com.simple.dao.OrderDao;
 import com.simple.dao.ProductDao;
 import com.simple.dao.UserDao;
 import com.simple.model.AgentSeller;
+import com.simple.model.Charge;
 import com.simple.model.Expressage;
 import com.simple.model.Order;
 import com.simple.model.OrderForm;
@@ -34,6 +36,8 @@ public class OrderService {
 	private AgentSellerDao agentSellerDao;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private ChargeDao chargeDao;
 	
 	
 	public Order getOrderByCode(String code) {
@@ -193,7 +197,9 @@ public class OrderService {
 		if (stock<=0) {
 			throw new Exception("商品库存不足!");
 		}
-		Order order = orderForm.castToOrder(product, seller, percent);
+		//扣掉那个系统的提成
+		Charge charge = chargeDao.getCharge();
+		Order order = orderForm.castToOrder(product, seller, percent,charge.getCharge());
 		orderDao.addOrder(order);
 		return order.getOrder_no();
 	}
@@ -226,8 +232,12 @@ public class OrderService {
 		return orderDao.querySellerTotalCharge(owner,seller);
 	}
 	
-	public List<Order> queryListByStatus(String owner,String seller,int orderStatus,String begin,String end,int pageIndex,int pageSize) {
-		return orderDao.queryListByStatus(owner,seller,orderStatus, begin,end,pageIndex,pageSize);
+	public List<Order> queryListByStatus(String owner,String seller,int orderStatus,String begin,String end,int pageIndex,int pageSize,boolean hasPay) {
+		return orderDao.queryListByStatus(owner,seller,orderStatus, begin,end,pageIndex,pageSize,hasPay);
+	}
+	
+	public List<Order> queryListByStatus(String owner,String seller,List<Integer> orderStatus,String begin,String end,int pageIndex,int pageSize,boolean hasPay) {
+		return orderDao.queryListByStatus(owner,seller,orderStatus, begin,end,pageIndex,pageSize,hasPay);
 	}
 	
 	public List<Order> querySendList(String owner,String seller,String begin,String end,int pageIndex,int pageSize) {

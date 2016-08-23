@@ -1,6 +1,7 @@
 package com.simple.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -59,7 +60,7 @@ public class OrderForm implements Serializable{
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public Order castToOrder(Product product,String seller,double percent) {
+	public Order castToOrder(Product product,String seller,double percent,double syscharge) {
 		Order order = new Order();
 		order.setOrder_no(PrimaryKeyUtil.getId());
 		order.setUser_phone(this.userPhone);
@@ -75,8 +76,17 @@ public class OrderForm implements Serializable{
 		order.setOrder_status(Constant.ORDER_STATUS_UNPAY);
 		order.setProduct_image(product.getFirstImg());
 		order.setTotal_price(product.getPrice()*this.productCount);
-		order.setAgent_total_charge(order.getTotal_price()*(100-percent)/100.00);
-		order.setSeller_total_charge(order.getTotal_price()*(percent)/100.00);
+		double sellercharge = formatPrice(order.getTotal_price()*(percent-syscharge)/100.00);
+		if (sellercharge<0) {
+			sellercharge = 0d;
+		}
+		order.setSeller_total_charge(sellercharge);
+		order.setAgent_total_charge(formatPrice(order.getTotal_price()*(100-percent)/100.00));
 		return order;
+	}
+	
+	private double formatPrice(double price) {
+		BigDecimal bg = new BigDecimal(price);
+        return bg.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
 	}
 }

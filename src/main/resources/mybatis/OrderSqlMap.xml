@@ -60,21 +60,21 @@
 	
 	<select id="queryAgentTotalPrice" resultType="Double" parameterType="java.util.Map">
   		select sum(total_price) 
-  		from tmall_order where owner = #{owner} and order_status in (2,3,5,6,8)
+  		from tmall_order where owner = #{owner} and order_status in (1,2,3,5,6) 
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
   	</select>
   	
   	<select id="queryAgentTotalCharge" resultType="Double" parameterType="java.util.Map">
   		select sum(agent_total_charge) 
-  		from tmall_order where owner = #{owner} and order_status in (2,3,5,6) 
+  		from tmall_order where owner = #{owner} and order_status in (1,2,3,5,6) 
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
   	</select>
   	
   	<select id="querySellerTotalPrice" resultType="Double" parameterType="java.util.Map">
   		select sum(total_price) 
-  		from tmall_order where seller = #{seller} and order_status in (2,3,5,6,8)
+  		from tmall_order where seller = #{seller} and order_status in (1,2,3,5,6)
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
@@ -82,13 +82,13 @@
   	
   	<select id="querySellerTotalCharge" resultType="Double" parameterType="java.util.Map">
   		select sum(seller_total_charge) 
-  		from tmall_order where seller = #{seller} and order_status in (2,3,5,6) 
+  		from tmall_order where seller = #{seller} and order_status in (1,2,3,5,6)
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   	</select>
   	
   	<select id="queryCountByStatus" resultType="Integer" parameterType="java.util.Map">
   		select count(1)  
-  		from tmall_order where 1=1
+  		from tmall_order where pay_time is not null and pay_time != ''
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="order_status > 0 " > and order_status = #{order_status}</if>
@@ -98,7 +98,7 @@
   	
   	<select id="queryToDoList" resultMap="orderEntity" parameterType="java.util.Map">
   		select <include refid="order_Column_List"></include>  
-  		from tmall_order where order_status = 1 or order_status = 5 
+  		from tmall_order where order_status = 1 or order_status = 5 or order_status = 6
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
@@ -109,7 +109,25 @@
   	<select id="queryListByStatus" resultMap="orderEntity" parameterType="java.util.Map">
   		select <include refid="order_Column_List"></include>  
   		from tmall_order where 1=1
+  		<if test="hasPay > 0 " > and pay_time is not null and pay_time != ''</if>
   		<if test="order_status > 0 " > and order_status = #{order_status}</if>
+  		<if test="owner != null and owner != ''">and owner = #{owner}</if>
+  		<if test="seller != null and seller != ''">and seller = #{seller}</if>
+  		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
+		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
+		limit #{begin},#{size}
+  	</select>
+  	
+  	<select id="queryListByStatusList" resultMap="orderEntity" parameterType="java.util.Map">
+  		select <include refid="order_Column_List"></include>  
+  		from tmall_order where 1=1
+  		<if test="hasPay > 0 " > and pay_time is not null and pay_time != ''</if>
+  		<if test="order_status != null " > 
+  			and order_status in 
+  			<foreach item="item" index="index" collection="order_status" open="(" separator="," close=")">  
+			  	#{item}  
+			</foreach>  
+  		</if>
   		<if test="owner != null and owner != ''">and owner = #{owner}</if>
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
