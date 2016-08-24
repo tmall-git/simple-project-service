@@ -11,6 +11,7 @@ public class AgentSellerMain implements Serializable{
 	private Integer watchCount;
 	private String sellerPhone;
 	private String weiChat;
+	private String nickName;
 	private Double chargePercent;
 	
 	public Double getTotalSell() {
@@ -48,5 +49,11 @@ public class AgentSellerMain implements Serializable{
 	}
 	public void setChargePercent(Double chargePercent) {
 		this.chargePercent = chargePercent;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 }
