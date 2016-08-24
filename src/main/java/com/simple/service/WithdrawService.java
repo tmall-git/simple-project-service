@@ -52,7 +52,7 @@ public class WithdrawService {
 		a.setStatus(Constant.CASH_STATUS_FINISHED);
 		withdrawDao.updateStatus(a);
 		//扣掉余额
-		userDao.reduceBlance(a.getUserPhone(), a.getCashAmount());
+		userDao.reduceBlance(a.getApplyPhone(), a.getCashAmount());
 		return a;
 	}
 	
