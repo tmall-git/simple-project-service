@@ -17,4 +17,8 @@ public class BaseService {
 	public List<Bank> getBankList(){
 		return baseDao.getBankList();
 	}
+	
+	public Bank queryBank(String code) {
+		return baseDao.queryBank(code);
+	}
 }

@@ -17,4 +17,8 @@ public class BaseDao extends BaseIbatisDao{
 	public List<Bank> getBankList(){
 		return super.sqlSession.selectList(scope + "getBankList");
 	}
+	
+	public Bank queryBank(String code) {
+		return super.sqlSession.selectOne(scope + "getBankByCode",code);
+	}
 }

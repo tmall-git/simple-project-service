@@ -17,6 +17,13 @@
   		<include refid="bank_column_list"></include>
   		from base_bank 
   	</select>
+  	
+  	<select id="getBankByCode" resultMap="bankEntity" parameterType="String">
+  		select
+  		<include refid="bank_column_list"></include>
+  		from base_bank where code=#{code} limit 0,1
+  	</select>
+  	
 	<select id="getByBankId" resultMap="bankEntity" parameterType="com.simple.model.Bank">
   		select
   		<include refid="bank_column_list"></include>

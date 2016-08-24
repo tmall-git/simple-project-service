@@ -16,6 +16,7 @@ public class Account implements Serializable{
 	private String userPhone;
 	private String realName;
 	private String bankCode;
+	private String bankName;
 	private String bankAccount;
 	private String bankAccountNo;
 	private double cashAmount;
@@ -27,6 +28,7 @@ public class Account implements Serializable{
 	private String remark;
 	private Timestamp operateTime;
 	private String showOperateTime;
+	private String applyPhone;
 	
 	public String getUserPhone() {
 		return userPhone;
@@ -123,5 +125,17 @@ public class Account implements Serializable{
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getApplyPhone() {
+		return applyPhone;
+	}
+	public void setApplyPhone(String applyPhone) {
+		this.applyPhone = applyPhone;
+	}
+	public String getBankName() {
+		return bankName;
+	}
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
 	}
 }

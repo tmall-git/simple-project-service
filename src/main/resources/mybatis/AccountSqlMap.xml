@@ -6,6 +6,7 @@
 		<id column="id" property="id" jdbcType="VARCHAR" />
 		<result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
 		<result column="bank_code" property="bankCode" jdbcType="VARCHAR"/>
+		<result column="real_name" property="realName" jdbcType="VARCHAR"/>
 		<result column="bank_account" property="bankAccount" jdbcType="VARCHAR"/>
 		<result column="bank_account_no" property="bankAccountNo" jdbcType="VARCHAR"/>
 		<result column="cash_amount" property="cashAmount" jdbcType="DOUBLE"/>
@@ -15,10 +16,11 @@
 		<result column="status" property="status" jdbcType="INTEGER"/>
 		<result column="remark" property="remark" jdbcType="VARCHAR"/>
 		<result column="operate_time" property="operateTime" jdbcType="TIMESTAMP"/>
+		<result column="apply_phone" property="applyPhone" jdbcType="VARCHAR"/>
 	</resultMap>
 
  	<sql id="account_column_list" >
-		id,user_phone,bank_code,bank_account,bank_account_no,cash_amount,cash_time,bank_phone,wei_chat_no,status,remark,operate_time
+		id,user_phone,real_name,bank_code,bank_account,bank_account_no,cash_amount,cash_time,bank_phone,wei_chat_no,status,remark,operate_time,apply_phone
   	</sql>
 
 	<select id="getById" resultMap="accountEntity" parameterType="String">
@@ -28,11 +30,25 @@
   		where id=#{id} 
   	</select>
 
-	<insert id="bankIst" parameterType="com.simple.model.Account">
-		INSERT INTO tmall_account(id,user_phone,bank_code,bank_account,bank_account_no,cash_amount,cash_time,bank_phone,
-		wei_chat_no,status,remark,operate_time)
-		VALUES(#{id},#{userPhone},#{bankCode},#{bankAccount},#{bankAccountNo},#{cashAmount},#{cashTime},#{bankPhone},
-		#{weiChatNo},#{status},#{remark},#{operateTime})
+	<select id="queryList" resultMap="accountEntity" parameterType="java.util.Map">
+		select <include refid="account_column_list"></include>
+  		from tmall_account where apply_phone =#{applyPhone}
+  		limit #{begin},#{size}
+	</select>
+	
+	<select id="queryAllList" resultMap="accountEntity" parameterType="java.util.Map">
+		select <include refid="account_column_list"></include>
+  		from tmall_account where 1=1
+  		<if test="applyPhone != null and applyPhone != '' " > and apply_phone =#{applyPhone}</if>
+  		<if test="cashStatus > 0" > and status =#{cashStatus}</if>
+  		limit #{begin},#{size}
+	</select>
+
+	<insert id="insert" parameterType="com.simple.model.Account">
+		INSERT INTO tmall_account(id,user_phone,real_name,bank_code,bank_account,bank_account_no,cash_amount,cash_time,bank_phone,
+		wei_chat_no,status,remark,operate_time,apply_phone)
+		VALUES(#{id},#{userPhone},#{realName},#{bankCode},#{bankAccount},#{bankAccountNo},#{cashAmount},#{cashTime},#{bankPhone},
+		#{weiChatNo},#{status},#{remark},#{operateTime},#{applyPhone})
 	</insert>
 		
 	<update id="updateStatus" parameterType="com.simple.model.Account">
@@ -43,4 +59,12 @@
 		WHERE 
 			id=#{id}
 	</update>
+	
+	<update id="updatePhone" parameterType="com.simple.model.Account">
+		UPDATE tmall_account SET user_phone = #{userPhone} WHERE id=#{id}
+	</update>
+	
+	<delete id="deleteByApplyPhone" parameterType="String">
+		delete from tmall_account where apply_phone = #{applyPhone} and status != 2
+	</delete>
 </mapper>
