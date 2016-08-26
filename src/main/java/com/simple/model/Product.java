@@ -16,6 +16,8 @@ public class Product extends AbstractBaseModel{
 	private double charge;//提成
 	private String sellerPhone;//用户购买时显示的代销电话
 	private String sellerWeChatNo;//用户购买时显示的代销微信
+	private String sellerNickName;
+	private String headimg;
 	
 	public String getName() {
 		return name;
@@ -88,5 +90,17 @@ public class Product extends AbstractBaseModel{
 	}
 	public void setSellerWeChatNo(String sellerWeChatNo) {
 		this.sellerWeChatNo = sellerWeChatNo;
+	}
+	public String getSellerNickName() {
+		return sellerNickName;
+	}
+	public void setSellerNickName(String sellerNickName) {
+		this.sellerNickName = sellerNickName;
+	}
+	public String getHeadimg() {
+		return headimg;
+	}
+	public void setHeadimg(String headimg) {
+		this.headimg = headimg;
 	}
 }

@@ -7,6 +7,9 @@ public class Constant {
 	
 	public static final int ALLOW_SELL = 1;
 	public static final int NOT_ALLOW_SELL = 2;
+	public static final int USER_STATUS_VALID = 1;
+	public static final int USER_STATUS_UNVALID = 2;
+	
 	
 	/*产品状态**/
 	public static final int PRODUCT_STATUS_CREATE = 1;

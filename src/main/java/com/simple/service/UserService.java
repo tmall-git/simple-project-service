@@ -27,12 +27,8 @@ public class UserService {
 		return dao.getById(statement, id);
 	}
 	
-	public User selectOne(String statement, Map<String, Object> params){
-		return dao.selectOne(statement, params);
-	}
-
-	public User queryByPhone(String phone) {
-		return dao.getByPhone(phone);
+	public User queryByPhone(String phone,boolean valid) {
+		return dao.getByPhone(phone,valid);
 	}
 	
 	public int insert(User user) {

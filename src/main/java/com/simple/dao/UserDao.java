@@ -18,14 +18,15 @@ public class UserDao extends BaseIbatisDao{
 		return (User) super.getById(statement, id);
 	}
 	
-	public User selectOne(String statement, Map<String, Object> params){
-		User user = (User) super.selectOne(statement, params);
-		return user;
-	}
 	
-	public User getByPhone(String phone) {
+	public User getByPhone(String phone,boolean valid) {
 		Map param = new HashMap();
 		param.put("userPhone", phone);
+		if (valid) {
+			param.put("status", Constant.USER_STATUS_VALID);
+		}else {
+			param.put("status", 0);
+		}
 		return this.sqlSession.selectOne("user.selectOne",param);
 	}
 	

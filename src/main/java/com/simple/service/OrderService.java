@@ -186,9 +186,9 @@ public class OrderService {
 		if ( null != ass && ass.size() > 0) {
 			percent = ass.get(0).getChargePercent();
 		}else {
-			User owner = userDao.getByPhone(product.getOwner());
+			User owner = userDao.getByPhone(product.getOwner(),true);
 			if ( null == owner ) {
-				throw new Exception("商品所属用户不存在");
+				throw new Exception("商品所属用户无效");
 			}
 			percent = owner.getChargePrecent();
 		}

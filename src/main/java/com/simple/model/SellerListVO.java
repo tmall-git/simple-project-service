@@ -7,6 +7,7 @@ public class SellerListVO implements java.io.Serializable{
 	private String userPhone;		//用户电话
 	private String wechatName;		//用户名称
 	private String nickName;
+	private String headimg;
 	private Double sellerAmount;	//代销金额
 	private Integer dealCount;		//成交笔数
 	private Integer productCount;	//商品总数
@@ -46,6 +47,12 @@ public class SellerListVO implements java.io.Serializable{
 	}
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+	public String getHeadimg() {
+		return headimg;
+	}
+	public void setHeadimg(String headimg) {
+		this.headimg = headimg;
 	}
 	public SellerListVO(){};
 	

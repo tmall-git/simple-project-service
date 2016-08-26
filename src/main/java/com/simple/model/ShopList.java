@@ -8,6 +8,7 @@ public class ShopList implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String owner;
 	private String ownerName;
+	private String headimg;
 	private String zhuying;
 	private int productCount;
 	private boolean join;
@@ -59,5 +60,13 @@ public class ShopList implements Serializable{
 
 	public void setJoin(boolean join) {
 		this.join = join;
+	}
+
+	public String getHeadimg() {
+		return headimg;
+	}
+
+	public void setHeadimg(String headimg) {
+		this.headimg = headimg;
 	}
 }

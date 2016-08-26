@@ -20,6 +20,8 @@ public class User extends AbstractBaseModel implements java.io.Serializable{
 	private String category="";
 	private int allowSell;
 	private double chargePrecent;
+	private String headimg;
+	private int status;
 	
 	public User() {
 	}
@@ -119,5 +121,21 @@ public class User extends AbstractBaseModel implements java.io.Serializable{
 			return false;
 		}
 		return true;
+	}
+
+	public String getHeadimg() {
+		return headimg;
+	}
+
+	public void setHeadimg(String headimg) {
+		this.headimg = headimg;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

@@ -18,11 +18,13 @@
 		<result column="category" property="category" jdbcType="VARCHAR" />
 		<result column="allow_sell" property="allowSell" jdbcType="INTEGER" />
 		<result column="charge_percent" property="chargePrecent" jdbcType="DOUBLE" />
+		<result column="headimg" property="headimg" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
 	</resultMap>
 
 	<sql id="user_Column_List" >
 		id, user_name,user_nick, user_phone, user_tel, password, wechat_no, 
-		ID_card, address, register_date, salt, balance, category,allow_sell,charge_percent
+		ID_card, address, register_date, salt, balance, category,allow_sell,charge_percent,headimg,status
 	</sql>
 
 	<select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -38,13 +40,14 @@
 		FROM user
 		WHERE 1=1
 		<if test="userPhone != null and userPhone != ''"> AND user_phone = #{userPhone}</if>
+		<if test="status > 0 "> AND status = #{status}</if>
 	</select>
 
 	<insert id="createRegister" parameterType="com.simple.model.User">
 		INSERT INTO user (user_name,user_phone,user_nick,user_tel,password,
-			wechat_no,ID_card,address,register_date,salt,balance,category,allow_sell,charge_percent) 
+			wechat_no,ID_card,address,register_date,salt,balance,category,allow_sell,charge_percent,headimg,status) 
 		VALUES (#{userName},#{userPhone},#{userNick},#{userTel},#{password},
-			#{weChatNo},#{IDCard},#{address},#{registerDate},#{salt},#{blance},#{category},#{allowSell},#{chargePrecent})
+			#{weChatNo},#{IDCard},#{address},#{registerDate},#{salt},#{blance},#{category},#{allowSell},#{chargePrecent},#{headimg},#{status})
 	</insert>	
 	
 	<update id="modify" parameterType="com.simple.model.User">
@@ -59,12 +62,18 @@
 			balance = #{blance},
 			category = #{category},
 			allow_sell = #{allowSell},
-			charge_percent = #{chargePrecent}
+			charge_percent = #{chargePrecent},
+			headimg = #{headimg}
 		WHERE user_phone = #{userPhone}
 	</update>
 	
 	<update id="updateAllow" parameterType="java.util.Map">
 		update user set allow_sell = #{allow} 
+		where user_phone = #{userPhone} 
+	</update>
+	
+	<update id="updateStatus" parameterType="java.util.Map">
+		update user set status = #{status} 
 		where user_phone = #{userPhone} 
 	</update>
 	
