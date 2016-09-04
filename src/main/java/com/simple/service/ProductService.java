@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.fastjson.JSONArray;
 import com.simple.common.util.ImageHandleUtil;
 import com.simple.dao.ProductDao;
 import com.simple.model.PageResult;
@@ -62,12 +63,13 @@ public class ProductService {
 	
 	private void addProductImage(Product product,String images) {
 		if (null != images) {
-			String[] ims = images.split(",");
-			if ( null != ims && ims.length > 0 ) {
-				for (int i = 0 ; i < ims.length ; i ++ ) {
-					if (!StringUtils.isEmpty(ims[i])) {
+			List<String> imagelist = JSONArray.parseArray(images, String.class);
+			//String[] ims = images.split(",");
+			if ( null != imagelist && imagelist.size() > 0 ) {
+				for (int i = 0 ; i < imagelist.size() ; i ++ ) {
+					if (!StringUtils.isEmpty(imagelist.get(i))) {
 						ProductImage pi = new ProductImage();
-						pi.setImage(ims[i]);
+						pi.setImage(imagelist.get(i));
 						pi.setProductId(product.getId());
 						productDao.addProductImage(pi);
 					}

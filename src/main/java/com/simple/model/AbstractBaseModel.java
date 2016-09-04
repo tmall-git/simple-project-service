@@ -4,8 +4,7 @@ import com.simple.common.config.EnvPropertiesConfiger;
 
 public class AbstractBaseModel implements java.io.Serializable{
 
-	//private static final String FILE_PREFIX = EnvPropertiesConfiger.getValue("fileUrl");
-	private static final String FILE_PREFIX = "http://juxier.com/file/";
+	private static final String FILE_PREFIX = EnvPropertiesConfiger.getValue("fileUrl");
 	
 	private static final long serialVersionUID = -522832123597167225L;
 	
