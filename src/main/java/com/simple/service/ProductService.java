@@ -31,6 +31,21 @@ public class ProductService {
 		return productDao.getImage(productId);
 	}
 	
+	public PageResult query(String name,String phone,int productStatus ,int pageIndex,int pageSize){
+		List<Product> products = queryList(name, phone, productStatus, pageIndex, pageSize);
+		int total = queryCount(name, phone, productStatus);
+		PageResult p = new PageResult(total, pageSize, pageIndex, products);
+		return p;
+	}
+	public List<Product> queryList(String name,String phone,int productStatus ,int pageIndex,int pageSize) {
+		return productDao.getList(phone, name,productStatus, pageIndex, pageSize);
+	}
+	
+	public int queryCount(String name,String phone,int productStatus) {
+		return productDao.getCount(phone, name, productStatus);
+	}
+	
+	
 	public PageResult query(String name,List<String> owners,int productStatus ,int pageIndex,int pageSize,boolean checkStock){
 		List<Product> products = queryList(name, owners, productStatus, pageIndex, pageSize,checkStock);
 		int total = queryCount(name, owners, productStatus);

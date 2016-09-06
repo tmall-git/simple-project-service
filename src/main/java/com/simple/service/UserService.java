@@ -1,17 +1,11 @@
 package com.simple.service;
 
-//import java.util.List;
-import java.util.Map;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-//import com.github.pagehelper.PageHelper;
-//import com.github.pagehelper.PageInfo;
 import com.simple.dao.OrderDao;
 import com.simple.dao.UserDao;
-//import com.simple.model.SellerListVO;
-import com.simple.model.SellerMainVO;
+import com.simple.model.PageResult;
 import com.simple.model.User;
 
 @Service
@@ -22,6 +16,21 @@ public class UserService {
 	
 	@Autowired 
 	private OrderDao orderDao;
+	
+	public PageResult queryPage(String phone,int pageIndex,int pageSize) {
+		List<User> products = queryList(phone,pageIndex, pageSize);
+		int total = queryCount(phone);
+		PageResult p = new PageResult(total, pageSize, pageIndex, products);
+		return p;
+	}
+	
+	public List<User> queryList(String phone,int pageIndex,int pageSize) {
+		return dao.getList(phone, pageIndex, pageSize);
+	}
+	
+	public int queryCount(String phone) {
+		return dao.getCount(phone);
+	}
 	
 	public User getById(String statement, int id){
 		return dao.getById(statement, id);
@@ -37,6 +46,10 @@ public class UserService {
 	
 	public int update(User user){
 		return dao.updateObject("user.modify",user);
+	}
+	
+	public void updateStatus(String phone,int status){
+		 dao.updateStatus(phone, status);
 	}
 
 }

@@ -23,6 +23,28 @@ public class ProductDao extends BaseIbatisDao{
 		return this.sqlSession.selectList("product.queryImage",productId);
 	}
 	
+	public List<Product> getList(String phone,String name,int productStatus,int pageIndex,int pageSize) {
+		if (pageIndex < 1) {
+			pageIndex  =1;
+		}
+		Map<String,Object> param = new HashMap<String,Object>(); 
+		param.put("name", name);
+		param.put("owner", phone);
+		param.put("startnum", (pageIndex-1)*pageSize);
+		param.put("pageSize", pageSize);
+		param.put("productStatus", productStatus);
+		return this.sqlSession.selectList("product.queryList",param);
+	}
+	
+	public int getCount(String phone,String name,int productStatus) {
+		Map<String,Object> param = new HashMap<String,Object>(); 
+		param.put("name", name);
+		param.put("owner", phone);
+		param.put("productStatus", productStatus);
+		return this.sqlSession.selectOne("product.queryCount",param);
+	}
+	
+	
 	public List<Product> getByOwners(List<String> owners,String name,int productStatus,int pageIndex,int pageSize,boolean checkStock) {
 		if (pageIndex < 1) {
 			pageIndex  =1;

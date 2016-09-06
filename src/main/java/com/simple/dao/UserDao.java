@@ -1,6 +1,7 @@
 package com.simple.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,22 @@ public class UserDao extends BaseIbatisDao{
 		return (User) super.getById(statement, id);
 	}
 	
+	public List<User> getList(String phone,int pageIndex,int pageSize) {
+		if (pageIndex < 1) {
+			pageIndex  =1;
+		}
+		Map<String,Object> param = new HashMap<String,Object>(); 
+		param.put("phone", phone);
+		param.put("startnum", (pageIndex-1)*pageSize);
+		param.put("pageSize", pageSize);
+		return this.sqlSession.selectList("user.getList",param);
+	}
+	
+	public int getCount(String phone) {
+		Map<String,Object> param = new HashMap<String,Object>(); 
+		param.put("phone", phone);
+		return this.sqlSession.selectOne("user.getCount",param);
+	}
 	
 	public User getByPhone(String phone,boolean valid) {
 		Map param = new HashMap();
@@ -60,6 +77,13 @@ public class UserDao extends BaseIbatisDao{
 		param.put("userPhone", phone);
 		param.put("amount", amount);
 		this.sqlSession.update("user.reduceBlance",param);
+	}
+	
+	public void updateStatus(String phone,int status){
+		Map param = new HashMap();
+		param.put("userPhone", phone);
+		param.put("status", status);
+		this.sqlSession.update("user.updateStatus",param);
 	}
 
 }

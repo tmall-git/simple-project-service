@@ -38,6 +38,24 @@
   		select distinct owner from product limit #{begin}, #{end}
   	</select>
   	
+  	<select id="queryList" resultMap="productEntity">
+  		select
+  		<include refid="product_Column_List"></include>
+  		from product where 1=1 
+		 <if test="name != null and name != ''" > and name like CONCAT('%',#{name},'%')</if>
+		 <if test="owner != null and owner != ''" > and owner like CONCAT('%',#{owner},'%')</if>
+		 <if test="productStatus > 0 " > and product_status = #{productStatus}</if>
+		 order by id desc limit #{startnum},#{pageSize} 
+  	</select>
+  	
+  	<select id="queryCount" resultType="Integer">
+  		select count(1) 
+  		from product where 1=1
+  		 <if test="name != null and name != ''" > and name like CONCAT('%',#{name},'%')</if>
+		 <if test="owner != null and owner != ''" > and owner like CONCAT('%',#{owner},'%')</if>
+		 <if test="productStatus > 0 " > and product_status = #{productStatus}</if>
+  	</select>
+  	
  	<select id="queryByOwner" resultMap="productEntity">
   		select
   		<include refid="product_Column_List"></include>
