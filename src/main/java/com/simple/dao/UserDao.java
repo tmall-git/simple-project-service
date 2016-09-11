@@ -19,20 +19,22 @@ public class UserDao extends BaseIbatisDao{
 		return (User) super.getById(statement, id);
 	}
 	
-	public List<User> getList(String phone,int pageIndex,int pageSize) {
+	public List<User> getList(String phone,int userStatus,int pageIndex,int pageSize) {
 		if (pageIndex < 1) {
 			pageIndex  =1;
 		}
 		Map<String,Object> param = new HashMap<String,Object>(); 
 		param.put("phone", phone);
+		param.put("userStatus", userStatus);
 		param.put("startnum", (pageIndex-1)*pageSize);
 		param.put("pageSize", pageSize);
 		return this.sqlSession.selectList("user.getList",param);
 	}
 	
-	public int getCount(String phone) {
+	public int getCount(String phone,int userStatus) {
 		Map<String,Object> param = new HashMap<String,Object>(); 
 		param.put("phone", phone);
+		param.put("userStatus", userStatus);
 		return this.sqlSession.selectOne("user.getCount",param);
 	}
 	

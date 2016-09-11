@@ -17,19 +17,19 @@ public class UserService {
 	@Autowired 
 	private OrderDao orderDao;
 	
-	public PageResult queryPage(String phone,int pageIndex,int pageSize) {
-		List<User> products = queryList(phone,pageIndex, pageSize);
-		int total = queryCount(phone);
+	public PageResult queryPage(String phone,int userStatus,int pageIndex,int pageSize) {
+		List<User> products = queryList(phone,userStatus,pageIndex, pageSize);
+		int total = queryCount(phone,userStatus);
 		PageResult p = new PageResult(total, pageSize, pageIndex, products);
 		return p;
 	}
 	
-	public List<User> queryList(String phone,int pageIndex,int pageSize) {
-		return dao.getList(phone, pageIndex, pageSize);
+	public List<User> queryList(String phone,int userStatus,int pageIndex,int pageSize) {
+		return dao.getList(phone,userStatus, pageIndex, pageSize);
 	}
 	
-	public int queryCount(String phone) {
-		return dao.getCount(phone);
+	public int queryCount(String phone,int userStatus) {
+		return dao.getCount(phone,userStatus);
 	}
 	
 	public User getById(String statement, int id){

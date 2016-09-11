@@ -11,6 +11,7 @@ public class SellerListVO implements java.io.Serializable{
 	private Double sellerAmount;	//代销金额
 	private Integer dealCount;		//成交笔数
 	private Integer productCount;	//商品总数
+	private Integer status;//状态
 	
 	public String getUserPhone() {
 		return userPhone;
@@ -53,6 +54,12 @@ public class SellerListVO implements java.io.Serializable{
 	}
 	public void setHeadimg(String headimg) {
 		this.headimg = headimg;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	public SellerListVO(){};
 	

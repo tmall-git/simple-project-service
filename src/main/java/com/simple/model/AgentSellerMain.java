@@ -14,6 +14,7 @@ public class AgentSellerMain implements Serializable{
 	private String nickName;
 	private String headimg;
 	private Double chargePercent;
+	private Integer status;
 	
 	public Double getTotalSell() {
 		return totalSell;
@@ -62,5 +63,11 @@ public class AgentSellerMain implements Serializable{
 	}
 	public void setHeadimg(String headimg) {
 		this.headimg = headimg;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }
