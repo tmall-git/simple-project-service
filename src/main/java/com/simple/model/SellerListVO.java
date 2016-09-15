@@ -12,7 +12,7 @@ public class SellerListVO implements java.io.Serializable{
 	private Integer dealCount;		//成交笔数
 	private Integer productCount;	//商品总数
 	private Integer status;//状态
-	
+	private Integer watchCount;//带看次数
 	public String getUserPhone() {
 		return userPhone;
 	}
@@ -60,6 +60,12 @@ public class SellerListVO implements java.io.Serializable{
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public Integer getWatchCount() {
+		return watchCount;
+	}
+	public void setWatchCount(Integer watchCount) {
+		this.watchCount = watchCount;
 	}
 	public SellerListVO(){};
 	
