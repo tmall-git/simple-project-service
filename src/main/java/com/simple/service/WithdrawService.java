@@ -12,6 +12,7 @@ import com.simple.constant.Constant;
 import com.simple.dao.UserDao;
 import com.simple.dao.WithdrawDao;
 import com.simple.model.Account;
+import com.simple.model.PageResult;
 
 @Service
 public class WithdrawService {
@@ -43,8 +44,11 @@ public class WithdrawService {
 		return withdrawDao.queryList(pageIndex, pageSize, applyPhone);
 	}
 	
-	public List<Account> queryAllList(int pageIndex,int pageSize,String applyPhone,int status) {
-		return withdrawDao.queryAllList(pageIndex, pageSize, applyPhone,status);
+	public PageResult queryAll(int pageIndex,int pageSize,String applyPhone,int status) {
+		List<Account> accounts = withdrawDao.queryAllList(pageIndex, pageSize, applyPhone,status);
+		Integer total = withdrawDao.queryAllCount(pageIndex, pageSize, applyPhone, status);
+		PageResult p = new PageResult(total, pageSize, pageIndex, accounts);
+		return p;
 	}
 	
 	public Account updateAccountFinised(Account a) {

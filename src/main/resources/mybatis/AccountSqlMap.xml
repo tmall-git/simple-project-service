@@ -43,6 +43,13 @@
   		<if test="cashStatus > 0" > and status =#{cashStatus}</if>
   		limit #{begin},#{size}
 	</select>
+	
+	<select id="queryAllCount" resultType="Integer" parameterType="java.util.Map">
+		select count(1)
+  		from tmall_account where 1=1
+  		<if test="applyPhone != null and applyPhone != '' " > and apply_phone =#{applyPhone}</if>
+  		<if test="cashStatus > 0" > and status =#{cashStatus}</if>
+	</select>
 
 	<insert id="insert" parameterType="com.simple.model.Account">
 		INSERT INTO tmall_account(id,user_phone,real_name,bank_code,bank_account,bank_account_no,cash_amount,cash_time,bank_phone,

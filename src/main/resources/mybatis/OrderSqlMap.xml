@@ -110,6 +110,7 @@
   		<if test="seller != null and seller != ''"> and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
+		order by id desc 
 		limit #{begin},#{size}
   	</select>
   	
@@ -122,6 +123,7 @@
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
+		order by id desc 
 		limit #{begin},#{size}
   	</select>
   	
@@ -139,6 +141,7 @@
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and create_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and create_time &lt;= #{endTime} </if>
+		order by id desc 
 		limit #{begin},#{size}
   	</select>
   	
@@ -149,6 +152,7 @@
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and expressage_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and expressage_time &lt;= #{endTime} </if>
+		order by id desc 
 		limit #{begin},#{size}
   	</select>
   	
@@ -159,6 +163,7 @@
   		<if test="seller != null and seller != ''">and seller = #{seller}</if>
   		<if test="beginTime != null and beginTime != ''" > and expressage_time &gt;= #{beginTime} </if>
 		<if test="endTime != null and endTime != ''" > and expressage_time &lt;= #{endTime} </if>
+		order by id desc 
 		limit #{begin},#{size}
   	</select>
   	
@@ -238,6 +243,7 @@
 	<select id="queryMyOrders" resultMap="orderEntity" parameterType="java.util.Map">
   		select <include refid="order_Column_List"></include>  
   		from tmall_order where user_phone = #{userPhone} and pay_time is not null and pay_time != ''
+  		order by id desc 
 		limit #{begin},#{size}
   	</select>
   	

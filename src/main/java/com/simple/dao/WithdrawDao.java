@@ -49,6 +49,16 @@ public class WithdrawDao extends BaseIbatisDao{
 		return this.sqlSession.selectList("account.queryAllList",param);
 	}
 	
+	public Integer queryAllCount(int pageIndex,int pageSize,String applyPhone,int status) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("applyPhone", applyPhone);
+		param.put("cashStatus", status);
+		if (pageIndex <=0) {
+			pageIndex = 1;
+		}
+		return this.sqlSession.selectOne("account.queryAllCount",param);
+	}
+	
 	public void updateFinished(String applyPhone) {
 		Map param = new HashMap();
 		param.put("applyPhone", applyPhone);
