@@ -32,6 +32,12 @@
 		FROM agent_seller where agent_phone = #{userPhone}
 	</select>
 	
+	<select id="queryByAgentAndSeller" parameterType="java.util.Map" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="user_Column_List"></include>
+		FROM agent_seller where agent_phone = #{agent} and seller_phone = #{seller}
+	</select>
+	
 	<select id="queryBySeller" parameterType="String" resultMap="BaseResultMap">
 		SELECT 
 		<include refid="user_Column_List"></include>

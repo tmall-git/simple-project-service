@@ -101,6 +101,9 @@ public class OrderService {
 	
 	private void refund(Order order) throws Exception {
 		WeiXinRefundResult wrr = WeiXinPay.refund(order.getOrder_no(), order.getTotal_price());
+		if (wrr.getResult_code().equals("FAIL")) {
+			throw new Exception(wrr.getErr_code_des());
+		}
 		String weixinorderNo = wrr.getTransaction_id();
 		order.setWeixin_order_no(weixinorderNo);
 		orderDao.updateOrderWeixinNo(order);

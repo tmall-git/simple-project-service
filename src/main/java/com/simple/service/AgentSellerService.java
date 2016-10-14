@@ -34,6 +34,10 @@ public class AgentSellerService {
 		return dao.queryBySeller(phone);
 	}
 	
+	public AgentSeller queryByAgentAndSeller(String agent,String seller) {
+		return dao.queryByAgentAndSeller(agent, seller);
+	}
+	
 	public int queryCountByPhone(String owner,String seller) {
 		return dao.queryCountByPhone(owner,seller);
 	}

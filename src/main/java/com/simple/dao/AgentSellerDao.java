@@ -25,6 +25,13 @@ public class AgentSellerDao extends BaseIbatisDao{
 		return this.sqlSession.selectList("agentSeller.queryBySeller",phone);
 	}
 	
+	public AgentSeller queryByAgentAndSeller(String agent,String seller) {
+		Map param = new HashMap();
+		param.put("agent", agent);
+		param.put("seller", seller);
+		return this.sqlSession.selectOne("agentSeller.queryByAgentAndSeller",param);
+	}
+	
 	public int queryCountByPhone(String owner,String seller) {
 		Map param = new HashMap();
 		param.put("owner", owner);
